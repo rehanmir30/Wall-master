@@ -324,6 +324,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text('SignUp'.tr),
                       ),
                     ),
+
+                    //signin with google
+                    SizedBox(height: 35,),
+                    InkWell(
+                      onTap: () async {
+
+                        _commonController.setLoading(true);
+                        AuthenticationController authController = Get.find<AuthenticationController>();
+                        await authController.SignInWithGoogle();
+                        _commonController.setLoading(false);
+
+                      },
+                      child: Container(
+                        height: 50,
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: AppColors.black,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.white,width: 1,)
+                        ),
+                        child: Text("Continue with Google".tr,style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
                   ],
                 ),
 

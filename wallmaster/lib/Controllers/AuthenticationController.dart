@@ -23,6 +23,10 @@ class AuthenticationController extends GetxController{
     await DatabaseHelper().SignIn(email, password);
     update();
   }
+  SignInWithGoogle()async{
+    await DatabaseHelper().SignInGoogle();
+    update();
+  }
   SignOut(UserModel model)async{
     await DatabaseHelper().SignOut(model);
     update();

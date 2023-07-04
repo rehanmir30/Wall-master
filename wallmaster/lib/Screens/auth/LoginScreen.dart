@@ -129,12 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                        if((emailController.text==null ||emailController.text=="")||(passController.text==null ||passController.text=="")){
                          CustomSnackbar.show( "PleaseFillAllTheFiled".tr, AppColors.red);
-                         // Get.snackbar(
-                         //   "PleaseFillAllTheFiled".tr,
-                         //   "",
-                         //   snackPosition: SnackPosition.BOTTOM,
-                         //   duration: Duration(seconds: 1),
-                         // );
                        }else{
                          _commonController.setLoading(true);
                          AuthenticationController authController = Get.find<AuthenticationController>();
@@ -152,6 +146,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           border: Border.all(color: Colors.white,width: 1,)
                         ),
                         child: Text("signin".tr,style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+
+                    //signin with google
+                    SizedBox(height: 35,),
+                    InkWell(
+                      onTap: () async {
+
+                          _commonController.setLoading(true);
+                          AuthenticationController authController = Get.find<AuthenticationController>();
+                          await authController.SignInWithGoogle();
+                          _commonController.setLoading(false);
+
+                      },
+                      child: Container(
+                        height: 50,
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: AppColors.black,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.white,width: 1,)
+                        ),
+                        child: Text("Continue with Google".tr,style: TextStyle(color: Colors.white),),
                       ),
                     ),
 

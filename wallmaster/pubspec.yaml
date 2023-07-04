@@ -48,6 +48,9 @@ dependencies:
   http:
   fluttertoast:
   shared_preferences:
+  google_sign_in:
+  firebase_auth:
+  firebase_core:
 
 dev_dependencies:
   flutter_test:

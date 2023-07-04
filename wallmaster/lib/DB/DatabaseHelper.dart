@@ -1,9 +1,12 @@
 
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wallmaster/Constants/ApiConstants.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
@@ -74,6 +77,51 @@ class DatabaseHelper{
   }
 
 }
+
+ //SignIn with Google
+  Future<void>SignInGoogle()async{
+    await Firebase.initializeApp();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    final user= await FirebaseAuth.instance.signInWithCredential(credential);
+
+    Map<String, String> header = {
+      "Accept": "application/json",
+      'Content-Type': 'application/json',
+    };
+    var body =
+        '{"email": "${user.user!.email}","is_social": 1,"name":"${user.user!.displayName}","social_uuid":"${user.user!.uid}"}';
+    var url = Uri.parse(ApiConstants.baseUrl+ApiConstants.loginApi);
+    if (kDebugMode) {
+      print('Verify User API URL - ${url.toString()}');
+      print('Verify User Request Body - ${body.toString()}');
+    }
+    final response = await http.post(
+      url,
+      headers: header,
+      body: body,
+    );
+    var responseJson = json.decode(response.body.toString());
+    if(responseJson['status']==200){
+      final usermodel = UserModel.fromJson(response.body.toString());
+      await authController.setUserData(usermodel);
+      CustomSnackbar.show('${usermodel.message}',AppColors.green);
+      await SharedPref.saveUser(usermodel);
+      CommonController commonController = Get.find<CommonController>();
+      await commonController.getCategories();
+      await commonController.getAllProducts();
+
+      Get.offAll(()=>const HomeScreen());
+
+    }else{
+      final userModelFailure = UserModelFailure.fromJson(response.body.toString());
+      CustomSnackbar.show('${userModelFailure.message}',AppColors.red);
+    }
+  }
 
   //SignIn Function
   Future<void> SignIn(email,password)async{

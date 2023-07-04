@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "26359633293",
+    "project_id": "wallmaster-a100c",
+    "storage_bucket": "wallmaster-a100c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26359633293:android:e0d02aa1dfd3f80b9899c4",
+        "android_client_info": {
+          "package_name": "com.example.wallmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26359633293-5affbiustmm8ncrkmt8d9opl5f0h5jkj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wallmaster",
+            "certificate_hash": "2085640aad7709a23f8f4b07c040b2ac90ff0c2c"
+          }
+        },
+        {
+          "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACsmwmp-Y6UANb5uZbJ7iTqTWwAqJaMq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
