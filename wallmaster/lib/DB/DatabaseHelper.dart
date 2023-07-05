@@ -81,7 +81,9 @@ class DatabaseHelper{
  //SignIn with Google
   Future<void>SignInGoogle()async{
     await Firebase.initializeApp();
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try{
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -120,6 +122,10 @@ class DatabaseHelper{
     }else{
       final userModelFailure = UserModelFailure.fromJson(response.body.toString());
       CustomSnackbar.show('${userModelFailure.message}',AppColors.red);
+    }
+
+    } on FirebaseAuthException catch(e){
+ CustomSnackbar.show('${e.message}',AppColors.red);
     }
   }
 

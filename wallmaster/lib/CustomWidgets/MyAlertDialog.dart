@@ -80,6 +80,7 @@ class _MyAlertDialogState extends State<MyAlertDialog> {
           onPressed: () {
             Localization loacl = Get.find<Localization>();
             loacl.setSelectedLang(selectedOption);
+            
             Get.put(OnBoardingController());
             Navigator.pop(context);
           },

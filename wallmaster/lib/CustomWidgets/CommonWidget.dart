@@ -24,7 +24,7 @@ class _CommonWidgetState extends State<CommonWidget> {
         width: MediaQuery.of(context).size.width,
         height: 100,
         decoration: BoxDecoration(
-          color: AppColors.red,
+          color: AppColors.black,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: AssetImage(widget.wallpaper.toString()),

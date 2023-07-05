@@ -29,20 +29,45 @@ class _PremiumWidgetState extends State<PremiumWidget> {
         height: 300,
         child: Stack(
           children: [
-            Container(
+
+           Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
-                color: AppColors.red,
+                color: AppColors.black,
                 borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
+                // image: DecorationImage(
+                //     image: NetworkImage(widget._productData!.image.toString()),
+                //     fit: BoxFit.fill
+                // ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: FadeInImage(
+                  height: 300,
+                    width: MediaQuery.of(context).size.width,
+                    placeholder: AssetImage("assets/images/logo.png"),
                     image: NetworkImage(widget.wallpaper.image.toString()),
-                    fit: BoxFit.fill
+                  fit: BoxFit.contain,
                 ),
               ),
-              // child: Text(widget.wallpaper.toString()),
             ).marginSymmetric(horizontal: 5,vertical: 5),
+
+            // Container(
+            //   alignment: Alignment.center,
+            //   width: MediaQuery.of(context).size.width,
+            //   height: 300,
+            //   decoration: BoxDecoration(
+            //     color: AppColors.black,
+            //     borderRadius: BorderRadius.circular(10),
+            //     image: DecorationImage(
+            //         image: NetworkImage(widget.wallpaper.image.toString()),
+            //         fit: BoxFit.fill
+            //     ),
+            //   ),
+            //   // child: Text(widget.wallpaper.toString()),
+            // ).marginSymmetric(horizontal: 5,vertical: 5),
             Positioned(
               right: 15,
               top: 10,

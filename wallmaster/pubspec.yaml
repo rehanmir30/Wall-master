@@ -51,6 +51,7 @@ dependencies:
   google_sign_in:
   firebase_auth:
   firebase_core:
+  google_mobile_ads:
 
 dev_dependencies:
   flutter_test:

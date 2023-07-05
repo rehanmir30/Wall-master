@@ -8,6 +8,7 @@ import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 import 'package:wallmaster/Screens/Onboarding/Onborading.dart';
 
 import '../Controllers/CommonController.dart';
+import '../Controllers/LocalizationController.dart';
 import '../Model/UserModel.dart';
 import 'auth/LoginScreen.dart';
 
@@ -29,10 +30,17 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     Future.delayed(const Duration(milliseconds: 3000), () async {
       UserModel? savedUser = await SharedPref.getUser();
+      var selectedLanguage = await SharedPref.getSelectedLanguage();
       if (savedUser != null) {
         AuthenticationController authenticationController = Get.find<AuthenticationController>();
         await authenticationController.setUserData(savedUser);
         CommonController commonController = Get.find<CommonController>();
+        Localization localization = Get.find<Localization>();
+        if(selectedLanguage!=null){
+          await localization.setSelectedLang(selectedLanguage);
+        }else{
+          await localization.setSelectedLang('spanish');
+        }
         await commonController.getCategories();
         await commonController.getAllProducts();
         Get.offAll(()=>const HomeScreen());

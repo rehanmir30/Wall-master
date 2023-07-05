@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../DB/SharedPreferences/SharedPreferences.dart';
+
 class Localization extends GetxController{
   @override
   void onInit() {
@@ -18,14 +20,7 @@ class Localization extends GetxController{
   late Map<String,dynamic> dropdownValue ;
   // Map<String,dynamic> get dropdownValue =>_dropdownValue;
 
-  void LanguageSelected(local){
-    // print(locals[0]);
-    dropdownValue = local;
-    update();
-    print("Selcedt: "+dropdownValue.toString());
-    changeLanguage(local!['locale']);
-  }
-  setSelectedLang(value)async{
+    setSelectedLang(value)async{
 
     if(value=="English"){
       LanguageSelected(locals[0]);
@@ -33,6 +28,15 @@ class Localization extends GetxController{
       LanguageSelected(locals[1]);
     }
     update();
+  }
+
+  void LanguageSelected(local)async{
+    // print(locals[0]);
+    dropdownValue = local;
+    update();
+    print("Selcedt: "+dropdownValue.toString());
+    changeLanguage(local!['locale']);
+    await SharedPref.saveSelectedLanguage(local!['name']);
   }
 
   changeLanguage(Locale local){

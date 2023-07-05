@@ -35,7 +35,7 @@ class _MixWidgetState extends State<MixWidget> {
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
-                color: AppColors.red,
+                color: AppColors.black,
                 borderRadius: BorderRadius.circular(10),
                 // image: DecorationImage(
                 //     image: NetworkImage(widget._productData!.image.toString()),
@@ -49,7 +49,7 @@ class _MixWidgetState extends State<MixWidget> {
                     width: MediaQuery.of(context).size.width,
                     placeholder: AssetImage("assets/images/logo.png"),
                     image: NetworkImage(widget._productData!.image.toString()),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ),
               ),
             ).marginSymmetric(horizontal: 5,vertical: 5),

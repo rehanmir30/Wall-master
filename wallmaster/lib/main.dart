@@ -5,7 +5,10 @@ import 'package:wallmaster/Screens/SplashScreen.dart';
 
 import 'Constants/LocalizationTranslator.dart';
 
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 

@@ -31,7 +31,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         width: MediaQuery.of(context).size.width,
         height: 200,
         decoration: BoxDecoration(
-          color: AppColors.red,
+          color: AppColors.black,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
@@ -44,7 +44,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 height: 200,
                   placeholder: AssetImage("assets/images/logo.png"), 
                   image: NetworkImage(widget.categoryModel!.data![widget.index].image.toString()),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               
               ),
             ),
