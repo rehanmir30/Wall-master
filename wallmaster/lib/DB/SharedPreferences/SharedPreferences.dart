@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallmaster/Model/UserModel.dart';
 
 class SharedPref {
-  static const String _keyUser = 'myUser';
+  static const String _keyUser = 'wallmaster_user';
 
   static Future<void> saveUser(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();

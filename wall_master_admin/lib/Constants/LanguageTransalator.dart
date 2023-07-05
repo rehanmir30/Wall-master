@@ -87,7 +87,7 @@ class LanguageTransalator extends Translations{
 
     'es_US':{
       //AppName
-      "AppName": "Maestro de la pared",
+      "AppName": "Wall Master",
       //Login Screen
       "AdminAccount": "Cuenta de administrador",
       "Email":"Correo electrónico",

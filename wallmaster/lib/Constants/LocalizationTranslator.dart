@@ -12,6 +12,9 @@ class LocalizationTranslator extends Translations{
       //AppName
       "WallMaster": "Wall Master",
 
+      //Social Login
+      "ContinueWithGoogle": "Continue with Google",
+
 
       //OnBoardingScreen
       "Privacy": "PRIVACY",
@@ -81,8 +84,10 @@ class LocalizationTranslator extends Translations{
     //Spanish LANGUAGE
     'es_US':{
       //AppName
-      "WallMaster": "Maestro de la pared",
+      "WallMaster": "Wall Master",
 
+      //Social Login
+      "ContinueWithGoogle": "Continuar con Google",
 
       //OnBoardingScreen
       "Privacy": "PRIVACIDAD",

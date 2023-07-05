@@ -37,7 +37,7 @@ class _OnboardingState extends State<Onboarding> {
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Colors.transparent,
-              leading: Image.asset("assets/images/logo.png"),
+              leading: Container(padding: EdgeInsets.all(10),child: Image.asset("assets/images/logo.png",width: 5,height: 5,fit: BoxFit.fill,)),
               actions: [
                 InkWell(
                     overlayColor: MaterialStateProperty.all(Colors.transparent),

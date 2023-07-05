@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "wallmaster",
+            "cwd": "wallmaster",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "wallmaster (profile mode)",
+            "cwd": "wallmaster",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "wallmaster (release mode)",
+            "cwd": "wallmaster",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "wall_master_admin",
+            "cwd": "wall_master_admin",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "wall_master_admin (profile mode)",
+            "cwd": "wall_master_admin",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "wall_master_admin (release mode)",
+            "cwd": "wall_master_admin",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

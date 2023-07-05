@@ -157,29 +157,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 35,),
-                    GetBuilder<Localization>(builder: (controller) {
-                      return InkWell(
-                          onTap: (){
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return MyAlertDialog();
-                              },
-                            );
-                          },
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(controller.dropdownValue['name'].toString(),style: TextStyle(color: Colors.white,fontSize: 16),),Icon(Icons.arrow_drop_down_sharp,color: AppColors.white,size: 30,)],));
-                    },),
 
-                    // SizedBox(height: 30,),
-                    // Text("Need help?",style: TextStyle(color: Colors.white54),),
-                    //
-                    // SizedBox(height: 30,),
-                    // Text("New to Wall Master? Sign up now",style: TextStyle(color: Colors.white70),),
-                    //
-                    // SizedBox(height: 30,),
-                    // Text("Sign in is protected by Google reCAPTCHA to ensure you're not a bot.",style: TextStyle(color: Colors.white12),textAlign: TextAlign.center,),
+                    // //Change Language
+                    // SizedBox(height: 35,),
+                    // GetBuilder<Localization>(builder: (controller) {
+                    //   return InkWell(
+                    //       onTap: (){
+                    //         showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return MyAlertDialog();
+                    //           },
+                    //         );
+                    //       },
+                    //       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(controller.dropdownValue['name'].toString(),style: TextStyle(color: Colors.white,fontSize: 16),),Icon(Icons.arrow_drop_down_sharp,color: AppColors.white,size: 30,)],));
+                    // },),
 
+                
 
                    ],
                 ).marginSymmetric(horizontal: 15),

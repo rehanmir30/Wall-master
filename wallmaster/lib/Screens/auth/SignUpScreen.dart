@@ -345,7 +345,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: Colors.white,width: 1,)
                         ),
-                        child: Text("Continue with Google".tr,style: TextStyle(color: Colors.white),),
+                        child: Text("ContinueWithGoogle".tr,style: TextStyle(color: Colors.white),),
                       ),
                     ),
                   ],
