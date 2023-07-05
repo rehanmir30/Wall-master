@@ -4,12 +4,15 @@ import 'package:wallmaster/Controllers/InitControllers/InitController.dart';
 import 'package:wallmaster/Screens/SplashScreen.dart';
 
 import 'Constants/LocalizationTranslator.dart';
+import 'dart:io' show Platform;
 
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

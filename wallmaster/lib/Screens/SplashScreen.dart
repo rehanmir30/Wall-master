@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/DB/SharedPreferences/SharedPreferences.dart';
+import 'package:wallmaster/Screens/AdScreen/AdScreen.dart';
 import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 import 'package:wallmaster/Screens/Onboarding/Onborading.dart';
 
@@ -43,9 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
         }
         await commonController.getCategories();
         await commonController.getAllProducts();
-        Get.offAll(()=>const HomeScreen());
+        Get.offAll(()=> HomeScreen());
       }else{
-        Get.offAll(const Onboarding());
+        Get.offAll(Onboarding());
       }
 
       // Get.offAll(LoginScreen());

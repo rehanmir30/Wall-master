@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
 
 import '../DB/DatabaseHelper.dart';
 import '../Model/GetProductModel.dart';
 import '../Model/LikedWallpaperModel.dart';
+import '../Screens/AdScreen/AdHelper.dart';
 
 
 class CommonController extends GetxController{
@@ -41,6 +43,7 @@ class CommonController extends GetxController{
 
   List<LikeProductData>? _likedProductData;
   List<LikeProductData>? get likedProductData=>_likedProductData;
+
 
 
   setReliventData(List<ProductData>? data)async{
@@ -159,6 +162,7 @@ class CommonController extends GetxController{
   onInit()async{
     super.onInit();
    getImages();
+  //  loadBanner();
   }
 
 
