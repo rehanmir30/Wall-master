@@ -50,6 +50,7 @@ class LocalizationTranslator extends Translations{
       "Premium": "Premium",
 
       //Drawer
+      "ChangeLanguage": "Change Language",
       "BuyPremium": "Buy Premium",
       "LikedWallpaper": "Liked Wallpaper",
       "Notifications": "Notifications",
@@ -122,6 +123,7 @@ class LocalizationTranslator extends Translations{
       "Premium": "De primera calidad",
 
       //Drawer
+      "ChangeLanguage": "Cambiar idioma",
       "BuyPremium": "Comprar Premium",
       "LikedWallpaper": "Fondo de pantalla que me gustó",
       "Notifications": "Notificaciones",

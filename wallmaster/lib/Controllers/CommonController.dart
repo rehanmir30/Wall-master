@@ -45,6 +45,11 @@ class CommonController extends GetxController{
   List<LikeProductData>? get likedProductData=>_likedProductData;
 
 
+  changeLanguage(value)async{
+    await DatabaseHelper().changeLanguage(value);
+    update();
+  }
+
 
   setReliventData(List<ProductData>? data)async{
     _productReliventData = data;

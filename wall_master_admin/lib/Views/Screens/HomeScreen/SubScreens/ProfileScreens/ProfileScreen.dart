@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wall_master_admin/Controllers/AuthenticationController.dart';
 import 'package:wall_master_admin/Controllers/CommonController.dart';
 
 import '../../../../../Constants/AppColors.dart';
+import '../../../../../CustomWidgets/CustomSnackbar.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -15,7 +19,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
+  CommonController commonController = Get.find<CommonController>();
+  AuthenticationController _authController = Get.find<AuthenticationController>();
+  File? _selectedImages ;
+  var _selectedImageName;
+
+  Future<void> _pickImage() async {
+    final _picker = ImagePicker();
+    final pickedFile  = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile  != null) {
+      setState(() {
+        _selectedImageName = pickedFile.path.split('/').last;
+        _selectedImages = File(pickedFile.path);
+      });
+    }
+  }
+
 
   bool isEditing = false;
   bool readOnly = true;
@@ -24,9 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    nameController.text = "Admin";
-    emailController.text = "admin@gmail.com";
-    phoneController.text = "+1 123-456-4890";
+    nameController.text = _authController.adminModel!.data!.name!;
+    emailController.text = _authController.adminModel!.data!.email!;
   }
 
   @override
@@ -126,6 +147,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
 
+              //Password Field
+              if(readOnly==false) SizedBox(height: 16.0),
+              if(readOnly==false)Text(
+                'Password'.tr,
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),
+              ),
+              if(readOnly==false)Container(
+                height: 50,
+                child: TextFormField(
+                  controller: passwordController,
+                  readOnly: readOnly,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Enter new password",
+                      hintStyle: TextStyle(color: AppColors.white.withOpacity(0.3)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: AppColors.white,width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: AppColors.white,width: 1),
+                      )
+                  ),
+                ),
+              ),
+
               SizedBox(height: 16.0),
               (isEditing==false)
                   ?Align(
@@ -151,6 +203,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.red,
       ),
       onPressed: () {
+        CommonController _commonController = Get.find<CommonController>();
+        if(nameController.text==null || nameController.text=="" || emailController.text==null || emailController.text==""){
+          CustomSnackbar.show('All Fields Required', AppColors.red);
+
+        }else{
+          _commonController.updateProfile(nameController.text,emailController.text,passwordController.text,_selectedImages);
+        }
           // Perform action when edit button is pressed
           setState(() {
             isEditing = false;

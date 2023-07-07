@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wall_master_admin/Controllers/AuthenticationController.dart';
@@ -61,11 +63,17 @@ class CommonController extends GetxController{
   getAllUsers()async{
     await DatabaseHelper().getAllUsers();
   }
+
+  updateProfile(name,email,password,image)async{
+    await DatabaseHelper().updateProfile(name,email,password,image);
+    update();
+  }
+
+
   setAllUsers(GetAllUserModel model)async{
     _allUserModel = model;
     update();
   }
-
 
   setCategoryModelList(List<Datum>? list){
     _categoryList = list;

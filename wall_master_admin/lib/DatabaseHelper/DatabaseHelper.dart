@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:wall_master_admin/Models/GetProductModel.dart';
 import 'package:wall_master_admin/Views/Screens/AuthScreens/LoginScreen.dart';
 import '../Constants/ApiConstants.dart';
 import '../Constants/AppColors.dart';
+import '../Controllers/LocalizationController.dart';
 import '../CustomWidgets/CustomSnackbar.dart';
 import '../Models/CategoryModel.dart';
 import '../Views/Screens/HomeScreen/HomeScreen.dart';
@@ -27,15 +29,15 @@ class DatabaseHelper{
   //SignIn Function
   Future<void> signIn(email,password)async{
     AuthenticationController authController = Get.find<AuthenticationController>();
-    print("Email: ${email} Pass: ${password}");
+    Localization _localization = Get.find<Localization>();
+    print("Email: ${email} Pass: ${password}, language ${_localization.dropdownValue['name'].toLowerCase()}");
 
     Map<String, String> header = {
       "Accept": "application/json",
       'Content-Type': 'application/json',
     };
 
-    var body =
-        '{"email": "${email}","password": "${password}"}';
+    var body = '{"email": "${email}","password": "${password}","language": "${_localization.dropdownValue['name'].toLowerCase()}"}';
 
     var url = Uri.parse(ApiConstants.baseUrl+ApiConstants.loginUrl);
     if (kDebugMode) {
@@ -107,6 +109,77 @@ class DatabaseHelper{
       //   snackPosition: SnackPosition.BOTTOM,
       //   duration: Duration(seconds: 1),
       // );
+    }
+
+  }
+
+  //Update Profile Function
+  Future<void> updateProfile(name,email,password,image)async{
+    AuthenticationController authenticationController = Get.find<AuthenticationController>();
+    Localization _localization = Get.find<Localization>();
+    Map<String, String> headers = {
+      "Accept": "application/json",
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ${authenticationController.adminModel?.accessToken}'
+    };
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.profileUpdateUrl),
+    );
+    print("PASSWORD: ${password}");
+    if(image==null||image==""){
+      if( password==null || password==""){
+        request.headers.addAll(headers);
+        request.fields['name'] = name;
+        request.fields['email'] = email.toString();
+        request.fields['language'] = _localization.dropdownValue['name'].toLowerCase().toString();
+      }else{
+        request.headers.addAll(headers);
+        request.fields['name'] = name;
+        request.fields['email'] = email.toString();
+        request.fields['language'] = _localization.dropdownValue['name'].toLowerCase().toString();
+        request.fields['password'] = password.toString();
+      }
+
+    }else{
+      request.headers.addAll(headers);
+      request.fields['name'] = name;
+      request.fields['email'] = email.toString();
+      request.fields['language'] = _localization.dropdownValue['name'].toLowerCase().toString();
+      request.fields['password'] = password.toString();
+      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+    }
+
+    if (kDebugMode) {
+      print('Update Profile API URL - ${request.url.toString()}');
+      print('Update Profile Request Body - ${request.fields.toString()}');
+    }
+
+    var response = await request.send();
+    var responseJson = await response.stream.bytesToString();
+    var jsonResponse = jsonDecode(responseJson);
+    if (jsonResponse['status'] == 200) {
+      // File successfully uploaded
+      print('File uploaded!');
+      CustomSnackbar.show('${jsonResponse['message']}', AppColors.green);
+      AuthenticationController _authController = Get.find<AuthenticationController>();
+      AdminModel? _adminModel = _authController.adminModel;
+      _adminModel!.data!.name = name;
+      _adminModel.data!.email = email;
+      _adminModel.data!.image = image;
+      await _authController.setAdminData(_adminModel);
+      await SharedPref.saveUser(_adminModel);
+      // Get.back();
+      // Get.offAll(()=>const HomeScreen());
+      await getCategories();
+      await getAllProducts();
+      Get.offAll(()=>HomeScreen());
+    } else {
+      // File upload failed
+      print('File upload failed with status code: ${response.statusCode}');
+      // var jsonResponse = jsonDecode(responseJson);
+      CustomSnackbar.show('${jsonResponse['message']}', AppColors.red);
     }
 
   }

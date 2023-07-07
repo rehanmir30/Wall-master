@@ -6,7 +6,7 @@ class Localization extends GetxController{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    dropdownValue = locals[1];
+    dropdownValue = locals[0];
   }
 
   List locals = [

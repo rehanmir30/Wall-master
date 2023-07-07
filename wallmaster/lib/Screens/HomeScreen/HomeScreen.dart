@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
+import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Category/SearchScreen.dart';
 import 'package:wallmaster/Screens/Onboarding/Onborading.dart';
+import '../../Controllers/LocalizationController.dart';
 import 'SubScreens/Category/CategoryScreen.dart';
 import 'SubScreens/Drawer/LikedWallpaper/LikedWallpaperScreen.dart';
 import 'SubScreens/Drawer/PremiumPackages/PremiumPackage.dart';
@@ -128,6 +130,35 @@ class MyDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            ListTile(
+              leading: Container(
+                width: 35,
+                height: 35,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.purple,
+                ),
+                child: Icon(Icons.change_circle_outlined,color: AppColors.white,size: 15,),
+              ),
+              title: Text('ChangeLanguage'.tr),
+              onTap: () async{
+                Navigator.pop(context);
+                Localization _localization = Get.find<Localization>();
+                CommonController _commonController = Get.find<CommonController>();
+                if('English'==_localization.dropdownValue['name']){
+                await _localization.setSelectedLang('spanish');
+                await _commonController.changeLanguage('spanish');
+
+                }else{
+                  await _localization.setSelectedLang('English');
+                  await _commonController.changeLanguage('English');
+                }
+                // Get.to(()=>PremiumPackage());
+                // Handle drawer item click for About
+              },
             ),
             ListTile(
               leading: Container(

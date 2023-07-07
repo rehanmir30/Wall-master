@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wall_master_admin/Models/AdminModel.dart';
 
 class SharedPref {
-  static const String _keyUser = 'AdminData';
+  static const String _keyUser = 'Wallmaster_AdminData';
 
   static Future<void> saveUser(AdminModel user) async {
     final prefs = await SharedPreferences.getInstance();
