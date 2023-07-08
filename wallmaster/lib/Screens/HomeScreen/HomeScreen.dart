@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: AppBar(
         backgroundColor: AppColors.black,
         elevation: 0,
-        title: Text("WallMaster".tr,style: TextStyle(color: Colors.white),),
+        title: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 24),),
         centerTitle: true,
         actions: [
           InkWell(
@@ -56,18 +56,32 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: TabBar(
             indicatorColor: AppColors.red,
+            indicatorWeight: 3,
             controller: _tabController,
             isScrollable: true,
             tabs: [
-              Tab(text: 'Categories'.tr),
-              Tab(text: 'Recent'.tr),
-              Tab(text: 'Premium'.tr),
-              // Tab(text: 'Random'),
-              // Tab(text: 'Weekly Popular'),
-              // Tab(text: 'Monthly Popular'),
-              // Tab(text: 'Most Popular'),
+              Tab(
+                child: Text(
+                  'Categories'.tr,
+                  style: TextStyle(fontSize: 20), // Increase the font size
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Recent'.tr,
+                  style: TextStyle(fontSize: 20), // Increase the font size
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Premium'.tr,
+                  style: TextStyle(fontSize: 20), // Increase the font size
+                ),
+              ),
+              // Other tabs...
             ],
           ),
+
         ),
       ),
 

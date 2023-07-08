@@ -30,14 +30,23 @@ class _LikeWidgetState extends State<LikeWidget> {
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
-                color: AppColors.red,
+                color: AppColors.black,
                 borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                    image: NetworkImage(widget._productData!.image.toString()),
-                    fit: BoxFit.fill
+                // image: DecorationImage(
+                //     image: NetworkImage(widget._productData!.image.toString()),
+                //     fit: BoxFit.fill
+                // ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: FadeInImage(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width,
+                  placeholder: AssetImage("assets/images/modified_logo.png"),
+                  image: NetworkImage(widget._productData!.image.toString()),
+                  fit: BoxFit.contain,
                 ),
               ),
-              // child: Text(widget.wallpaper.toString()),
             ).marginSymmetric(horizontal: 5,vertical: 5),
             if(widget._productData!.forPremium!=0)Positioned(
               right: 15,

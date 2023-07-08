@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isVisible = false;
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
         _isVisible = true;
       });
@@ -62,19 +62,36 @@ class _SplashScreenState extends State<SplashScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-            color: AppColors.black
+            color: AppColors.white
         ),
         child: Center(
-          child: AnimatedContainer(
-            width: _isVisible ? 0 : 400,
-            height: _isVisible ? 0 : 400,
-            curve: Curves.bounceIn,
-            duration: Duration(seconds: 1),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/logo.png"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedContainer(
+                width: _isVisible ? 150 : 0,
+                height: _isVisible ? 150 : 0,
+                curve: Curves.bounceIn,
+                duration: Duration(seconds: 1),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/modified_logo.png"),
+                  ),
+                ),
               ),
-            ),
+              Text("Wall Master",style: TextStyle(color: Color(0xffA61892),fontSize: 54,fontFamily: 'impact',letterSpacing: 3),),
+              Text("Your world, your Screen...",style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+              SizedBox(height: 20,),
+              Container(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: Color(0xffA61892),
+                ),
+              ),
+
+            ],
           ),
         ),
       ),

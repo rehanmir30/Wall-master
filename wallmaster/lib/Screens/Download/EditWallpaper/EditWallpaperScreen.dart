@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
@@ -30,6 +32,7 @@ class EditWallPaperScreen extends StatefulWidget {
 class _EditWallPaperScreenState extends State<EditWallPaperScreen> {
   final GlobalKey _globalKey = GlobalKey();
   final List<List<double>> filters = [
+    filterColor.Original_MATRIX,
     filterColor.SEPIA_MATRIX,
     filterColor.GREYSCALE_MATRIX,
     filterColor.VINTAGE_MATRIX,
@@ -43,6 +46,8 @@ class _EditWallPaperScreenState extends State<EditWallPaperScreen> {
 
 
   void convertWidgetToImage() async {
+    CommonController commonController = Get.find<CommonController>();
+    await commonController.setLoading(true);
     RenderRepaintBoundary repaintBoundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image boxImage = await repaintBoundary.toImage(pixelRatio: 10.0);
     ByteData? byteData = await boxImage.toByteData(format: ui.ImageByteFormat.png);
@@ -54,6 +59,8 @@ class _EditWallPaperScreenState extends State<EditWallPaperScreen> {
     File imageFile = File(imagePath);
     imageFile.writeAsBytesSync(uint8list);
 
+    await commonController.setLoading(false);
+
     showModalBottomSheet(
       barrierColor: Colors.transparent,
       backgroundColor: Color(0xff282828),
@@ -64,6 +71,70 @@ class _EditWallPaperScreenState extends State<EditWallPaperScreen> {
       },
     );
 
+  }
+  Future<String> convertFilterToImage() async {
+    CommonController commonController = Get.find<CommonController>();
+    await commonController.setLoading(true);
+    RenderRepaintBoundary repaintBoundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image boxImage = await repaintBoundary.toImage(pixelRatio: 10.0);
+    ByteData? byteData = await boxImage.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List uint8list = byteData!.buffer.asUint8List();
+
+    final directory = await getTemporaryDirectory();
+    final imagePath = "${directory.path}/wallpaper.png";
+
+    File imageFile = File(imagePath);
+    imageFile.writeAsBytesSync(uint8list);
+
+    await commonController.setLoading(false);
+
+    return imagePath;
+  }
+
+  Future<void> cropFilteredImage() async {
+    var imageUrl = await convertFilterToImage();
+    // ImagePicker picker = ImagePicker();
+    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    final croppedFile = await ImageCropper().cropImage(
+      compressFormat: ImageCompressFormat.png,
+      sourcePath: imageUrl,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.original,
+
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Crop',
+            toolbarColor: AppColors.black,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            activeControlsWidgetColor: Color(0xffA61892),
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+
+    // Handle the cropped file (e.g., display, upload, etc.)
+    if (croppedFile != null) {
+      // Do something with the cropped file
+      showModalBottomSheet(
+        barrierColor: Colors.transparent,
+        backgroundColor: Color(0xff282828),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+        context: context,
+        builder: (BuildContext context) {
+          return WallpaperBottomSheet(croppedFile.path,context);
+        },
+      );
+    } else {
+      // Crop operation was canceled or failed
+    }
   }
 
   @override
@@ -82,6 +153,23 @@ class _EditWallPaperScreenState extends State<EditWallPaperScreen> {
         backgroundColor: AppColors.black.withOpacity(0.3),
         elevation: 0,
         actions: [
+          IconButton(onPressed: () async {
+
+            await cropFilteredImage();
+            //
+            // showModalBottomSheet(
+            //   barrierColor: Colors.transparent,
+            //   backgroundColor: Color(0xff282828),
+            //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return WallpaperBottomSheet(croppedFile?.path,context);
+            //   },
+            // );
+
+
+
+          }, icon: Icon(Icons.crop)),
           IconButton(icon: Icon(Icons.check), onPressed: convertWidgetToImage),
         ],
       ),
@@ -197,6 +285,7 @@ class WallpaperBottomSheet extends StatelessWidget {
               final results = await WallpaperManager.setWallpaperFromFile(
                 wallpaper,
                 WallpaperManager.LOCK_SCREEN,
+
                 // Set// wallpaper for the home screen
               );
               if(results==true){

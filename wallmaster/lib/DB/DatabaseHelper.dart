@@ -1,11 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:wallmaster/Constants/ApiConstants.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
@@ -85,45 +90,58 @@ class DatabaseHelper {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      final user = await FirebaseAuth.instance.signInWithCredential(credential);
 
-      Map<String, String> header = {
-        "Accept": "application/json",
-        'Content-Type': 'application/json',
-      };
-      var body =
-          '{"email": "${user.user!.email}","is_social": 1,"name":"${user.user!.displayName}","social_uuid":"${user.user!.uid}", "language":"${_localization.dropdownValue['name'].toLowerCase()}"}';
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.loginApi);
-      if (kDebugMode) {
-        print('Verify User API URL - ${url.toString()}');
-        print('Verify User Request Body - ${body.toString()}');
-      }
-      final response = await http.post(
-        url,
-        headers: header,
-        body: body,
-      );
-      var responseJson = json.decode(response.body.toString());
-      if (responseJson['status'] == 200) {
-        final usermodel = UserModel.fromJson(response.body.toString());
-        await authController.setUserData(usermodel);
-        CustomSnackbar.show('${usermodel.message}', AppColors.green);
-        await SharedPref.saveUser(usermodel);
-        CommonController commonController = Get.find<CommonController>();
-        await commonController.getCategories();
-        await commonController.getAllProducts();
 
-        Get.offAll(() => const HomeScreen());
-      } else {
-        final userModelFailure =
-            UserModelFailure.fromJson(response.body.toString());
-        CustomSnackbar.show('${userModelFailure.message}', AppColors.red);
+      if(googleUser?.email !=null){
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        var User = await FirebaseAuth.instance.signInWithCredential(credential);
+
+
+        Map<String, String> header = {
+          "Accept": "application/json",
+          'Content-Type': 'application/json',
+        };
+        var body =
+            '{"email": "${User.user!.email}","is_social": 1,"name":"${User.user!.displayName}","social_uuid":"${User.user!.uid}", "language":"${_localization.dropdownValue['name'].toLowerCase()}"}';
+        var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.loginApi);
+        if (kDebugMode) {
+          print('Verify User API URL - ${url.toString()}');
+          print('Verify User Request Body - ${body.toString()}');
+        }
+        final response = await http.post(
+          url,
+          headers: header,
+          body: body,
+        );
+        var responseJson = json.decode(response.body.toString());
+        if (responseJson['status'] == 200) {
+          final usermodel = UserModel.fromJson(response.body.toString());
+          await authController.setUserData(usermodel);
+          CustomSnackbar.show('${usermodel.message}', AppColors.green);
+          await SharedPref.saveUser(usermodel);
+          CommonController commonController = Get.find<CommonController>();
+          await commonController.getCategories();
+          await commonController.getAllProducts();
+
+          Get.offAll(() => const HomeScreen());
+        } else {
+          final userModelFailure =
+          UserModelFailure.fromJson(response.body.toString());
+          CustomSnackbar.show('${userModelFailure.message}', AppColors.red);
+        }
+
+      }else{
+        commonController.setLoading(false);
       }
+
     } on FirebaseAuthException catch (e) {
+      commonController.setLoading(false);
+      CustomSnackbar.show('${e.message}', AppColors.red);
+    } on PlatformException catch(e){
+      commonController.setLoading(false);
       CustomSnackbar.show('${e.message}', AppColors.red);
     }
   }
@@ -139,7 +157,7 @@ class DatabaseHelper {
       'Content-Type': 'application/json',
     };
     var body =
-        '{"email": "${email}","password": "${password},"language":"${_localization.dropdownValue['name']}"}';
+        '{"email": "${email}","password": "${password}","language":"${_localization.dropdownValue['name'].toLowerCase()}"}';
 
     var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.loginApi);
 
@@ -216,35 +234,40 @@ class DatabaseHelper {
 
   //Get All Categories Function
   Future<void> getCategories() async {
-    AuthenticationController authenticationController =
-        Get.find<AuthenticationController>();
-    Map<String, String> headers = {
-      "Accept": "application/json",
-      'Content-Type': 'multipart/form-data',
-      'Authorization': 'Bearer ${authenticationController.myUser?.accessToken}'
-    };
-    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.getCategoryListUrl);
+   try{
+     AuthenticationController authenticationController =
+     Get.find<AuthenticationController>();
+     Map<String, String> headers = {
+       "Accept": "application/json",
+       'Content-Type': 'multipart/form-data',
+       'Authorization': 'Bearer ${authenticationController.myUser?.accessToken}'
+     };
+     var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.getCategoryListUrl);
 
-    var response = await http.get(url, headers: headers);
+     var response = await http.get(url, headers: headers);
 
-    var responseJson = json.decode(response.body.toString());
+     var responseJson = json.decode(response.body.toString());
 
-    if (responseJson['status'] == 200) {
-      CommonController commonController = Get.find<CommonController>();
-      final getCategoryModel =
-          GetCategoryModel.fromJson(response.body.toString());
-      // await .setAdminData(adminModel);
-      List<Datum> categories = parseDataList(response.body);
+     if (responseJson['status'] == 200) {
+       CommonController commonController = Get.find<CommonController>();
+       final getCategoryModel =
+       GetCategoryModel.fromJson(response.body.toString());
+       // await .setAdminData(adminModel);
+       List<Datum> categories = parseDataList(response.body);
 
-      await commonController.setCategoryModelList(categories);
+       await commonController.setCategoryModelList(categories);
 
-      await commonController.setCategoryList(getCategoryModel);
-      print(getCategoryModel.message.toString());
-    } else {
-      final getCategoryModel =
-          GetCategoryModel.fromJson(response.body.toString());
-      print(getCategoryModel.message.toString());
-    }
+       await commonController.setCategoryList(getCategoryModel);
+       print(getCategoryModel.message.toString());
+     } else {
+       final getCategoryModel =
+       GetCategoryModel.fromJson(response.body.toString());
+       print(getCategoryModel.message.toString());
+     }
+   }catch(e){
+     CustomSnackbar.show("${e}", AppColors.red);
+
+   }
   }
 
   List<Datum> parseDataList(String responseBody) {
@@ -300,6 +323,19 @@ class DatabaseHelper {
         .toList();
     // return productdata;
     await commonController.setPremiumProduct(productdata);
+  }
+
+  Future<bool> isProductLiked(id) async {
+    final likedProducts = commonController.likedWallpaperModel!.data;
+
+    if (likedProducts != null) {
+      bool isLiked = likedProducts.any((element) => element.id == id);
+      print("AVAVA: $isLiked");
+      return isLiked;
+    }
+    print("NULL");
+
+    return false;
   }
 
   Future<void> getLikedProduct() async {
@@ -374,20 +410,16 @@ class DatabaseHelper {
   }
 
   // Create a method to compare tags and store matching products
-  Future<void> getMatchingProducts(List<ProductData> productDataList,
-      GetProductModel getProductModel) async {
+  Future<void> getMatchingProducts(List<ProductData> productDataList, GetProductModel getProductModel) async {
     List<ProductData> matchingProducts = [];
+    matchingProducts.add(productDataList[0]);
 
     for (ProductData productData in productDataList) {
       for (ProductData product in getProductModel.data ?? []) {
-        if (product.tags != null &&
-            product.tags!.isNotEmpty &&
-            productData.tags != null &&
-            productData.tags!.isNotEmpty) {
+        if (product.tags != null && product.tags!.isNotEmpty && productData.tags != null && productData.tags!.isNotEmpty) {
           for (dynamic tag in productData.tags!) {
             if (product.tags!.any((t) =>
-                    t['tag'].toLowerCase() == tag['tag'].toLowerCase()) &&
-                product.id != productData.id) {
+                    t['tag'].toLowerCase() == tag['tag'].toLowerCase()) && product.id != productData.id) {
               print(product.id.toString());
               print(product.name.toString());
               if (matchingProducts.any(
@@ -408,8 +440,7 @@ class DatabaseHelper {
   }
 
   //Get Searched Wallpapers
-  Future<void> getSearchedProduct(
-      String searchParameter, GetProductModel getProductModel) async {
+  Future<void> getSearchedProduct(String searchParameter, GetProductModel getProductModel) async {
     List<ProductData> filteredProducts = [];
 
     // Iterate over the list of ProductData objects in GetProductModel
@@ -462,5 +493,20 @@ class DatabaseHelper {
     } catch (e) {
       CustomSnackbar.show('$e', AppColors.red);
     }
+  }
+
+  Future<void>addColor() async{
+    CommonController commonController = Get.find<CommonController>();
+    List<PaletteColor?> dyColors = [];
+    for(var image in commonController.productReliventData!){
+      final PaletteGenerator pg = await PaletteGenerator.fromImageProvider(
+        NetworkImage(image.image!),
+        // size: Size(200, 200),
+      );
+      dyColors.add(pg.darkVibrantColor == null
+          ?PaletteColor(Colors.white, 2)
+          :pg.darkVibrantColor);
+    }
+    await commonController.setDyColor(dyColors);
   }
 }

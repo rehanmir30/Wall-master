@@ -44,14 +44,14 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
               primary: true,
               itemCount: controller.productData!.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                // crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 1.0,
+                  crossAxisSpacing: 1.0,
+                  mainAxisSpacing: 3.0,
                   mainAxisExtent: 300,
                   crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return MixWidget(controller.productData![index]);
 
-              },).marginSymmetric(horizontal: 10);
+              },).marginSymmetric(horizontal: 30);
           },),
 
 

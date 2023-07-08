@@ -40,14 +40,14 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
           primary: true,
           itemCount: controller.likedWallpaperModel!.data!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            // crossAxisSpacing: 10.0,
-              mainAxisSpacing: 1.0,
+              crossAxisSpacing: 1.0,
+              mainAxisSpacing: 3.0,
               mainAxisExtent: 300,
               crossAxisCount: 2),
           itemBuilder: (context, index) {
             return LikeWidget(controller.likedWallpaperModel!.data![index]);
 
-          },).marginSymmetric(horizontal: 10);
+          },).marginSymmetric(horizontal: 30);
       },)
     );
   }

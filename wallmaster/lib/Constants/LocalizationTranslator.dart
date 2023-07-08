@@ -45,9 +45,9 @@ class LocalizationTranslator extends Translations{
       "Recaptchas": "Sign in is protected by Google reCAPTCHA to ensure you're not a bot.",
 
       //HomeScreen
-      "Categories": "Categories",
-      "Recent": "Recent",
-      "Premium": "Premium",
+      "Categories": "CATEGORIES",
+      "Recent": "RECENT",
+      "Premium": "PREMIUM",
 
       //Drawer
       "ChangeLanguage": "Change Language",
@@ -118,9 +118,10 @@ class LocalizationTranslator extends Translations{
       "Recaptchas": "El inicio de sesión está protegido por Google reCAPTCHA para garantizar que no sea un bot.",
 
       //HomeScreen
-      "Categories": "Categorías",
-      "Recent": "Reciente",
-      "Premium": "De primera calidad",
+      "Categories": "CATEGORIAS",
+      "Recent": "RECIENTE",
+      "Premium": "DE PRIMERA CALIDAD",
+
 
       //Drawer
       "ChangeLanguage": "Cambiar idioma",

@@ -42,14 +42,20 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               borderRadius: BorderRadius.circular(10),
               child: FadeInImage(
                 height: 200,
-                  placeholder: AssetImage("assets/images/logo.png"), 
+                  placeholder: AssetImage("assets/images/modified_logo.png"),
                   image: NetworkImage(widget.categoryModel!.data![widget.index].image.toString()),
                 fit: BoxFit.cover,
               
               ),
             ),
 
-            Text(widget.categoryModel!.data![widget.index].name.toString(),style: TextStyle(color: AppColors.white,fontSize: 18),),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Text(widget.categoryModel!.data![widget.index].name.toString(),style: TextStyle(color: AppColors.black,fontSize: 20,fontFamily: 'impact',),),
+                Text(widget.categoryModel!.data![widget.index].name.toString(),style: TextStyle(color: AppColors.white,fontSize: 18,fontFamily: 'impact',),),
+              ],
+            ),
 
 
           ],

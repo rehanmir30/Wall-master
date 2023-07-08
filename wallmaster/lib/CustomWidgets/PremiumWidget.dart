@@ -47,7 +47,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                 child: FadeInImage(
                   height: 300,
                     width: MediaQuery.of(context).size.width,
-                    placeholder: AssetImage("assets/images/logo.png"),
+                    placeholder: AssetImage("assets/images/modified_logo.png"),
                     image: NetworkImage(widget.wallpaper.image.toString()),
                   fit: BoxFit.contain,
                 ),

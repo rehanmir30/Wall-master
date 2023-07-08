@@ -20,14 +20,21 @@ class _MixWidgetState extends State<MixWidget> {
     return InkWell(
       onTap: () async {
         CommonController commonController = Get.find<CommonController>();
-        Get.to(()=>SetWallpaperScreen(widget._productData,true));
+        await commonController.setLoading(true);
         List<ProductData> data =[];
         data!.add(widget._productData);
         await commonController.getReliventData(data);
+        await commonController.addColor();
+        await commonController.setLoading(false);
+        Get.to(()=>SetWallpaperScreen(widget._productData,true));
 
       },
       child: Container(
         height: 300,
+        decoration: BoxDecoration(
+          // border: Border.all(color: Colors.white,width: 1,),
+          ),
+
         child: Stack(
           children: [
             Container(
@@ -47,7 +54,7 @@ class _MixWidgetState extends State<MixWidget> {
                 child: FadeInImage(
                   height: 300,
                     width: MediaQuery.of(context).size.width,
-                    placeholder: AssetImage("assets/images/logo.png"),
+                    placeholder: AssetImage("assets/images/modified_logo.png"),
                     image: NetworkImage(widget._productData!.image.toString()),
                   fit: BoxFit.contain,
                 ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -33,126 +34,151 @@ class SetWallpaperScreen extends StatefulWidget {
 }
 
 class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
-  var initialChildSize =0.1;
-  var minChildSize =0.1;
+  var initialChildSize =0.11;
+  var minChildSize =0.11;
   var maxChildSize =0.9;
   // CommonController commonController = Get.find<CommonController>();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    check();
+  }
+  check()async{
+    print("IDDDDDDDDDDDD: "+widget.productData.id.toString());
+    CommonController commonController = Get.find<CommonController>();
+    await commonController.isProductLiked(widget.productData.id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: Stack(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(widget.productData.image.toString()),
-                fit: BoxFit.fill
-              )
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+
+        ),
+        body: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(widget.productData.image.toString()),
+                  fit: BoxFit.fill
+                )
+              ),
             ),
-          ),
-          GestureDetector(
-            onVerticalDragUpdate: (DragUpdateDetails details){
-              double dragPercentage = details.primaryDelta! / MediaQuery.of(context).size.height;
+            GestureDetector(
+              onVerticalDragUpdate: (DragUpdateDetails details){
+                double dragPercentage = details.primaryDelta! / MediaQuery.of(context).size.height;
 
-              // Update the sheet position by calling setState and modifying the initialChildSize
-              setState(() {
-                initialChildSize = (initialChildSize - dragPercentage).clamp(minChildSize, maxChildSize);
-              });
-            },
-
-            child: DraggableScrollableSheet(
-              initialChildSize: initialChildSize, // Initial size of the sheet (e.g., 0.2 for 20% of the screen)
-              minChildSize: minChildSize, // Minimum size of the sheet
-              maxChildSize: maxChildSize, // Maximum size of the sheet
-              builder: (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.black ,// Customize the background color
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50)),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 30,),
-
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                                onTap: () async {
-                                  CommonController commonController = Get.find();
-                                  await commonController.updateLikeProduct(widget.productData.id, widget.notFromLike);
-                                },
-                                child: Icon(CupertinoIcons.heart_fill,color: Colors.white,)),
-                            InkWell(
-                                onTap: (){
-                                  showModalBottomSheet(
-                                    barrierColor: Colors.transparent,
-                                    backgroundColor: Color(0xff282828),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return WallpaperBottomSheet(widget.productData.image);
-                                    },
-                                  );
-
-
-                                },
-                                child: Icon(Icons.phone_android_outlined,color: Colors.white,)),
-                            InkWell(
-                                onTap: () async {
-                                  downloadImage(widget.productData.image!,context);
-                                },
-                                child: Icon(Icons.download,color: Colors.white,)),
-                            InkWell(
-                                onTap: ()async{
-                                  Get.to(()=>EditWallPaperScreen(widget.productData.image));
-                                },
-                                child: Icon(Icons.crop,color: Colors.white,))
-
-                          ]),
-                      SizedBox(height: 21,),
-                      Expanded(
-                        child: GetBuilder<CommonController>(builder: (commonController) {
-                          return (commonController.productReliventData!.length==0 ||commonController.productReliventData!.length==null)
-                              ?Center(child: Text("NoRelatedWallpaper".tr,style: TextStyle(color: AppColors.white,fontSize: 18),),)
-                              :GridView.builder(
-                            shrinkWrap: true,
-                            primary: true,
-                            itemCount: commonController.productReliventData!.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              // crossAxisSpacing: 10.0,
-                                mainAxisSpacing: 1.0,
-                                mainAxisExtent: 300,
-                                crossAxisCount: 2),
-                            itemBuilder: (context, index) {
-                              // return CommonWidget(commonController.productModelList!.data![index]);
-                              return ReliventWidget(commonController.productReliventData![index]);
-
-                            },).marginSymmetric(horizontal: 10);
-                        },),
-                      ),
-                    ],
-                  ),
-                );
+                // Update the sheet position by calling setState and modifying the initialChildSize
+                setState(() {
+                  initialChildSize = (initialChildSize - dragPercentage).clamp(minChildSize, maxChildSize);
+                });
               },
+
+              child: DraggableScrollableSheet(
+                initialChildSize: initialChildSize, // Initial size of the sheet (e.g., 0.2 for 20% of the screen)
+                minChildSize: minChildSize, // Minimum size of the sheet
+                maxChildSize: maxChildSize, // Maximum size of the sheet
+                builder: (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.black ,// Customize the background color
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50)),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 30,),
+
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GetBuilder<CommonController>(builder: (controller) {
+                                return InkWell(
+                                    onTap: () async {
+                                      await controller.setLoading(true);
+                                      await controller.updateLikeProduct(widget.productData.id, widget.notFromLike);
+                                      await controller.setLiked(true);
+                                      await controller.setLoading(false);
+                                    },
+                                    child: (controller.isLiked==true)
+                                        ?Icon(CupertinoIcons.heart_fill,color: Colors.white,)
+                                        :Icon(CupertinoIcons.heart,color: Colors.white,));
+                              },),
+                              InkWell(
+                                  onTap: (){
+                                    showModalBottomSheet(
+                                      barrierColor: Colors.transparent,
+                                      backgroundColor: Color(0xff282828),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return WallpaperBottomSheet(widget.productData.image);
+                                      },
+                                    );
+
+
+                                  },
+                                  child: Icon(Icons.phone_android_outlined,color: Colors.white,)),
+                              InkWell(
+                                  onTap: () async {
+                                    downloadImage(widget.productData.image!,context);
+                                  },
+                                  child: Icon(Icons.download,color: Colors.white,)),
+                              InkWell(
+                                  onTap: ()async{
+                                    Get.to(()=>EditWallPaperScreen(widget.productData.image));
+                                  },
+                                  child: Icon(Icons.crop,color: Colors.white,))
+
+                            ]),
+                        SizedBox(height: 21,),
+                        Expanded(
+                          child: GetBuilder<CommonController>(builder: (commonController) {
+                            return (commonController.productReliventData!.length==0 ||commonController.productReliventData!.length==null)
+                                ?Center(child: Text("NoRelatedWallpaper".tr,style: TextStyle(color: AppColors.white,fontSize: 18),),)
+                                :GridView.builder(
+                              shrinkWrap: true,
+                              primary: true,
+                              itemCount: commonController.productReliventData!.length,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                // crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 1.0,
+                                  mainAxisExtent: 300,
+                                  crossAxisCount: 2),
+                              itemBuilder: (context, index) {
+                                // return CommonWidget(commonController.productModelList!.data![index]);
+                                return ReliventWidget(commonController.productReliventData![index]);
+
+                              },).marginSymmetric(horizontal: 10);
+                          },),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
 
-         GetBuilder<CommonController>(builder: (commonController) {
-           return  Visibility(
-               visible: commonController.isLoading,
-               child: LoadingAnimation(),
-               );
-         },)
-        ],
+           GetBuilder<CommonController>(builder: (commonController) {
+             return  Visibility(
+                 visible: commonController.isLoading,
+                 child: LoadingAnimation(),
+                 );
+           },)
+          ],
+        ),
+
       ),
-
     );
   }
 }
@@ -388,4 +414,10 @@ class WallpaperBottomSheet extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
 

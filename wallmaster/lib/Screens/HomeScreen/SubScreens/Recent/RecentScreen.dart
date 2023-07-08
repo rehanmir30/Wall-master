@@ -29,15 +29,15 @@ class _RecentScreenState extends State<RecentScreen> {
           primary: true,
           itemCount: commonController.productModelList!.data!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            // crossAxisSpacing: 10.0,
-              mainAxisSpacing: 1.0,
+            crossAxisSpacing: 1.0,
+              mainAxisSpacing: 3.0,
               mainAxisExtent: 300,
               crossAxisCount: 2),
           itemBuilder: (context, index) {
             // return CommonWidget(commonController.productModelList!.data![index]);
             return MixWidget(commonController.productModelList!.data![index]);
 
-          },).marginSymmetric(horizontal: 10);
+          },).marginSymmetric(horizontal: 30);
       },)
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:palette_generator/palette_generator.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
 
@@ -13,9 +14,14 @@ class CommonController extends GetxController{
 
   List<String> _Images=[];
   List<String> get Images =>_Images;
+  List<PaletteColor?> _dycolors = [];
+  List<PaletteColor?> get dycolors =>_dycolors;
 
   bool _isLoading = false;
   bool get isLoading =>_isLoading;
+
+  bool _isLiked = false;
+  bool get isLiked =>_isLiked;
 
   GetCategoryModel? _categoryModelList;
   GetCategoryModel? get categoryModelList=>_categoryModelList;
@@ -50,6 +56,26 @@ class CommonController extends GetxController{
     update();
   }
 
+  setDyColor(color)async{
+    _dycolors = color;
+    update();
+  }
+
+  setLiked(bool value)async{
+    _isLiked= value;
+    update();
+  }
+
+  addColor()async{
+    await DatabaseHelper().addColor();
+    update();
+  }
+
+  isProductLiked(id)async{
+   bool result =  await DatabaseHelper().isProductLiked(id);
+   await setLiked(result);
+    update();
+  }
 
   setReliventData(List<ProductData>? data)async{
     _productReliventData = data;
@@ -139,6 +165,7 @@ class CommonController extends GetxController{
     await DatabaseHelper().getPremiumProduct(model);
     update();
   }
+
   setPremiumProduct(List<ProductData>? model)async{
     _premiumProductData = model;
     update();
