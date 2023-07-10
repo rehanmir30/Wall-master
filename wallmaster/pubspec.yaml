@@ -56,6 +56,15 @@ dependencies:
   palette_generator:
   #Image Cropper
   image_cropper:
+  #Mobile Ads
+  google_mobile_ads: ^3.0.0
+  #Slider
+  carousel_slider:
+  #cacheNetwork Image
+  cached_network_image:
+  #Google Pay
+  pay:
+
 
 dev_dependencies:
   flutter_test:

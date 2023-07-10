@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../../../Constants/AppColors.dart';
 import '../../../../../Controllers/CommonController.dart';
@@ -42,16 +43,37 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                 :GridView.builder(
               shrinkWrap: true,
               primary: true,
-              itemCount: controller.productData!.length,
+              itemCount: controller.productData!.length + (controller.productData!.length ~/ 5),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 1.0,
-                  mainAxisSpacing: 3.0,
-                  mainAxisExtent: 300,
-                  crossAxisCount: 2),
+                crossAxisSpacing: 1.0,
+                mainAxisSpacing: 3.0,
+                mainAxisExtent: 300,
+                crossAxisCount: 2,
+              ),
               itemBuilder: (context, index) {
-                return MixWidget(controller.productData![index]);
+                if (index % 6 == 5 && index != 0) {
+                  final adIndex = (index ~/ 6) * 5;
+                  return Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    height: 280,
+                    decoration: BoxDecoration(
+                      color: AppColors.black,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: AdWidget(ad: commonController.createListBannerAd()!),
+                    ),
+                  ).marginSymmetric(horizontal: 5, vertical: 5);
 
-              },).marginSymmetric(horizontal: 30);
+                }
+                else {
+                  final productIndex = index - (index ~/ 6);
+                  return MixWidget(controller.productData![productIndex]);
+                }
+              },
+            ).marginSymmetric(horizontal: 30);
           },),
 
 

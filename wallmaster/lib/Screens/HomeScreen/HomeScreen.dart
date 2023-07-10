@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:wallmaster/AdsMob/AdMobService.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
@@ -21,12 +23,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
   }
 
   @override
@@ -37,69 +41,80 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.black,
-      appBar: AppBar(
+    return GetBuilder<CommonController>(builder: (controller) {
+      return Scaffold(
         backgroundColor: AppColors.black,
-        elevation: 0,
-        title: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 24),),
-        centerTitle: true,
-        actions: [
-          InkWell(
-              onTap: (){
-                Get.to(()=>SearchScreen());
-              },
-              child: Icon(Icons.search,size: 24,color: Colors.white,).marginOnly(right: 15))
-        ],
+        appBar: AppBar(
+          backgroundColor: AppColors.black,
+          elevation: 0,
+          title: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 24),),
+          centerTitle: true,
+          actions: [
+            InkWell(
+                onTap: (){
+                  Get.to(()=>SearchScreen());
+                },
+                child: Icon(Icons.search,size: 24,color: Colors.white,).marginOnly(right: 15))
+          ],
 
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: TabBar(
-            indicatorColor: AppColors.red,
-            indicatorWeight: 3,
-            controller: _tabController,
-            isScrollable: true,
-            tabs: [
-              Tab(
-                child: Text(
-                  'Categories'.tr,
-                  style: TextStyle(fontSize: 20), // Increase the font size
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(kToolbarHeight),
+            child: TabBar(
+              indicatorColor: AppColors.red,
+              indicatorWeight: 3,
+              controller: _tabController,
+              isScrollable: true,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Categories'.tr,
+                    style: TextStyle(fontSize: 20), // Increase the font size
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  'Recent'.tr,
-                  style: TextStyle(fontSize: 20), // Increase the font size
+                Tab(
+                  child: Text(
+                    'Recent'.tr,
+                    style: TextStyle(fontSize: 20), // Increase the font size
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  'Premium'.tr,
-                  style: TextStyle(fontSize: 20), // Increase the font size
+                Tab(
+                  child: Text(
+                    'Premium'.tr,
+                    style: TextStyle(fontSize: 20), // Increase the font size
+                  ),
                 ),
-              ),
-              // Other tabs...
-            ],
+                // Other tabs...
+              ],
+            ),
+
           ),
-
         ),
-      ),
 
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          CategoryScreen(),
-          RecentScreen(),
-          PremiumScreen(),
-          // RandomScreen(),
-          // WeeklyScreen(),
-          // MonthlyPopularScreen(),
-          // MostPopularScreen(),
-        ],
-      ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            CategoryScreen(),
+            RecentScreen(),
+            PremiumScreen(),
+            // RandomScreen(),
+            // WeeklyScreen(),
+            // MonthlyPopularScreen(),
+            // MostPopularScreen(),
+          ],
+        ),
 
-      drawer: MyDrawer(),
-    );
+        drawer: MyDrawer(),
+
+        bottomNavigationBar: controller.banner==null
+            ?Container()
+            :Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 12),
+          height: 52,
+          child: AdWidget(ad: controller.banner!,),
+        ),
+      );
+    },);
   }
 }
 

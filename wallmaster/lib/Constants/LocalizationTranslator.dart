@@ -120,7 +120,7 @@ class LocalizationTranslator extends Translations{
       //HomeScreen
       "Categories": "CATEGORIAS",
       "Recent": "RECIENTE",
-      "Premium": "DE PRIMERA CALIDAD",
+      "Premium": "PREMIUM",
 
 
       //Drawer

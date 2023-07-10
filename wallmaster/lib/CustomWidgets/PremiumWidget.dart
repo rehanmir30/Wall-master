@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Model/GetProductModel.dart';
 
 import '../Constants/AppColors.dart';
@@ -20,10 +21,19 @@ class _PremiumWidgetState extends State<PremiumWidget> {
     return InkWell(
       onTap: () async {
         CommonController commonController = Get.find<CommonController>();
-        Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
-        List<ProductData> data =[];
-        data!.add(widget.wallpaper);
-        await commonController.getReliventData(data);
+        AuthenticationController authController = Get.find<AuthenticationController>();
+        if(authController.myUser!.data!.isPremimum ==0 ||authController.myUser!.data!.isPremimum ==null){
+          commonController.showRewardedAd();
+          Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+          List<ProductData> data =[];
+          data!.add(widget.wallpaper);
+          await commonController.getReliventData(data);
+        }else{
+          Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+          List<ProductData> data =[];
+          data!.add(widget.wallpaper);
+          await commonController.getReliventData(data);
+        }
       },
       child: Container(
         height: 300,

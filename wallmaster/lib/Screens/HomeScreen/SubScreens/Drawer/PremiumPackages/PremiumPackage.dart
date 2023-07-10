@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:wallmaster/Screens/Payment/paymentConfig.dart';
+import 'package:pay/pay.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 class PremiumPackage extends StatefulWidget {
   const PremiumPackage({super.key});
@@ -11,6 +15,43 @@ class PremiumPackage extends StatefulWidget {
 }
 
 class _PremiumPackageState extends State<PremiumPackage> {
+  String os = Platform.operatingSystem;
+  var applePayButton = ApplePayButton(
+    paymentConfiguration: PaymentConfiguration.fromJsonString(defaultApplePay),
+      onPaymentResult: (result) {
+      debugPrint('Payment Result $result');
+      },
+    loadingIndicator: const Center(child: CircularProgressIndicator(),),
+      paymentItems: [
+        PaymentItem(
+            amount: '0.01',
+            label: 'Premium',
+          status: PaymentItemStatus.final_price,
+        ),
+      ],
+    style: ApplePayButtonStyle.automatic,
+    width: double.infinity,
+    height: 50,
+
+  );
+
+  var googlePayButton = GooglePayButton(
+    paymentConfiguration: PaymentConfiguration.fromJsonString(defaultGooglePay),
+
+    onPaymentResult: (result) {
+
+  }, paymentItems: const [
+    PaymentItem(
+        amount: '0.01',
+        status: PaymentItemStatus.final_price,
+        label: 'Premium Package',
+    )
+  ],
+    width: double.infinity,
+    type: GooglePayButtonType.pay,
+    loadingIndicator: const Center(child: CircularProgressIndicator(),),
+  );
+
   bool agreement= false;
   @override
   Widget build(BuildContext context) {
@@ -134,13 +175,18 @@ class _PremiumPackageState extends State<PremiumPackage> {
             ),
             SizedBox(height: 10,),
 
-            (agreement)?Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width*0.9,
-              height: 50,
-              decoration: BoxDecoration(color: AppColors.red,borderRadius: BorderRadius.circular(10)),
-              child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
-            ):Container(
+            (agreement)
+            ?Container(
+              child: Platform.isIOS?applePayButton:googlePayButton,
+            )
+            //     ?Container(
+            //   alignment: Alignment.center,
+            //   width: MediaQuery.of(context).size.width*0.9,
+            //   height: 50,
+            //   decoration: BoxDecoration(color: AppColors.red,borderRadius: BorderRadius.circular(10)),
+            //   child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
+            // )
+                :Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width*0.9,
               height: 50,

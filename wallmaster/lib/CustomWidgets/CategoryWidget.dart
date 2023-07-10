@@ -22,6 +22,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return InkWell(
       onTap: (){
         CommonController commonController = Get.find<CommonController>();
+        commonController.setCount();
         commonController.getSelectedCategoryProduct(commonController.productModelList,widget.categoryModel!.data![widget.index].id);
 
         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:widget.categoryModel!.data![widget.index].id,name: widget.categoryModel!.data![widget.index].name,image: widget.categoryModel!.data![widget.index].image)));

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:wallmaster/Constants/ApiConstants.dart';
@@ -22,6 +23,7 @@ import 'package:http/http.dart' as http;
 import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/LikedWallpaper/LikedWallpaperScreen.dart';
 
+import '../AdsMob/AdMobService.dart';
 import '../Constants/AppColors.dart';
 import '../CustomWidgets/CustomSnackbar.dart';
 import '../Model/GetCategoryModel.dart';
@@ -414,26 +416,41 @@ class DatabaseHelper {
     List<ProductData> matchingProducts = [];
     matchingProducts.add(productDataList[0]);
 
-    for (ProductData productData in productDataList) {
-      for (ProductData product in getProductModel.data ?? []) {
-        if (product.tags != null && product.tags!.isNotEmpty && productData.tags != null && productData.tags!.isNotEmpty) {
-          for (dynamic tag in productData.tags!) {
-            if (product.tags!.any((t) =>
-                    t['tag'].toLowerCase() == tag['tag'].toLowerCase()) && product.id != productData.id) {
-              print(product.id.toString());
-              print(product.name.toString());
-              if (matchingProducts.any(
-                  (element) => element.name!.contains(productData.name!))) {
-              } else {
-                matchingProducts.add(productData);
+
+      for (ProductData product in getProductModel.data!) {
+        // print('List: ${product.tags}');
+        // print('Target: ${productDataList[0].tags}');
+        if (product.tags != null && product.tags!.isNotEmpty && productDataList[0].tags != null && productDataList[0].tags!.isNotEmpty) {
+          for (dynamic tag in productDataList[0].tags!) {
+              print('TAKKKK: ${tag['tag']}');
+              for(dynamic foundedTag in product.tags!){
+                if(tag['tag'].contains(foundedTag['tag'])){
+                  if(matchingProducts.any((element) => element.id==product.id)){
+                    print('Product ID: ${product.id}');
+
+                  }else{
+                    matchingProducts.add(product);
+                  }
+                }
+
               }
+
+            // if (product.tags!.any((t) =>
+            //         t['tag'].toLowerCase() == tag['tag'].toLowerCase()) && product.id != productDataList[0].id) {
+            //   print(product.id.toString());
+            //   print(product.name.toString());
+            //   if (matchingProducts.any(
+            //       (element) => element.name!.contains(productDataList[0].name!))) {
+            //   } else {
+            //     matchingProducts.add(productDataList[0]);
+            //   }
 
               break;
             }
           }
         }
-      }
-    }
+
+
 
     CommonController commonController = Get.find<CommonController>();
     await commonController.setReliventData(matchingProducts);
@@ -509,4 +526,100 @@ class DatabaseHelper {
     }
     await commonController.setDyColor(dyColors);
   }
+
+
+  createBannerAd() async {
+    BannerAd? _banner= BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdMobService.bannerAdUnitId!,
+      listener: AdMobService.bannerAdListener,
+      request: const AdRequest(
+        keywords: ['gaming','pubg','freefire'],
+      ),
+    )..load();
+    await commonController.setBannerAd(_banner);
+
+  }
+
+  createListBannerAd() async {
+    BannerAd? _banner= BannerAd(
+      size: AdSize.leaderboard,
+      adUnitId: AdMobService.bannerAdUnitId!,
+      listener: AdMobService.ListbannerAdListener,
+      request: const AdRequest(
+        keywords: ['gaming','pubg','freefire'],
+      ),
+    )..load();
+    await commonController.setBannerListAd(_banner);
+
+  }
+
+  createInterstitialAd(){
+    InterstitialAd.load(
+      adUnitId: AdMobService.interstitialAdUnitId!,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) async {
+            await commonController.setInterstitialAd(ad);
+          },
+          onAdFailedToLoad: (error) async {
+            await commonController.setInterstitialAd(null);
+          }
+      ),
+    );
+  }
+
+  createRewardedAd(){
+    RewardedAd.load(
+      adUnitId: AdMobService.rewardedAdUniId!,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) async {
+          await commonController.setRewardedAd(ad);
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          commonController.setRewardedAd(null);
+        },),
+    );
+  }
+
+  showInterstitialAd(){
+    if(commonController.interstitialAd !=null){
+      commonController.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad){
+          ad.dispose();
+          createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (ad,error){
+          ad.dispose();
+          createInterstitialAd();
+        },
+      );
+      commonController.interstitialAd!.show();
+      commonController.setInterstitialAd(null);
+    }
+  }
+
+  showRewardedAd() async {
+    if(commonController.rewardedAd != null){
+      commonController.rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad){
+            ad.dispose();
+            createRewardedAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad,error){
+            ad.dispose();
+            createRewardedAd();
+          }
+      );
+      commonController.rewardedAd!.show(
+          onUserEarnedReward:(ad,reward) async {
+            await commonController.setRewardScore();
+
+          } );
+    await commonController.setRewardedAd(null);
+    }
+
+  }
+
 }

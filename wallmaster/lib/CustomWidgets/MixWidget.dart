@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/Screens/Download/SetWallpaper/SetWallpaperScreen.dart';
 import '../Constants/AppColors.dart';
@@ -15,6 +16,7 @@ class MixWidget extends StatefulWidget {
 }
 
 class _MixWidgetState extends State<MixWidget> {
+  CommonController myController = Get.find<CommonController>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -25,12 +27,13 @@ class _MixWidgetState extends State<MixWidget> {
         data!.add(widget._productData);
         await commonController.getReliventData(data);
         await commonController.addColor();
+        await commonController.setCount();
         await commonController.setLoading(false);
         Get.to(()=>SetWallpaperScreen(widget._productData,true));
 
       },
       child: Container(
-        height: 300,
+        height: 280,
         decoration: BoxDecoration(
           // border: Border.all(color: Colors.white,width: 1,),
           ),
@@ -40,7 +43,7 @@ class _MixWidgetState extends State<MixWidget> {
             Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
-              height: 300,
+              height: 280,
               decoration: BoxDecoration(
                 color: AppColors.black,
                 borderRadius: BorderRadius.circular(10),
@@ -52,14 +55,15 @@ class _MixWidgetState extends State<MixWidget> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: FadeInImage(
-                  height: 300,
+                  height: 280,
                     width: MediaQuery.of(context).size.width,
-                    placeholder: AssetImage("assets/images/modified_logo.png"),
+                    placeholder: const AssetImage("assets/images/modified_logo.png"),
                     image: NetworkImage(widget._productData!.image.toString()),
-                  fit: BoxFit.contain,
+                  fit: BoxFit.fill,
                 ),
               ),
             ).marginSymmetric(horizontal: 5,vertical: 5),
+
             if(widget._productData!.forPremium!=0)Positioned(
               right: 15,
               top: 10,

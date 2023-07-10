@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:palette_generator/palette_generator.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
 
+import '../AdsMob/AdMobService.dart';
 import '../DB/DatabaseHelper.dart';
 import '../Model/GetProductModel.dart';
 import '../Model/LikedWallpaperModel.dart';
@@ -22,6 +26,9 @@ class CommonController extends GetxController{
 
   bool _isLiked = false;
   bool get isLiked =>_isLiked;
+
+  bool _interstitial = false;
+  bool get interstitial => _interstitial;
 
   GetCategoryModel? _categoryModelList;
   GetCategoryModel? get categoryModelList=>_categoryModelList;
@@ -49,6 +56,26 @@ class CommonController extends GetxController{
 
   List<LikeProductData>? _likedProductData;
   List<LikeProductData>? get likedProductData=>_likedProductData;
+
+
+  BannerAd? _banner;
+  BannerAd? _Listbanner;
+  InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
+  int _rewardedScore = 0;
+
+  BannerAd? get banner=>_banner;
+  BannerAd? get Listbanner=>_Listbanner;
+  InterstitialAd? get interstitialAd =>_interstitialAd;
+  RewardedAd? get rewardedAd=>_rewardedAd;
+  int get rewardedScore => _rewardedScore;
+
+  int _clickCount = 0;
+  int get clickCount => _clickCount;
+
+
+
+
 
 
   changeLanguage(value)async{
@@ -171,9 +198,6 @@ class CommonController extends GetxController{
     update();
   }
 
-
-
-
   List<String> images =[
         "assets/images/1 (1).jpg",
         "assets/images/1 (2).jpg",
@@ -194,9 +218,159 @@ class CommonController extends GetxController{
   onInit()async{
     super.onInit();
    getImages();
+    createBannerAd();
+    createInterstitialAd();
+    createRewardedAd();
+    TimerCount();
   //  loadBanner();
   }
 
+  setCount()async{
+    _clickCount++;
+    print('${_clickCount}');
+    update();
+  }
+
+  TimerCount()async{
+    Timer.periodic(Duration(seconds: 5), (timer) {
+      called();
+    });
+  }
+  called()async{
+    print('checking');
+    if(clickCount>=5){
+      if(interstitial==true){
+        showInterstitialAd();
+        await setInerstialBool();
+        return;
+      }else{
+        showInterstitialAd();
+       await setInerstialBool();
+      }
+    }else{
+      return;
+    }
+  }
+
+  setBannerAd(BannerAd? value)async{
+    _banner = value;
+    update();
+  }
+
+  setBannerListAd(BannerAd? value)async{
+    _Listbanner = value;
+    update();
+  }
+
+  setInterstitialAd(InterstitialAd? ad)async{
+    _interstitialAd = ad;
+    update();
+  }
+
+  setRewardedAd(RewardedAd? ad)async{
+    _rewardedAd = ad;
+    update();
+  }
+
+  setInerstialBool()async{
+    _interstitial = !interstitial;
+    _clickCount=0;
+    update();
+  }
+
+  setRewardScore()async{
+    _rewardedScore++;
+    update();
+  }
+
+   createBannerAd(){
+    _banner = BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdMobService.bannerAdUnitId!,
+      listener: AdMobService.bannerAdListener,
+      request: const AdRequest(
+        keywords: ['gaming','pubg','freefire'],
+      ),
+    )..load();
+
+  }
+
+   BannerAd?createListBannerAd(){
+    _Listbanner = BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdMobService.bannerAdUnitId!,
+      listener: AdMobService.ListbannerAdListener,
+      request: const AdRequest(
+        keywords: ['gaming','pubg','freefire'],
+      ),
+    )..load();
+    return _Listbanner;
+  }
+
+   createInterstitialAd(){
+    InterstitialAd.load(
+      adUnitId: AdMobService.interstitialAdUnitId!,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad)=>_interstitialAd = ad,
+          onAdFailedToLoad: (LoadAdError error)=> _interstitialAd = null
+      ),
+    );
+  }
+
+   createRewardedAd(){
+    RewardedAd.load(
+      adUnitId: AdMobService.rewardedAdUniId!,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) => _rewardedAd= ad,
+        onAdFailedToLoad: (LoadAdError error) {
+            _rewardedAd = null;
+
+
+
+        },),
+    );
+  }
+
+   showInterstitialAd(){
+    if(_interstitialAd !=null){
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad){
+          ad.dispose();
+          createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (ad,error){
+          ad.dispose();
+          createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+      _interstitialAd = null;
+    }
+  }
+
+   showRewardedAd(){
+    if(_rewardedAd != null){
+      _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad){
+            ad.dispose();
+            createRewardedAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad,error){
+            ad.dispose();
+            createRewardedAd();
+          }
+      );
+      _rewardedAd!.show(
+          onUserEarnedReward:(ad,reward){
+              _rewardedScore++;
+          } );
+      _rewardedAd = null;
+
+    }
+
+  }
 
 
   setImages(List<String> image)async{
