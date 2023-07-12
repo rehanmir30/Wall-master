@@ -538,7 +538,15 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                             :Icon(CupertinoIcons.heart,color: Colors.white,)).marginSymmetric(horizontal: 10),
                     InkWell(
                       onTap: (){
-                        downloadImage(controller.productReliventData![_index].image!,context);
+                        showModalBottomSheet(
+                          barrierColor: Colors.transparent,
+                          backgroundColor: Color(0xff282828),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+                          context: context,
+                          builder: (BuildContext context) {
+                            return WallpaperBottomSheet(controller.productReliventData![_index].image);
+                          },
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.all(17),
@@ -546,22 +554,14 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                             shape: BoxShape.circle,
                             color: Colors.white
                         ),
-                        child: Icon(Icons.download,size: 30,),
+                        child: Icon(Icons.mobile_screen_share_sharp,size: 30,),
                       ).marginSymmetric(horizontal: 10),
                     ),
                     InkWell(
                         onTap: (){
-                          showModalBottomSheet(
-                                      barrierColor: Colors.transparent,
-                                      backgroundColor: Color(0xff282828),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return WallpaperBottomSheet(controller.productReliventData![_index].image);
-                                      },
-                                    );
+                          downloadImage(controller.productReliventData![_index].image!,context);
                         },
-                        child: Icon(Icons.mobile_screen_share_outlined,size: 34,color: Colors.white,).marginSymmetric(horizontal: 10))
+                        child: Icon(Icons.download,size: 34,color: Colors.white,).marginSymmetric(horizontal: 10))
 
                   ],),
               ],).marginSymmetric(horizontal: 0,vertical: 10),

@@ -20,16 +20,16 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () async {
         CommonController commonController = Get.find<CommonController>();
         commonController.setCount();
         commonController.getSelectedCategoryProduct(commonController.productModelList,widget.categoryModel!.data![widget.index].id);
-
         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:widget.categoryModel!.data![widget.index].id,name: widget.categoryModel!.data![widget.index].name,image: widget.categoryModel!.data![widget.index].image)));
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
+        // width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
           color: AppColors.black,
@@ -61,7 +61,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
           ],
         ),
-      ).marginSymmetric(vertical: 5),
+      ).marginSymmetric(vertical: 5,horizontal: 0),
     );
   }
 }

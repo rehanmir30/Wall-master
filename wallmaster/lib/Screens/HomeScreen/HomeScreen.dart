@@ -64,6 +64,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               indicatorWeight: 3,
               controller: _tabController,
               isScrollable: true,
+              onTap: (value) async{
+                CommonController commonController = Get.find<CommonController>();
+                await commonController.shuffleList();
+              },
               tabs: [
                 Tab(
                   child: Text(

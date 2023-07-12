@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ApiConstants{
 
   //Base Url
-  static const baseUrl = "https://gwebsoft.org/";
+  static const baseUrl = "http://wallmaster.gwebsoft.org/";
   //Login Url for Admin
   static const loginUrl = "api/admin/login";
   //Logout Url for Admin

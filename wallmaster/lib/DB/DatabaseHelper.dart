@@ -303,6 +303,7 @@ class DatabaseHelper {
       // CustomSnackbar.show('${getCategoryModel.message}',AppColors.green);
       await getLikedProduct();
       print(getProductModel.message.toString());
+
       // await SharedPref.saveUser(adminModel);
       // Get.offAll(()=>const HomeScreen());
     } else {
@@ -621,5 +622,6 @@ class DatabaseHelper {
     }
 
   }
+
 
 }

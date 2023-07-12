@@ -1,17 +1,21 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
 
 import '../AdsMob/AdMobService.dart';
+import '../Constants/AppColors.dart';
 import '../DB/DatabaseHelper.dart';
 import '../Model/GetProductModel.dart';
 import '../Model/LikedWallpaperModel.dart';
 import '../Screens/AdScreen/AdHelper.dart';
+import '../Screens/Download/SetWallpaper/SetWallpaperScreen.dart';
 
 
 class CommonController extends GetxController{
@@ -63,6 +67,12 @@ class CommonController extends GetxController{
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
   int _rewardedScore = 0;
+  late NativeAd _nativeAd;
+  NativeAd get nativeAd=>_nativeAd;
+  List<NativeAd>? _nativeAdList = [];
+  List<NativeAd>? get nativeAdList=>_nativeAdList;
+
+  bool nativeIsLoaded = false;
 
   BannerAd? get banner=>_banner;
   BannerAd? get Listbanner=>_Listbanner;
@@ -74,6 +84,16 @@ class CommonController extends GetxController{
   int get clickCount => _clickCount;
 
 
+
+  shuffleList()async{
+
+    _likedWallpaperModel!.data?.shuffle(Random());
+    _productData?.shuffle(Random());
+    _productReliventData?.shuffle(Random());
+    _premiumProductData?.shuffle(Random());
+    print("Shuffle Lists");
+    update();
+  }
 
 
 
@@ -170,8 +190,16 @@ class CommonController extends GetxController{
     await DatabaseHelper().getAllProducts();
     update();
   }
+  AddNativeAd(NativeAd ad)async{
+    nativeAdList!.add(ad);
+    print("Ad LENGTH: ${nativeAdList!.length}");
+    update();
+  }
 
   setProductList(GetProductModel model)async{
+    var reversed = model.data!.reversed;
+    model.data =reversed.toList();
+
     _productModelList = model;
     print("All product updated");
     update();
@@ -179,6 +207,7 @@ class CommonController extends GetxController{
 
   setListofProduct(List<ProductData>? data){
     _productData = data;
+    shuffleList();
     update();
   }
 
@@ -223,6 +252,15 @@ class CommonController extends GetxController{
     createRewardedAd();
     TimerCount();
   //  loadBanner();
+  }
+  NativeAd loadNativeAd(){
+    NativeAd LnativeAd = NativeAd(
+        adUnitId: '${AdMobService.nativeAdUniId}',
+        listener: AdMobService.nativeAdListener,
+        factoryId: 'listTile',
+        request: AdRequest(),
+    )..load();
+    return LnativeAd;
   }
 
   setCount()async{
@@ -350,21 +388,29 @@ class CommonController extends GetxController{
     }
   }
 
-   showRewardedAd(){
+   showRewardedAd(wallpaper,bool value){
+    CommonController commonController = Get.find<CommonController>();
     if(_rewardedAd != null){
       _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
           onAdDismissedFullScreenContent: (ad){
+            print("Dissmissed");
             ad.dispose();
+            commonController.setLoading(false);
             createRewardedAd();
           },
           onAdFailedToShowFullScreenContent: (ad,error){
+            print("Failed to Load");
             ad.dispose();
+            CustomSnackbar.show("${error.message}", AppColors.red);
+            commonController.setLoading(false);
             createRewardedAd();
           }
       );
       _rewardedAd!.show(
           onUserEarnedReward:(ad,reward){
+            commonController.setLoading(false);
               _rewardedScore++;
+              Get.to(()=>SetWallpaperScreen(wallpaper,value));
           } );
       _rewardedAd = null;
 

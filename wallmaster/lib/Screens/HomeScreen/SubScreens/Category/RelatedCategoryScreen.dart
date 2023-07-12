@@ -46,9 +46,9 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
               itemCount: controller.productData!.length + (controller.productData!.length ~/ 5),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 1.0,
-                mainAxisSpacing: 3.0,
-                mainAxisExtent: 300,
-                crossAxisCount: 2,
+                mainAxisSpacing: 1.0,
+                mainAxisExtent: 230,
+                crossAxisCount: 3,
               ),
               itemBuilder: (context, index) {
                 if (index % 6 == 5 && index != 0) {
@@ -63,9 +63,9 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: AdWidget(ad: commonController.createListBannerAd()!),
+                      child: AdWidget(ad: commonController.nativeAdList![adIndex]..load()),
                     ),
-                  ).marginSymmetric(horizontal: 5, vertical: 5);
+                  ).marginSymmetric(horizontal: 0, vertical: 0);
 
                 }
                 else {
@@ -73,7 +73,7 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                   return MixWidget(controller.productData![productIndex]);
                 }
               },
-            ).marginSymmetric(horizontal: 30);
+            ).marginSymmetric(horizontal: 5);
           },),
 
 

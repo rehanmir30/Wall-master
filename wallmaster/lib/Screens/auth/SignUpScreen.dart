@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/CustomWidgets/LoadingAnimation.dart';
+import 'package:wallmaster/Screens/auth/LoginScreen.dart';
 
 import '../../Constants/AppColors.dart';
 
@@ -326,6 +327,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
 
                     //signin with google
+                    SizedBox(height: 25,),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account,",style: TextStyle(color: Colors.white),),
+                        InkWell(
+                            onTap: (){
+                              Get.back();
+                              Get.to(()=>LoginScreen());
+                            },
+                            child: Text(" Sign in now",style: TextStyle(color: AppColors.red),)),
+                      ],
+                    ),
+
                     SizedBox(height: 35,),
                     InkWell(
                       onTap: () async {

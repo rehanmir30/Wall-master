@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/CustomWidgets/CategoryWidget.dart';
@@ -17,6 +18,28 @@ class _CategoryScreenState extends State<CategoryScreen> {
   // List<String> categoryList = ['Abstract','Animals','Artistic','Astronomy','Autumn','Babies & Kids','Birds'];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getNative();
+  }
+
+  getNative()async{
+    CommonController commonController = Get.find<CommonController>();
+
+    for(int i= 0 ; i<=commonController.productModelList!.data!.length; i++){
+      NativeAd ad =  await commonController.loadNativeAd();
+      if(ad==null){
+        print("ADD IS NULL");
+      }
+      await commonController.AddNativeAd(ad);
+
+    }
+
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black,
@@ -26,9 +49,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           itemCount: controller.categoryModelList!.data!.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
+                crossAxisSpacing: 1,
                 mainAxisSpacing: 3,
-                mainAxisExtent: 180
+                mainAxisExtent: 180,
             ), itemBuilder: (context, index) {
               return CategoryWidget(controller.categoryModelList!, index);
             },);
@@ -41,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         //     return CategoryWidget(controller.categoryModelList!,index);
         //
         //   },);
-      },).marginSymmetric(horizontal: 10),
+      },).marginSymmetric(horizontal:15),
     );
   }
 }

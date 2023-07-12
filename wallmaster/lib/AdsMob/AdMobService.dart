@@ -31,7 +31,16 @@ class AdMobService{
     if(Platform.isAndroid){
       return 'ca-app-pub-3874043468724625/3248894847';
     }else if(Platform.isIOS){
-      return'ca-app-pub-3874043468724625/3248894847';
+      return 'ca-app-pub-3874043468724625/3248894847';
+    }
+    return null;
+  }
+
+  static String? get nativeAdUniId {
+    if(Platform.isAndroid){
+      return 'ca-app-pub-3874043468724625/2372821085';
+    }else if(Platform.isIOS){
+      return 'ca-app-pub-3874043468724625/2372821085';
     }
     return null;
   }
@@ -43,6 +52,19 @@ class AdMobService{
       CommonController commonController = Get.find<CommonController>();
       ad.dispose();
       debugPrint('Ad Failed to load: $error');
+      // commonController.createBannerAd();
+    },
+    onAdOpened: (ad)=>debugPrint('Ad opened'),
+    onAdClosed: (ad)=>debugPrint('Ad closed'),
+  );
+
+  static final NativeAdListener nativeAdListener = NativeAdListener(
+    onAdLoaded: (ad){
+      debugPrint('Native Ad loaded');
+      },
+    onAdFailedToLoad: (ad,error) async {
+      ad.dispose();
+      debugPrint('Native Ad Failed to load: ${error.message}, ${error.code}');
       // commonController.createBannerAd();
     },
     onAdOpened: (ad)=>debugPrint('Ad opened'),
