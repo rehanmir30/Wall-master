@@ -45,35 +45,15 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
               primary: true,
               itemCount: controller.productData!.length + (controller.productData!.length ~/ 5),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 1.0,
-                mainAxisSpacing: 1.0,
+                crossAxisSpacing: 0.0,
+                mainAxisSpacing: 0.0,
                 mainAxisExtent: 230,
                 crossAxisCount: 3,
               ),
               itemBuilder: (context, index) {
-                if (index % 6 == 5 && index != 0) {
-                  final adIndex = (index ~/ 6) * 5;
-                  return Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width,
-                    height: 280,
-                    decoration: BoxDecoration(
-                      color: AppColors.black,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: AdWidget(ad: commonController.nativeAdList![adIndex]..load()),
-                    ),
-                  ).marginSymmetric(horizontal: 0, vertical: 0);
-
-                }
-                else {
-                  final productIndex = index - (index ~/ 6);
-                  return MixWidget(controller.productData![productIndex]);
-                }
+                  return MixWidget(controller.productData![index]);
               },
-            ).marginSymmetric(horizontal: 5);
+            ).marginSymmetric(horizontal: 3);
           },),
 
 

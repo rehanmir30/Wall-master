@@ -61,7 +61,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
           ],
         ),
-      ).marginSymmetric(vertical: 5,horizontal: 0),
+      ).marginSymmetric(vertical: 2,horizontal: 2),
     );
   }
 }

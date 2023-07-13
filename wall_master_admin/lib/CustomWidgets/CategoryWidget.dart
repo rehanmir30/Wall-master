@@ -40,7 +40,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(widget.categoryModel!.data![widget.index].name.toString(),style: TextStyle(color: AppColors.white,fontSize: 18),),
-      ).marginSymmetric(vertical: 5),
+      ).marginSymmetric(vertical: 2,horizontal: 2),
     );
   }
 }

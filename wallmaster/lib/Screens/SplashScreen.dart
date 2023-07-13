@@ -33,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       UserModel? savedUser = await SharedPref.getUser();
       var selectedLanguage = await SharedPref.getSelectedLanguage();
       if (savedUser != null) {
+        // await SharedPref.removeUser();
         AuthenticationController authenticationController = Get.find<AuthenticationController>();
         await authenticationController.setUserData(savedUser);
         CommonController commonController = Get.find<CommonController>();
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
         await commonController.getCategories();
         await commonController.getAllProducts();
-        Get.offAll(()=> HomeScreen());
+        Get.offAll(()=>  HomeScreen());
       }else{
         Get.offAll(Onboarding());
       }

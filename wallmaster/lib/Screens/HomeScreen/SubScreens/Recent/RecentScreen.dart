@@ -35,37 +35,54 @@ class _RecentScreenState extends State<RecentScreen> {
           shrinkWrap: true,
           primary: true,
           // reverse: true,
-          itemCount: commonController.productModelList!.data!.length + (commonController.productModelList!.data!.length ~/ 5),
+          itemCount: commonController.productModelList!.data!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 1.0,
-            mainAxisSpacing: 1.0,
+            crossAxisSpacing: 0.0,
+            mainAxisSpacing: 0.0,
             mainAxisExtent: 230,
             crossAxisCount: 3,
           ),
           itemBuilder: (context, index) {
-            if (index % 6 == 5 && index != 0) {
-              final adIndex = (index ~/ 6) * 5;
-              return Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: AdWidget(ad: commonController.nativeAdList![adIndex]..load()),
-                ),
-              ).marginSymmetric(horizontal: 2, vertical: 2);
+              return MixWidget(commonController.productModelList!.data![index]);
 
-            }
-            else {
-              final productIndex = index - (index ~/ 6);
-              return MixWidget(commonController.productModelList!.data![productIndex]);
-            }
           },
-        ).marginSymmetric(horizontal: 15);
+        ).marginSymmetric(horizontal: 3);
+
+        //     :GridView.builder(
+        //   shrinkWrap: true,
+        //   primary: true,
+        //   // reverse: true,
+        //   itemCount: commonController.productModelList!.data!.length + (commonController.productModelList!.data!.length ~/ 5),
+        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //     crossAxisSpacing: 1.0,
+        //     mainAxisSpacing: 1.0,
+        //     mainAxisExtent: 230,
+        //     crossAxisCount: 3,
+        //   ),
+        //   itemBuilder: (context, index) {
+        //     if (index % 6 == 5 && index != 0) {
+        //       final adIndex = (index ~/ 6) * 5;
+        //       return Container(
+        //         alignment: Alignment.center,
+        //         width: MediaQuery.of(context).size.width,
+        //         height: 200,
+        //         decoration: BoxDecoration(
+        //           color: AppColors.white,
+        //           borderRadius: BorderRadius.circular(10),
+        //         ),
+        //         child: ClipRRect(
+        //           borderRadius: BorderRadius.circular(10),
+        //           child: AdWidget(ad: commonController.nativeAdList![adIndex]..load()),
+        //         ),
+        //       ).marginSymmetric(horizontal: 2, vertical: 2);
+        //
+        //     }
+        //     else {
+        //       final productIndex = index - (index ~/ 6);
+        //       return MixWidget(commonController.productModelList!.data![productIndex]);
+        //     }
+        //   },
+        // ).marginSymmetric(horizontal: 15);
 
       },)
     );

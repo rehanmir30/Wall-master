@@ -43,8 +43,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     // childAspectRatio: 200,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 3,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
                     mainAxisExtent: 180),
                 itemBuilder: (context, index) {
                   return CategoryWidget(commonController.categoryModelList,index);
@@ -52,7 +52,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               },),
             ),
           ],
-        ).marginSymmetric(horizontal: 15),
+        ).marginSymmetric(horizontal: 3),
       ),
 
       floatingActionButton: FloatingActionButton.extended(

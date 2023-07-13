@@ -20,48 +20,34 @@ class _PremiumWidgetState extends State<PremiumWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 280,
       child: Stack(
         children: [
 
          Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
-            height: 300,
+            height: 280,
             decoration: BoxDecoration(
               color: AppColors.black,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(6),
               // image: DecorationImage(
               //     image: NetworkImage(widget._productData!.image.toString()),
               //     fit: BoxFit.fill
               // ),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(6),
               child: FadeInImage(
-                height: 300,
+                height: 280,
                   width: MediaQuery.of(context).size.width,
                   placeholder: AssetImage("assets/images/modified_logo.png"),
                   image: NetworkImage(widget.wallpaper.image.toString()),
-                fit: BoxFit.contain,
+                fit: BoxFit.fill,
               ),
             ),
-          ).marginSymmetric(horizontal: 0,vertical: 0),
+          ).marginSymmetric(horizontal: 2,vertical: 2),
 
-          // Container(
-          //   alignment: Alignment.center,
-          //   width: MediaQuery.of(context).size.width,
-          //   height: 300,
-          //   decoration: BoxDecoration(
-          //     color: AppColors.black,
-          //     borderRadius: BorderRadius.circular(10),
-          //     image: DecorationImage(
-          //         image: NetworkImage(widget.wallpaper.image.toString()),
-          //         fit: BoxFit.fill
-          //     ),
-          //   ),
-          //   // child: Text(widget.wallpaper.toString()),
-          // ).marginSymmetric(horizontal: 5,vertical: 5),
           Positioned(
             right: 15,
             top: 10,

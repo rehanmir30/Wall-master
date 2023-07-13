@@ -86,7 +86,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                     },
                     child: PremiumWidget(controller.premiumProductData![index]));
 
-              },).marginSymmetric(horizontal: 15);
+              },).marginSymmetric(horizontal: 3);
           },)
         ),
 

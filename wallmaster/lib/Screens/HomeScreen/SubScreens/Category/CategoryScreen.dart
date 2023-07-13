@@ -49,8 +49,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
           itemCount: controller.categoryModelList!.data!.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 1,
-                mainAxisSpacing: 3,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0,
                 mainAxisExtent: 180,
             ), itemBuilder: (context, index) {
               return CategoryWidget(controller.categoryModelList!, index);

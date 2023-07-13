@@ -21,23 +21,23 @@ class _MixWidgetState extends State<MixWidget> {
         Get.to(()=>PreviewWallpaper(widget._productData));
       },
       child: Container(
-        height: 300,
+        height: 280,
         child: Stack(
           children: [
             Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
-              height: 300,
+              height: 280,
               decoration: BoxDecoration(
                 color: AppColors.red,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(6),
                 image: DecorationImage(
                     image: NetworkImage(widget._productData!.image.toString()),
                     fit: BoxFit.fill
                 ),
               ),
               // child: Text(widget.wallpaper.toString()),
-            ).marginSymmetric(horizontal: 5,vertical: 5),
+            ).marginSymmetric(horizontal: 2,vertical: 2),
             if(widget._productData!.forPremium!=0)Positioned(
               right: 15,
               top: 10,
