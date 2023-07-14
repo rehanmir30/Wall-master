@@ -8,6 +8,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
+import 'package:wallmaster/Model/UserModel.dart';
 
 import '../AdsMob/AdMobService.dart';
 import '../Constants/AppColors.dart';
@@ -95,8 +96,15 @@ class CommonController extends GetxController{
     update();
   }
 
+  getUserDetails(UserModel? savedUser)async{
+    await DatabaseHelper().getUserDetails(savedUser);
+    update();
+  }
 
-
+  buyPremium()async{
+    await DatabaseHelper().buyPremium();
+    update();
+  }
 
   changeLanguage(value)async{
     await DatabaseHelper().changeLanguage(value);
@@ -351,7 +359,9 @@ class CommonController extends GetxController{
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad)=>_interstitialAd = ad,
-          onAdFailedToLoad: (LoadAdError error)=> _interstitialAd = null
+          onAdFailedToLoad: (LoadAdError error){
+            _interstitialAd = null;
+          }
       ),
     );
   }
@@ -364,8 +374,6 @@ class CommonController extends GetxController{
         onAdLoaded: (ad) => _rewardedAd= ad,
         onAdFailedToLoad: (LoadAdError error) {
             _rewardedAd = null;
-
-
 
         },),
     );

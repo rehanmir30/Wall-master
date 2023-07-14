@@ -44,7 +44,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       CommonController commonController = Get.find<CommonController>();
                       commonController.setLoading(true);
                       AuthenticationController authController = Get.find<AuthenticationController>();
-                      if(authController.myUser!.data!.isPremimum ==0 ||authController.myUser!.data!.isPremimum ==null){
+                      if(authController.myUser!.data!.isPremium ==0 ||authController.myUser!.data!.isPremium ==null){
                         showDialog(context: context, builder: (context) {
                           return AlertDialog(
                             title: Text('You are not a premium member'),
@@ -77,7 +77,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
                         },);
 
                         commonController.setLoading(false);
-                      }else{
+                      }
+                      else{
+                        commonController.setLoading(false);
                         Get.to(()=>SetWallpaperScreen(controller.premiumProductData![index],true));
                         List<ProductData> data =[];
                         data!.add(controller.premiumProductData![index]);

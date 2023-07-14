@@ -49,20 +49,30 @@ class Data {
   String? name;
   String? email;
   dynamic emailVerifiedAt;
-  int? isPremimum;
-  String? image;
+  String? role;
+  int? isPremium;
+  dynamic image;
+  dynamic imageName;
+  dynamic socialUuid;
+  String? language;
   DateTime? createdAt;
   DateTime? updatedAt;
+  dynamic subscribeDate;
 
   Data({
     this.id,
     this.name,
     this.email,
     this.emailVerifiedAt,
-    this.isPremimum,
+    this.role,
+    this.isPremium,
     this.image,
+    this.imageName,
+    this.socialUuid,
+    this.language,
     this.createdAt,
     this.updatedAt,
+    this.subscribeDate,
   });
 
   factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
@@ -74,10 +84,15 @@ class Data {
     name: json["name"],
     email: json["email"],
     emailVerifiedAt: json["email_verified_at"],
-    isPremimum: json["is_premimum"],
+    role: json["role"],
+    isPremium: json["is_premium"],
     image: json["image"],
+    imageName: json["image_name"],
+    socialUuid: json["social_uuid"],
+    language: json["language"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    subscribeDate: json["subscribe_date"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -85,10 +100,15 @@ class Data {
     "name": name,
     "email": email,
     "email_verified_at": emailVerifiedAt,
-    "is_premimum": isPremimum,
+    "role": role,
+    "is_premium": isPremium,
     "image": image,
+    "image_name": imageName,
+    "social_uuid": socialUuid,
+    "language": language,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
+    "subscribe_date": subscribeDate,
   };
 }
 

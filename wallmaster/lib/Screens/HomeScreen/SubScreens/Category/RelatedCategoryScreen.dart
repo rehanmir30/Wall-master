@@ -43,7 +43,7 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                 :GridView.builder(
               shrinkWrap: true,
               primary: true,
-              itemCount: controller.productData!.length + (controller.productData!.length ~/ 5),
+              itemCount: controller.productData!.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 0.0,
                 mainAxisSpacing: 0.0,

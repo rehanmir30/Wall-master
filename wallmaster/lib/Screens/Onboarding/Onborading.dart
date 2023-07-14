@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as sheet;
 import 'package:light_modal_bottom_sheet/light_modal_bottom_sheet.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/PrivacyPolicy/PrivacyPolicyScreen.dart';
 import 'package:wallmaster/Screens/auth/SignUpScreen.dart';
 import '../../Constants/AppColors.dart';
 import '../../Controllers/LocalizationController.dart';
@@ -45,6 +46,7 @@ class _OnboardingState extends State<Onboarding> {
                     radius: 20,
                     onTap: () {
                       print("Clicked");
+                      Get.to(()=>PrivacyPolicyScreen());
                     },
                     child: Center(
                       child: Container(

@@ -16,6 +16,9 @@ class ApiConstants{
   //Change Language (Onlhy want to use language parameter and for clarity in the application code so we can specified the implementation )
   static const changeLanguageApi = "api/profile/update";
 
+  //Get User Detail
+  static const getDetailApi =  "api/user/profile/detail";
+
   //Category Urls
 
   //Get Category Url
@@ -30,5 +33,6 @@ class ApiConstants{
   static const getAllLikeProductUrl = "api/user/like/list";
   //Update Like Product Url
   static const updateLikeProductUrl = "api/user/update/like";
+
 
 }

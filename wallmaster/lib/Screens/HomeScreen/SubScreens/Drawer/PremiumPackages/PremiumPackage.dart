@@ -4,6 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:wallmaster/Controllers/CommonController.dart';
+import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
+import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/TermsAndCondtions/TermsAndCondtions.dart';
 import 'package:wallmaster/Screens/Payment/paymentConfig.dart';
 import 'package:pay/pay.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
@@ -24,8 +27,8 @@ class _PremiumPackageState extends State<PremiumPackage> {
     loadingIndicator: const Center(child: CircularProgressIndicator(),),
       paymentItems: [
         PaymentItem(
-            amount: '0.01',
-            label: 'Premium',
+            amount: '6.99',
+            label: 'Premium Package',
           status: PaymentItemStatus.final_price,
         ),
       ],
@@ -38,11 +41,20 @@ class _PremiumPackageState extends State<PremiumPackage> {
   var googlePayButton = GooglePayButton(
     paymentConfiguration: PaymentConfiguration.fromJsonString(defaultGooglePay),
 
-    onPaymentResult: (result) {
+    onError: (error) {
+      print("ERROR: "+error.toString());
+      CustomSnackbar.show("$error", AppColors.red);
+    },
+    onPaymentResult: (result) async {
+      print("RESULT: ${result}");
+      CommonController commonController = Get.find<CommonController>();
+      await commonController.buyPremium();
+      CustomSnackbar.show("You have Successfully purchased Premium", AppColors.green);
+
 
   }, paymentItems: const [
     PaymentItem(
-        amount: '0.01',
+        amount: '6.99',
         status: PaymentItemStatus.final_price,
         label: 'Premium Package',
     )
@@ -97,36 +109,35 @@ class _PremiumPackageState extends State<PremiumPackage> {
                 child: Text("Wall Master",style: TextStyle(color: Colors.white,fontSize: 28),)),
             SizedBox(height: 40,),
 
-            Text("Upgrade to our Premium Package and enjoy exclusive benefits that will elevate your wallpaper app experience. With unlimited access to a diverse library of high-quality wallpapers, you can easily personalize your device with stunning images that match your style and mood. Say goodbye to interruptions with our ad-free environment, allowing you to browse seamlessly and focus on discovering the perfect wallpapers. Plus, with an increased wallpaper limit, you can expand your collection and effortlessly switch between favorites. Gain early access to new releases and exclusive collections, staying ahead of trends and accessing unique wallpapers. Enjoy priority customer support, ensuring a smooth experience throughout your subscription. Upgrade today and unlock a world of possibilities for your wallpaper app journey.",style: TextStyle(fontSize: 14,color: Colors.white),),
+            Text("Upgrade".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
 
 
             SizedBox(height: 40,),
-            Text("What we provide:",style: TextStyle(color: Colors.white,fontSize: 22),),
+            Text("provide".tr,style: TextStyle(color: Colors.white,fontSize: 22),),
             SizedBox(height: 10,),
             Row(
               children: [
               Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("Remove Ads",style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("RemoveAds".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
             ],),
             Row(
               children: [
                 Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("Live Updates",style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("LiveUpdates".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
             Row(
               children: [
                 Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("Unlimited Wallpapers",style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("UnlimitedWallpapers".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
-            Row(
-              children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
-                Text("Remove Ads",style: TextStyle(color: Colors.white,fontSize: 18),),
-              ],),
+
+            SizedBox(height: 10,),
+
+            Text("OneYear".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+
 
             SizedBox(height: 10,),
             Row(
@@ -153,11 +164,11 @@ class _PremiumPackageState extends State<PremiumPackage> {
 
                 RichText(
                   text: TextSpan(
-                    text: 'I agree to ',
+                    text: 'Iagreeto'.tr,
                     style: TextStyle(color: Colors.white,fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'terms and conditions',
+                        text: 'termsandconditions'.tr,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.blue,
@@ -165,6 +176,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
+                          Get.to(()=>TermsAndCondtions());
                             // launch('https://example.com/terms'); // Replace with your terms and conditions URL
                           },
                       ),
@@ -186,13 +198,18 @@ class _PremiumPackageState extends State<PremiumPackage> {
             //   decoration: BoxDecoration(color: AppColors.red,borderRadius: BorderRadius.circular(10)),
             //   child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
             // )
-                :Container(
+                :InkWell(
+              onTap: (){
+                CustomSnackbar.show("Please select the checkbox", AppColors.red);
+              },
+                  child: Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width*0.9,
               height: 50,
               decoration: BoxDecoration(color: AppColors.red.withOpacity(0.7),borderRadius: BorderRadius.circular(10)),
               child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
             ),
+                ),
 
             SizedBox(height: 20,),
 

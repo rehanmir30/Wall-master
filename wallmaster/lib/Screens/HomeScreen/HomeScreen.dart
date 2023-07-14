@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(bottom: 12),
           height: 52,
-          child: AdWidget(ad: controller.banner!,),
+          child: AdWidget(ad: controller.banner!..load(),),
         ),
       );
     },);
@@ -231,23 +231,23 @@ class MyDrawer extends StatelessWidget {
                 // Handle drawer item click for Home
               },
             ),
-            ListTile(
-              leading: Container(
-                width: 35,
-                height: 35,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.green,
-                ),
-                child: Image.asset("assets/images/bell.png",width: 15,height: 15,),
-              ),
-              title: Text('Notifications'.tr),
-              onTap: () {
-                // Handle drawer item click for About
-              },
-            ),
+            // ListTile(
+            //   leading: Container(
+            //     width: 35,
+            //     height: 35,
+            //     alignment: Alignment.center,
+            //     padding: EdgeInsets.all(10),
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       color: Colors.green,
+            //     ),
+            //     child: Image.asset("assets/images/bell.png",width: 15,height: 15,),
+            //   ),
+            //   title: Text('Notifications'.tr),
+            //   onTap: () {
+            //     // Handle drawer item click for About
+            //   },
+            // ),
             ListTile(
               leading: Container(
                 width: 35,

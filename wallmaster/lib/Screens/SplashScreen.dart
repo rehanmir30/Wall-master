@@ -34,17 +34,18 @@ class _SplashScreenState extends State<SplashScreen> {
       var selectedLanguage = await SharedPref.getSelectedLanguage();
       if (savedUser != null) {
         // await SharedPref.removeUser();
-        AuthenticationController authenticationController = Get.find<AuthenticationController>();
-        await authenticationController.setUserData(savedUser);
         CommonController commonController = Get.find<CommonController>();
+        // AuthenticationController authenticationController = Get.find<AuthenticationController>();
+        // await authenticationController.setUserData(savedUser);
+        await commonController.getUserDetails(savedUser);
         Localization localization = Get.find<Localization>();
         if(selectedLanguage!=null){
           await localization.setSelectedLang(selectedLanguage);
         }else{
           await localization.setSelectedLang('spanish');
         }
-        await commonController.getCategories();
-        await commonController.getAllProducts();
+        // await commonController.getCategories();
+        // await commonController.getAllProducts();
         Get.offAll(()=>  HomeScreen());
       }else{
         Get.offAll(Onboarding());

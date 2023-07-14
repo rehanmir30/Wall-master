@@ -313,8 +313,7 @@ class DatabaseHelper {
     }
   }
 
-  Future<List<ProductData>?> getSelectedCategoryProduct(
-      GetProductModel? model, id) async {
+  Future<List<ProductData>?> getSelectedCategoryProduct(GetProductModel? model, id) async {
     List<ProductData>? productdata =
         model?.data?.where((product) => product.categoryId == id).toList();
     return productdata;
@@ -512,6 +511,94 @@ class DatabaseHelper {
       CustomSnackbar.show('$e', AppColors.red);
     }
   }
+
+  Future<void> getUserDetails(UserModel? savedUser)async{
+    CommonController commonController = Get.find<CommonController>();
+    AuthenticationController authenticationController = Get.find<AuthenticationController>();
+
+    Map<String, String> header = {
+      "Accept": "application/json",
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${savedUser?.accessToken}'
+    };
+    // var body = '{"product_id": "${authController.myUser?.data?.isPremimum}"}';
+
+    var url =
+    Uri.parse(ApiConstants.baseUrl + ApiConstants.getDetailApi);
+
+    if (kDebugMode) {
+      print('Verify User API URL - ${url.toString()}');
+      // print('Verify User Request Body - ${body.toString()}');
+    }
+    final response = await http.get(url, headers: header,);
+    var responseJson = json.decode(response.body.toString());
+
+
+    if (responseJson['status'] == 200) {
+      final usermodel = UserModel.fromJson(response.body.toString());
+      usermodel.accessToken = savedUser!.accessToken;
+      usermodel.tokenType = savedUser.tokenType;
+      await authenticationController.setUserData(usermodel);
+      // CustomSnackbar.show('${usermodel.message}', AppColors.green);
+      await SharedPref.saveUser(usermodel);
+
+      CommonController commonController = Get.find<CommonController>();
+      await commonController.getCategories();
+      await commonController.getAllProducts();
+      await getLikedProduct();
+    } else {
+      CustomSnackbar.show('${responseJson['message']}', AppColors.red);
+    }
+
+
+
+  }
+
+  Future<void> buyPremium()async{
+
+    try {
+      AuthenticationController authController = Get.find<AuthenticationController>();
+      // print("product_id: ${productId} is_like: ${isLike}");
+      Map<String, String> header = {
+        "Accept": "application/json",
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authController.myUser?.accessToken}'
+      };
+      var body = '{"is_premium": "${1}", "subscribe_date": "${DateTime.now()}"}';
+
+      var url =
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.profileUpdateApi);
+
+      if (kDebugMode) {
+        print('Verify User API URL - ${url.toString()}');
+        print('Verify User Request Body - ${body.toString()}');
+      }
+      final response = await http.post(
+        url,
+        headers: header,
+        body: body,
+      );
+      var responseJson = json.decode(response.body.toString());
+
+      if (responseJson['status'] == 200) {
+        CustomSnackbar.show('${responseJson['message']}', AppColors.green);
+        UserModel? model = authController.myUser;
+        model!.data!.isPremium = 1;
+        await authController.setUserData(model);
+        await SharedPref.saveUser(model);
+
+      } else {
+        CustomSnackbar.show('${responseJson['message']}', AppColors.red);
+      }
+    } catch (e) {
+      CustomSnackbar.show('$e', AppColors.red);
+    }
+
+
+  }
+
+
+
 
   Future<void>addColor() async{
     CommonController commonController = Get.find<CommonController>();

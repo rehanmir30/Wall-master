@@ -9,7 +9,7 @@ class AuthenticationController extends GetxController{
   UserModel? _myUser;
   UserModel? get myUser=>_myUser;
 
-  setUserData(UserModel userModel){
+  setUserData(UserModel? userModel){
     _myUser = userModel;
     update();
   }

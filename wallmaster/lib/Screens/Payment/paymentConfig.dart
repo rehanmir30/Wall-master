@@ -40,22 +40,16 @@
     "requiredShippingContactFields": [],
     "shippingMethods": [
       {
-        "amount": "0.00",
+        "amount": "6.99",
         "detail": "Available within an hour",
         "identifier": "in_store_pickup",
-        "label": "In-Store Pickup"
+        "label": "Premium Package"
       },
       {
-        "amount": "4.99",
-        "detail": "5-8 Business Days",
-        "identifier": "flat_rate_shipping_id_2",
-        "label": "UPS Ground"
-      },
-      {
-        "amount": "29.99",
+        "amount": "6.99",
         "detail": "1-3 Business Days",
         "identifier": "flat_rate_shipping_id_1",
-        "label": "FedEx Priority Mail"
+        "label": "Wall Master"
       }
     ]
   }
@@ -66,7 +60,7 @@
    const String defaultGooglePay = '''{
   "provider": "google_pay",
   "data": {
-    "environment": "TEST",
+    "environment": "PRODUCTION",
     "apiVersion": 2,
     "apiVersionMinor": 0,
     "allowedPaymentMethods": [
@@ -91,8 +85,8 @@
       }
     ],
     "merchantInfo": {
-      "merchantId": "01234567890123456789",
-      "merchantName": "Example Merchant Name"
+      "merchantId": "905380771951695262",
+      "merchantName": "Georgio"
     },
     "transactionInfo": {
       "countryCode": "US",

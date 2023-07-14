@@ -27,7 +27,7 @@ class _MixWidgetState extends State<MixWidget> {
         commonController.setLoading(true);
         AuthenticationController authenticationController = Get.find<AuthenticationController>();
         if(widget._productData.forPremium ==1){
-          if(authenticationController.myUser!.data!.isPremimum==0 || authenticationController.myUser!.data!.isPremimum==null){
+          if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
             commonController.setLoading(false);
             showDialog(context: context, builder: (context) {
               return AlertDialog(
@@ -67,7 +67,7 @@ class _MixWidgetState extends State<MixWidget> {
             data!.add(widget._productData);
             await commonController.getReliventData(data);
             await commonController.addColor();
-            await commonController.setCount();
+            // await commonController.setCount();
             await commonController.setLoading(false);
             Get.to(()=>SetWallpaperScreen(widget._productData,true));
           }

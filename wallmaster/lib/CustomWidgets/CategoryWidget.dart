@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wallmaster/Controllers/AuthenticationController.dart';
 
 import '../Constants/AppColors.dart';
 import '../Controllers/CommonController.dart';
@@ -22,7 +23,10 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return InkWell(
       onTap: () async {
         CommonController commonController = Get.find<CommonController>();
-        commonController.setCount();
+        AuthenticationController authenticationController = Get.find<AuthenticationController>();
+        if(authenticationController.myUser!.data!.isPremium==0){
+          await commonController.setCount();
+        }
         commonController.getSelectedCategoryProduct(commonController.productModelList,widget.categoryModel!.data![widget.index].id);
         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:widget.categoryModel!.data![widget.index].id,name: widget.categoryModel!.data![widget.index].name,image: widget.categoryModel!.data![widget.index].image)));
       },
