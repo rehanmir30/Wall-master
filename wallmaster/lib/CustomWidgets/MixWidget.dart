@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -31,10 +32,10 @@ class _MixWidgetState extends State<MixWidget> {
             commonController.setLoading(false);
             showDialog(context: context, builder: (context) {
               return AlertDialog(
-                title: Text('You are not a premium member'),
+                title: Text('premiummember'.tr),
                 backgroundColor: AppColors.white,
                 elevation: 3,
-                content: Text("If you want to view wallpaper"),
+                content: Text("viewwallpaper".tr),
                 actions: [
                   InkWell(
                       onTap: () async {
@@ -47,14 +48,14 @@ class _MixWidgetState extends State<MixWidget> {
                         commonController.setLoading(false);
                         // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
                       },
-                      child: Text("View Ad",style: TextStyle(color: Colors.blue),)),
+                      child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
                       onPressed: () {
                         Navigator.of(context).pop();
                         Get.to(()=>PremiumPackage());
 
-                      }, child: Text('Buy Premium',style: TextStyle(color: AppColors.white),))
+                      }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
                 ],
               );
             },);
@@ -62,26 +63,38 @@ class _MixWidgetState extends State<MixWidget> {
           }
           else{
             CommonController commonController = Get.find<CommonController>();
-            // await commonController.setLoading(true);
+            await commonController.setLoading(true);
             List<ProductData> data =[];
             data!.add(widget._productData);
             await commonController.getReliventData(data);
-            await commonController.addColor();
-            // await commonController.setCount();
+            await commonController.setLoading(false);
+            Get.to(()=>SetWallpaperScreen(widget._productData,true));            // await commonController.setCount();
+
+
+          }
+
+        }
+        else{
+
+          if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
+            CommonController commonController = Get.find<CommonController>();
+            await commonController.setLoading(true);
+            List<ProductData> data =[];
+            data!.add(widget._productData);
+            await commonController.getReliventData(data);
+            await commonController.setCount();
+            await commonController.setLoading(false);
+            Get.to(()=>SetWallpaperScreen(widget._productData,true));
+          }else{
+            CommonController commonController = Get.find<CommonController>();
+            await commonController.setLoading(true);
+            List<ProductData> data =[];
+            data!.add(widget._productData);
+            await commonController.getReliventData(data);
             await commonController.setLoading(false);
             Get.to(()=>SetWallpaperScreen(widget._productData,true));
           }
 
-        }else{
-          CommonController commonController = Get.find<CommonController>();
-          await commonController.setLoading(true);
-          List<ProductData> data =[];
-          data!.add(widget._productData);
-          await commonController.getReliventData(data);
-          await commonController.addColor();
-          await commonController.setCount();
-          await commonController.setLoading(false);
-          Get.to(()=>SetWallpaperScreen(widget._productData,true));
         }
 
       },
@@ -110,25 +123,41 @@ class _MixWidgetState extends State<MixWidget> {
                 child: FadeInImage(
                   height: 280,
                     width: MediaQuery.of(context).size.width,
-                    placeholder: const AssetImage("assets/images/modified_logo.png"),
-                    image: NetworkImage(widget._productData!.image.toString()),
+                    placeholder:   AssetImage("assets/images/loading_logo.png"),
+                    image: CachedNetworkImageProvider(widget._productData!.image.toString()),
                   fit: BoxFit.fill,
                 ),
               ),
-            ).marginSymmetric(horizontal: 2,vertical: 2),
+            ).marginSymmetric(horizontal: 0,vertical: 0),
 
             if(widget._productData!.forPremium!=0)Positioned(
               right: 15,
               top: 10,
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 10,
-                child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 10,
+                    child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                  ),
+                  SizedBox(height: 10,),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                  ).marginOnly(left: 5)
+                ],
               ),
             ),
           ],
         ),
-      ),
+      ).marginSymmetric(horizontal: 1,vertical: 1),
     );
   }
 }

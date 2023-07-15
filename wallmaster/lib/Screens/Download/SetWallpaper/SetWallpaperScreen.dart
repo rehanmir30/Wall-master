@@ -476,7 +476,7 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(controller.productReliventData![_index].image!),
+                      image: CachedNetworkImageProvider(controller.productReliventData![_index].image!),
                       fit: BoxFit.cover,
                     )
                 ),

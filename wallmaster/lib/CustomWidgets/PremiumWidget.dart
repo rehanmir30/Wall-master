@@ -41,7 +41,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
               child: FadeInImage(
                 height: 280,
                   width: MediaQuery.of(context).size.width,
-                  placeholder: AssetImage("assets/images/modified_logo.png"),
+                  placeholder: AssetImage("assets/images/loading_logo.png"),
                   image: NetworkImage(widget.wallpaper.image.toString()),
                 fit: BoxFit.fill,
               ),
@@ -51,10 +51,24 @@ class _PremiumWidgetState extends State<PremiumWidget> {
           Positioned(
             right: 15,
             top: 10,
-            child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: 10,
-              child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 10,
+                  child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                ),
+                SizedBox(height: 10,),
+
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                ).marginOnly(left: 5)
+              ],
             ),
           ),
         ],

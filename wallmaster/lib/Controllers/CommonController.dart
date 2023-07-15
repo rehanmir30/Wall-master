@@ -261,15 +261,15 @@ class CommonController extends GetxController{
     TimerCount();
   //  loadBanner();
   }
-  NativeAd loadNativeAd(){
-    NativeAd LnativeAd = NativeAd(
-        adUnitId: '${AdMobService.nativeAdUniId}',
-        listener: AdMobService.nativeAdListener,
-        factoryId: 'listTile',
-        request: AdRequest(),
-    )..load();
-    return LnativeAd;
-  }
+  // NativeAd loadNativeAd(){
+  //   NativeAd LnativeAd = NativeAd(
+  //       adUnitId: '${AdMobService.nativeAdUniId}',
+  //       listener: AdMobService.nativeAdListener,
+  //       factoryId: 'listTile',
+  //       request: AdRequest(),
+  //   )..load();
+  //   return LnativeAd;
+  // }
 
   setCount()async{
     _clickCount++;
@@ -407,9 +407,9 @@ class CommonController extends GetxController{
             createRewardedAd();
           },
           onAdFailedToShowFullScreenContent: (ad,error){
+            CustomSnackbar.show("${error.message}", AppColors.red);
             print("Failed to Load");
             ad.dispose();
-            CustomSnackbar.show("${error.message}", AppColors.red);
             commonController.setLoading(false);
             createRewardedAd();
           }

@@ -21,23 +21,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getNative();
   }
 
-  getNative()async{
-    CommonController commonController = Get.find<CommonController>();
-
-    for(int i= 0 ; i<=commonController.productModelList!.data!.length; i++){
-      NativeAd ad =  await commonController.loadNativeAd();
-      if(ad==null){
-        print("ADD IS NULL");
-      }
-      await commonController.AddNativeAd(ad);
-
-    }
-
-
-  }
 
   @override
   Widget build(BuildContext context) {

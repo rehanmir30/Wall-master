@@ -17,7 +17,7 @@ class _TermsAndCondtionsState extends State<TermsAndCondtions> {
     return Scaffold(
       backgroundColor: AppColors.black,
       appBar: AppBar(
-        title:  Text('PrivacyPolicy'.tr),
+        title:  Text('termsandconditions'.tr.capitalizeFirst!),
         centerTitle: true,
         backgroundColor: AppColors.black,
       ),

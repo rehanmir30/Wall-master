@@ -124,6 +124,13 @@ class LocalizationTranslator extends Translations{
       "Iagreeto" : "I agree to ",
       "termsandconditions" : "terms and conditions",
 
+      //Buy Premium Dialog
+      "premiummember" : "You are not a premium member",
+      "viewwallpaper" : "If you want to view wallpaper",
+      "ViewAd" : "View Ad",
+      "BuyPremium" : "Buy Premium",
+
+
 
 
       // Terms And Condtions
@@ -145,7 +152,7 @@ class LocalizationTranslator extends Translations{
       "Allintellectual" : "All intellectual property rights in and on the Application and its content are owned by us or our licensors. You have no right to copy, distribute, modify, reverse engineer, disassemble, attempt to derive the source code of, or create derivative works from the Application.",
 
       "Changes" : "Changes",
-      "WeReserve " : "We reserve the right to change these Terms and Conditions at any time. By continuing to use the Application after such changes are made, you accept the revised terms.",
+      "WeReserve" : "We reserve the right to change these Terms and Conditions at any time. By continuing to use the Application after such changes are made, you accept the revised terms.",
 
       "Termination" : "Termination",
       "Wemayterminate" : "We may terminate or suspend your access to the Application at any time, without prior notice or liability, for any reason.",
@@ -156,8 +163,64 @@ class LocalizationTranslator extends Translations{
       "Contact" : "Contact",
       "Ifyouhave" : "If you have any questions about these Terms and Conditions, please contact us: ",
 
-      "email" : "info@gwebsoft.org",
+      "email" : "admin@gwebsoft.org",
 
+
+      //FAQS Screen
+
+      "FAQ" : "FAQS",
+
+      "PremiumWallpaper" : "What is a Premium Wallpaper? ",
+      "PremiumWallpaperDescription" : "Premium wallpapers are exclusive wallpapers only available to Premium users or those who choose to watch a Google ad to unlock them. These wallpapers are unique and of higher quality compared to our free wallpapers.",
+
+      "PremiumUser" : "Premium User? ",
+      "PremiumUserDescription" : "You can become a premium user by subscribing to our Premium Plan within the app. The premium subscription offers benefits like ad-free browsing, instant access to premium wallpapers, and more.",
+
+      "PremiumPlan" : "What if I don't want to subscribe to the Premium Plan? ",
+      "PremiumPlanDescription" : "You can still access our premium wallpapers by choosing to watch a Google ad. After watching the ad, the premium wallpaper will be unlocked for your use.",
+
+      "WallPaperUse" : "Can I use the wallpapers for both my lock screen and home screen? ",
+      "WallPaperUseDescription" : "Yes, you can set any of our wallpapers for both your lock screen and home screen according to your preference.",
+
+      "HowtoDownloadWalllaper" : "Do I need to watch an ad for every premium wallpaper I want to download? ",
+      "HowtoDownloadWalllaperDescription" :"Yes, if you are not a Premium user, you will need to watch an ad to unlock each premium wallpaper you wish to use.",
+
+      "PremiumWallpaperRemains" : "Will my unlocked premium wallpapers remain available if I uninstall the app or switch devices? ",
+      "PremiumWallpaperRemainsDescription" : "No, if you are not a Premium user, the wallpapers unlocked by watching ads will not remain available if you uninstall the app or switch devices. However, if you are a Premium user, your access to these wallpapers will be saved with your account, and you can access them across any devices.",
+
+      "PremiumSeeingAd" : "I am a Premium User. Why am I still seeing ads? ",
+      "PremiumSeeingAdDescription" : "As a Premium user, you should not see any ads within the app. If you're encountering ads, please ensure that your subscription is active, and try logging out and back into your account. If the issue persists, please contact our support team.",
+
+      "CannotWatchWallpaperAfterAd" : "I have watched an ad but the Premium wallpaper is not unlocked. What should I do? ",
+      "CannotWatchWallpaperAfterAdDescription" : "Please ensure you have a stable internet connection and try restarting the app. If the issue persists, please contact our support team.",
+
+      "CanShareWallpapers" : "Can I share the wallpapers with others? ",
+      "CanShareWallpapersDescription" : "Our terms and conditions do not allow sharing of wallpapers, either free or premium, outside of our app. We encourage all users to respect the work of the artists who create these wallpapers.",
+
+      "HowToShareWallpaper" : "I have a suggestion for a wallpaper, how can I share it? ",
+      "HowToShareWallpaperDescription" : "We love to hear from our users! Please use the feedback function within the app to share your suggestions.",
+
+      "DownloadLimits" : "Is there any limit to the number of wallpapers I can download in a day? ",
+      "DownloadLimitsDescription" : "No, there is no limit on the number of wallpapers you can download in a day, whether you are a free user or a Premium user.",
+
+
+      //HelpScreen
+      "Helped" : "HELP",
+      "HowToDownloadWallpaper" : "How to Download a Wallpaper: ",
+      "HowToDownloadWallpaperDescription" : "To download a wallpaper, navigate to the wallpaper you want to download and click on the 'Download' button. If it's a Premium wallpaper, you'll need to watch an ad or be a Premium user to download it.",
+
+      "HowToSetWallpaper" : "How to Set a Wallpaper: ",
+      "HowToSetWallpaperDescription" : "Once you've downloaded the wallpaper, navigate to your device's wallpaper settings. Choose 'Lock Screen', 'Home Screen', or 'Both', then select the downloaded wallpaper from your photo gallery.",
+
+      "HowToBecomePremium" : "How to Become a Premium User: ",
+      "HowToBecomePremiumDescription" : "To become a Premium user, go to the 'Settings' tab in the app, then click on 'Go Premium'. Follow the prompts to complete your subscription.",
+
+      "HowToUseAppWithoutSubscription" : "How to Use the App Without a Subscription: ",
+      "HowToUseAppWithoutSubscriptionDescription" : "If you don't want to become a Premium user, you can still enjoy our wallpapers. For premium wallpapers, you'll need to watch an ad to unlock each one you want to use.",
+
+      "HowToContactSupport" : "How to Contact Support: ",
+      "HowToContactSupportDescription" : "If you need help or have any questions about the app, you can contact us here: ",
+      'email': "admin@gwebsoft.org",
 
 
 
@@ -221,7 +284,7 @@ class LocalizationTranslator extends Translations{
       //SetWallpaperScreen
       "NoRelatedWallpaper": "Sin fondo de pantalla relacionado",
       "SetWallpaper": "Establecer fondo de pantalla",
-      "LockScreen": "Bloquear pantalla",
+      "LockScreen": "Pantalla de Bloqueo",
       "HomeScreen": "Pantalla de inicio",
       "Both": "Ambas",
 
@@ -277,6 +340,12 @@ class LocalizationTranslator extends Translations{
       "Iagreeto" : "Acepto los ",
       "termsandconditions" : "términos y condiciones",
 
+      //Buy Premium Dialog
+      "premiummember" : "No eres miembro premium",
+      "viewwallpaper" : "Si quieres ver el fondo de pantalla",
+      "ViewAd" : "Ver anuncio",
+      "BuyPremium" : "Comprar Premium",
+
 
       // Terms And Condtions
       "WallMasterTermsandConditions" : "Términos y Condiciones de WallMaster",
@@ -297,7 +366,7 @@ class LocalizationTranslator extends Translations{
       "Allintellectual" : "Todos los derechos de propiedad intelectual en y sobre la Aplicación y su contenido son propiedad de nosotros o de nuestros licenciantes. Usted no tiene derecho a copiar, distribuir, modificar, realizar ingeniería inversa, desmontar, intentar derivar el código fuente de, o crear obras derivadas de la Aplicación.",
 
       "Changes" : "Cambios",
-      "WeReserve " : "Nos reservamos el derecho de cambiar estos Términos y Condiciones en cualquier momento. Al continuar utilizando la Aplicación después de que se realicen esos cambios, usted acepta los términos revisados.",
+      "WeReserve" : "Nos reservamos el derecho de cambiar estos Términos y Condiciones en cualquier momento. Al continuar utilizando la Aplicación después de que se realicen esos cambios, usted acepta los términos revisados.",
 
       "Termination" : "Terminación",
       "Wemayterminate" : "Podemos terminar o suspender su acceso a la Aplicación en cualquier momento, sin previo aviso ni responsabilidad, por cualquier motivo.",
@@ -308,7 +377,67 @@ class LocalizationTranslator extends Translations{
       "Contact" : "Contacto",
       "Ifyouhave" : "Si tiene alguna pregunta sobre estos Términos y Condiciones, contáctenos: ",
 
-      "email" : "info@gwebsoft.org",
+      "email" : "admin@gwebsoft.org",
+
+
+
+      //FAQS Screen
+      "FAQ" : "PREGUNTAS Y RESPUESTAS",
+      "PremiumWallpaper" : "¿Qué es un Wallpaper Premium? ",
+      "PremiumWallpaperDescription" : "Los wallpapers premium son fondos de pantalla exclusivos disponibles solo para usuarios Premium o aquellos que eligen ver un anuncio de Google para desbloquearlos. Estos wallpapers son únicos y de mayor calidad en comparación con nuestros wallpapers gratuitos.",
+
+      "PremiumUser" : "¿Cómo puedo convertirme en un Usuario Premium? ",
+      "PremiumUserDescription" : "Puedes convertirte en un usuario Premium suscribiéndote a nuestro Plan Premium dentro de la aplicación. La suscripción premium ofrece beneficios como navegación sin anuncios, acceso instantáneo a wallpapers premium y más.",
+
+      "PremiumPlan" : "¿Qué pasa si no quiero suscribirme al Plan Premium? ",
+      "PremiumPlanDescription" : "Aún puedes acceder a nuestros wallpapers premium eligiendo ver un anuncio de Google. Después de ver el anuncio, el wallpaper premium se desbloqueará para su uso.",
+
+      "WallPaperUse" : "¿Puedo usar los wallpapers para mi pantalla de bloqueo y pantalla de inicio? ",
+      "WallPaperUseDescription" : "Sí, puedes configurar cualquiera de nuestros wallpapers para tu pantalla de bloqueo y pantalla de inicio según tu preferencia.",
+
+      "HowtoDownloadWalllaper" : "¿Necesito ver un anuncio para cada wallpaper premium que quiera descargar? ",
+      "HowtoDownloadWalllaperDescription" :"Sí, si no eres un usuario Premium, tendrás que ver un anuncio para desbloquear cada wallpaper premium que desees usar.",
+
+      "PremiumWallpaperRemains" : "¿Mis wallpapers premium desbloqueados permanecerán disponibles si desinstalo la aplicación o cambio de dispositivo? ",
+      "PremiumWallpaperRemainsDescription" : "No, si no eres un usuario Premium, los wallpapers desbloqueados al ver anuncios no permanecerán disponibles si desinstalas la aplicación o cambias de dispositivo. Sin embargo, si eres un usuario Premium, tu acceso a estos wallpapers se guardará con tu cuenta y puedes acceder a ellos desde cualquier dispositivo.",
+
+      "PremiumSeeingAd" : "Soy un Usuario Premium. ¿Por qué sigo viendo anuncios? ",
+      "PremiumSeeingAdDescription" : "Como usuario Premium, no deberías ver ningún anuncio dentro de la aplicación. Si encuentras anuncios, por favor asegúrate de que tu suscripción está activa e intenta cerrar sesión y volver a iniciarla. Si el problema persiste, por favor contacta a nuestro equipo de soporte.",
+
+      "CannotWatchWallpaperAfterAd" : "He visto un anuncio pero el Wallpaper Premium no se ha desbloqueado. ¿Qué debo hacer? ",
+      "CannotWatchWallpaperAfterAdDescription" : "Por favor asegúrate de tener una conexión a internet estable e intenta reiniciar la aplicación. Si el problema persiste, por favor contacta a nuestro equipo de soporte.",
+
+      "CanShareWallpapers" : "¿Puedo compartir los wallpapers con otros? ",
+      "CanShareWallpapersDescription" : "Nuestros términos y condiciones no permiten compartir wallpapers, gratuitos o premium, fuera de nuestra aplicación. Animamos a todos los usuarios a respetar el trabajo de los artistas que crean estos wallpapers.",
+
+      "HowToShareWallpaper" : "Tengo una sugerencia para un wallpaper, ¿cómo puedo compartirla? ",
+      "HowToShareWallpaperDescription" : "¡Nos encanta escuchar a nuestros usuarios! Por favor utiliza la función de feedback dentro de la aplicación para compartir tus sugerencias.",
+
+      "DownloadLimits" : "¿Existe algún límite en el número de wallpapers que puedo descargar en un día? ",
+      "DownloadLimitsDescription" : "No, no hay límite en el número de wallpapers que puedes descargar en un día, ya seas un usuario gratuito o un usuario Premium.",
+
+
+      //HelpScreen
+      "Helped" : "AYUDA",
+      "HowToDownloadWallpaper" : "Cómo descargar un Wallpaper: ",
+      "HowToDownloadWallpaperDescription" : "Para descargar un wallpaper, navega hasta el wallpaper que deseas descargar y haz clic en el botón 'Descargar'. Si es un wallpaper premium, necesitarás ver un anuncio o ser un usuario premium para poder descargarlo.",
+
+      "HowToSetWallpaper" : "Cómo configurar un Wallpaper: ",
+      "HowToSetWallpaperDescription" : "Una vez que hayas descargado el wallpaper, ve a los ajustes de wallpaper de tu dispositivo. Elige 'Pantalla de bloqueo', 'Pantalla de inicio' o 'Ambas', luego selecciona el wallpaper descargado desde tu galería de fotos.",
+
+      "HowToBecomePremium" : "⦁	Cómo convertirse en un Usuario Premium: ",
+      "HowToBecomePremiumDescription" : "Para convertirte en un usuario premium, ve a la pestaña 'Configuración' en la aplicación, luego haz clic en 'Hacerse Premium'. Sigue las instrucciones para completar tu suscripción.",
+
+      "HowToUseAppWithoutSubscription" : "Cómo usar la aplicación sin una suscripción:",
+      "HowToUseAppWithoutSubscriptionDescription" : "Si no deseas convertirte en un usuario premium, aún puedes disfrutar de nuestros wallpapers. Para los wallpapers premium, tendrás que ver un anuncio para desbloquear cada uno que quieras usar.",
+
+      "HowToContactSupport" : "Cómo contactar al Soporte: ",
+      "HowToContactSupportDescription" : "Si necesitas ayuda o tienes alguna pregunta sobre la aplicación, puedes contactar a nuestro equipo de soporte escribiéndonos a ",
+
+      'email': "admin@gwebsoft.org",
+
+
+
 
     },
 

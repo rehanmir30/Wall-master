@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:light_modal_bottom_sheet/light_modal_bottom_sheet.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/PrivacyPolicy/PrivacyPolicyScreen.dart';
+import 'package:wallmaster/Screens/Onboarding/Menu/FAQSCREEN.dart';
+import 'package:wallmaster/Screens/Onboarding/Menu/HelpScreen.dart';
 import 'package:wallmaster/Screens/auth/SignUpScreen.dart';
 import '../../Constants/AppColors.dart';
 import '../../Controllers/LocalizationController.dart';
@@ -100,21 +102,24 @@ class _OnboardingState extends State<Onboarding> {
                       // row with two children
                       child: Text("Help".tr),
                     ),
-                    PopupMenuItem(
-                      value: 3,
-                      // row with two children
-                      onTap: (){
-                        // Get.to(ForgetScreen());
-                      },
-                      child: Text("ForgetPassword".tr),
-                    ),
+                    // PopupMenuItem(
+                    //   value: 3,
+                    //   // row with two children
+                    //   onTap: (){
+                    //     // Get.to(ForgetScreen());
+                    //   },
+                    //   child: Text("ForgetPassword".tr),
+                    // ),
                   ],
                   offset: Offset(0, 0),
                   color: Colors.white,
                   elevation: 2,
                   onSelected: (value) {
                     if (value == 1) {
-                    } else if (value == 2) {}
+                      Get.to(()=>FAQSCREEN());
+                    } else if (value == 2) {
+                      Get.to(()=>HelpScreen());
+                    }
                   },
                 ),
               ],
