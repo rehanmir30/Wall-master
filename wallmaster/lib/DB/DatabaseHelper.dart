@@ -22,6 +22,7 @@ import 'package:wallmaster/Model/UserModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/LikedWallpaper/LikedWallpaperScreen.dart';
+import 'package:wallmaster/Screens/auth/LoginScreen.dart';
 
 import '../AdsMob/AdMobService.dart';
 import '../Constants/AppColors.dart';
@@ -512,6 +513,7 @@ class DatabaseHelper {
     }
   }
 
+  //Get User Details
   Future<void> getUserDetails(UserModel? savedUser)async{
     CommonController commonController = Get.find<CommonController>();
     AuthenticationController authenticationController = Get.find<AuthenticationController>();
@@ -554,6 +556,7 @@ class DatabaseHelper {
 
   }
 
+  //Buy Premium Package
   Future<void> buyPremium()async{
 
     try {
@@ -597,8 +600,45 @@ class DatabaseHelper {
 
   }
 
+  //Forget Passsword
+  Future<void> forgetPassword(email)async{
+
+    Localization _localization = Get.find<Localization>();
+    Map<String, String> header = {
+      "Accept": "application/json",
+      'Content-Type': 'application/json',
+    };
+    var body =
+        '{"email": "${email.trim()}"}';
+
+    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.forgetPasswordApi);
+
+    if (kDebugMode) {
+      print('Verify User API URL - ${url.toString()}');
+      print('Verify User Request Body - ${body.toString()}');
+    }
+    final response = await http.post(
+      url,
+      headers: header,
+      body: body,
+    );
+    var responseJson = json.decode(response.body.toString());
+
+    if (responseJson['status'] == 200) {
+
+      CustomSnackbar.show('${responseJson['message']}', AppColors.green);
+      Get.to(()=>LoginScreen());
+    } else {
+
+      CustomSnackbar.show('${responseJson['message']}', AppColors.red);
+    }
+
+  }
 
 
+
+
+  ////////////////////////////////////////////////////////////////////////////////////
 
   Future<void>addColor() async{
     CommonController commonController = Get.find<CommonController>();

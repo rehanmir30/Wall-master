@@ -160,6 +160,11 @@ class CommonController extends GetxController{
     update();
   }
 
+  forgetPassword(email)async{
+    await DatabaseHelper().forgetPassword(email);
+    update();
+  }
+
   getLikedProduct(List<LikeProductData> list)async{
     _likedProductData = list;
     update();
@@ -198,6 +203,7 @@ class CommonController extends GetxController{
     await DatabaseHelper().getAllProducts();
     update();
   }
+
   AddNativeAd(NativeAd ad)async{
     nativeAdList!.add(ad);
     print("Ad LENGTH: ${nativeAdList!.length}");

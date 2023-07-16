@@ -12,6 +12,7 @@ import '../../Controllers/LocalizationController.dart';
 import '../../CustomWidgets/MyAlertDialog.dart';
 import '../HomeScreen/HomeScreen.dart';
 import '../auth/LoginScreen.dart';
+import 'Menu/ForgetPassword.dart';
 import 'OnboardingController.dart';
 
 class Onboarding extends StatefulWidget {
@@ -102,14 +103,14 @@ class _OnboardingState extends State<Onboarding> {
                       // row with two children
                       child: Text("Help".tr),
                     ),
-                    // PopupMenuItem(
-                    //   value: 3,
-                    //   // row with two children
-                    //   onTap: (){
-                    //     // Get.to(ForgetScreen());
-                    //   },
-                    //   child: Text("ForgetPassword".tr),
-                    // ),
+                    PopupMenuItem(
+                      value: 3,
+                      // row with two children
+                      onTap: (){
+                        // Get.to(ForgetScreen());
+                      },
+                      child: Text("ForgetPassword".tr),
+                    ),
                   ],
                   offset: Offset(0, 0),
                   color: Colors.white,
@@ -119,6 +120,8 @@ class _OnboardingState extends State<Onboarding> {
                       Get.to(()=>FAQSCREEN());
                     } else if (value == 2) {
                       Get.to(()=>HelpScreen());
+                    }else if(value == 3){
+                      Get.to(()=>ForgetPassword());
                     }
                   },
                 ),
