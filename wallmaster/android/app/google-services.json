@@ -14,10 +14,63 @@
       },
       "oauth_client": [
         {
-          "client_id": "26359633293-5affbiustmm8ncrkmt8d9opl5f0h5jkj.apps.googleusercontent.com",
+          "client_id": "26359633293-4lnei10lpr3oiopuhs8gasvqf2ehnt2n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.wallmaster",
+            "certificate_hash": "2085640aad7709a23f8f4b07c040b2ac90ff0c2c"
+          }
+        },
+        {
+          "client_id": "26359633293-mr6s5olt9ds1h2umonggpclvmgse182d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wallmaster",
+            "certificate_hash": "7f80eaf7125b47a2fe30cd30e33c20661faf2ca0"
+          }
+        },
+        {
+          "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACsmwmp-Y6UANb5uZbJ7iTqTWwAqJaMq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26359633293:android:afbf2e09754540cb9899c4",
+        "android_client_info": {
+          "package_name": "com.wallmaster.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26359633293-2isribu554rqrb2nlvbcqpmoes1p9fm2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wallmaster.app",
+            "certificate_hash": "7f80eaf7125b47a2fe30cd30e33c20661faf2ca0"
+          }
+        },
+        {
+          "client_id": "26359633293-hj9qmkv28aklae4kmurubk86bsfetr8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wallmaster.app",
             "certificate_hash": "2085640aad7709a23f8f4b07c040b2ac90ff0c2c"
           }
         },
