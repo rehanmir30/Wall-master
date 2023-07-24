@@ -19,7 +19,7 @@ class _LikeWidgetState extends State<LikeWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.to(()=>SetWallpaperScreen(widget._productData,false));
+        Get.to(()=>SetWallpaperScreen(widget._productData,false,false));
       },
       child: Container(
         height: 300,

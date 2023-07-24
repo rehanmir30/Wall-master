@@ -68,7 +68,7 @@ class _MixWidgetState extends State<MixWidget> {
             data!.add(widget._productData);
             await commonController.getReliventData(data);
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true));            // await commonController.setCount();
+            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));            // await commonController.setCount();
 
 
           }
@@ -84,7 +84,7 @@ class _MixWidgetState extends State<MixWidget> {
             await commonController.getReliventData(data);
             await commonController.setCount();
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true));
+            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));
           }else{
             CommonController commonController = Get.find<CommonController>();
             await commonController.setLoading(true);
@@ -92,7 +92,7 @@ class _MixWidgetState extends State<MixWidget> {
             data!.add(widget._productData);
             await commonController.getReliventData(data);
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true));
+            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));
           }
 
         }

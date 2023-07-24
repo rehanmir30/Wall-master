@@ -13,6 +13,7 @@ import 'package:wallmaster/Model/UserModel.dart';
 import '../AdsMob/AdMobService.dart';
 import '../Constants/AppColors.dart';
 import '../DB/DatabaseHelper.dart';
+import '../Model/CategoryDeckModel.dart';
 import '../Model/GetProductModel.dart';
 import '../Model/LikedWallpaperModel.dart';
 import '../Screens/AdScreen/AdHelper.dart';
@@ -62,6 +63,9 @@ class CommonController extends GetxController{
   List<LikeProductData>? _likedProductData;
   List<LikeProductData>? get likedProductData=>_likedProductData;
 
+  List<CategoryDeckModel>? _categoryDeckList;
+  List<CategoryDeckModel>? get categoryDeckList => _categoryDeckList;
+
 
   BannerAd? _banner;
   BannerAd? _Listbanner;
@@ -86,6 +90,11 @@ class CommonController extends GetxController{
 
 
 
+  setCategoryDeck(List<CategoryDeckModel>? model)async{
+    _categoryDeckList = model;
+    update();
+  }
+
   shuffleList()async{
 
     _likedWallpaperModel!.data?.shuffle(Random());
@@ -94,6 +103,12 @@ class CommonController extends GetxController{
     _premiumProductData?.shuffle(Random());
     print("Shuffle Lists");
     update();
+  }
+
+  getCategoriesWallpaper()async{
+    await DatabaseHelper().getCategoriesWallpaper();
+    update();
+
   }
 
   getUserDetails(UserModel? savedUser)async{
@@ -380,7 +395,7 @@ class CommonController extends GetxController{
         onAdLoaded: (ad) => _rewardedAd= ad,
         onAdFailedToLoad: (LoadAdError error) {
             _rewardedAd = null;
-
+            // CustomSnackbar.show("Ad is not available at the moment. Try again later.", AppColors.red);
         },),
     );
   }
@@ -424,10 +439,14 @@ class CommonController extends GetxController{
           onUserEarnedReward:(ad,reward){
             commonController.setLoading(false);
               _rewardedScore++;
-              Get.to(()=>SetWallpaperScreen(wallpaper,value));
+              Get.to(()=>SetWallpaperScreen(wallpaper,value,false));
           } );
       _rewardedAd = null;
 
+    }
+    else{
+      CustomSnackbar.show("Ad is not available at the moment. Try again later.", AppColors.red);
+      createRewardedAd();
     }
 
   }

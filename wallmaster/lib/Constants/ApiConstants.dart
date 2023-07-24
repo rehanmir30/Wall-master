@@ -18,7 +18,7 @@ class ApiConstants{
   //Profile Update
   static const profileUpdateApi = "api/profile/update";
 
-  //Change Language (Onlhy want to use language parameter and for clarity in the application code so we can specified the implementation )
+  //Change Language (Only want to use language parameter and for clarity in the application code so we can specified the implementation )
   static const changeLanguageApi = "api/profile/update";
 
   //Forget Password

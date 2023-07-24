@@ -80,7 +80,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       }
                       else{
                         commonController.setLoading(false);
-                        Get.to(()=>SetWallpaperScreen(controller.premiumProductData![index],true));
+                        Get.to(()=>SetWallpaperScreen(controller.premiumProductData![index],true,false));
                         List<ProductData> data =[];
                         data!.add(controller.premiumProductData![index]);
                         await commonController.getReliventData(data);

@@ -17,6 +17,7 @@ import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/Controllers/LocalizationController.dart';
 import 'package:wallmaster/DB/SharedPreferences/SharedPreferences.dart';
+import 'package:wallmaster/Model/CategoryDeckModel.dart';
 import 'package:wallmaster/Model/LikedWallpaperModel.dart';
 import 'package:wallmaster/Model/UserModel.dart';
 import 'package:http/http.dart' as http;
@@ -68,6 +69,7 @@ class DatabaseHelper {
       CommonController commonController = Get.find<CommonController>();
       await commonController.getCategories();
       await commonController.getAllProducts();
+      await getCategoriesWallpaper();
 
       Get.offAll(() => const HomeScreen());
     } else {
@@ -128,6 +130,7 @@ class DatabaseHelper {
           CommonController commonController = Get.find<CommonController>();
           await commonController.getCategories();
           await commonController.getAllProducts();
+          await getCategoriesWallpaper();
 
           Get.offAll(() => const HomeScreen());
         } else {
@@ -183,6 +186,7 @@ class DatabaseHelper {
       CommonController commonController = Get.find<CommonController>();
       await commonController.getCategories();
       await commonController.getAllProducts();
+      await getCategoriesWallpaper();
 
       Get.offAll(() => const HomeScreen());
     } else {
@@ -548,11 +552,185 @@ class DatabaseHelper {
       await commonController.getCategories();
       await commonController.getAllProducts();
       await getLikedProduct();
+      await getCategoriesWallpaper();
     } else {
       CustomSnackbar.show('${responseJson['message']}', AppColors.red);
     }
 
 
+
+  }
+
+  Future<void>getCategoriesWallpaper()async{
+   CommonController commonController = Get.find<CommonController>();
+   List<CategoryDeckModel>? data =[];
+
+   for(var i in commonController.categoryModelList!.data!){
+     CategoryDeckModel? deckModel = CategoryDeckModel();
+
+     deckModel.id = i.id;
+       deckModel.name = i.name;
+       deckModel.imageName = i.imageName;
+       deckModel.image = i.image;
+
+       List<ProductData> productList =[];
+       int lastWas=0;
+       bool firstRun = true;
+
+       for(var j in commonController.productModelList!.data!){
+         if(j.forPremium==0 && j.categoryId==i.id){
+           bool result = productList.any((element) => element.id==j.id);
+           print('${result}');
+           if(result==false){
+             print("Regular Added: ${j.forPremium}");
+             if(lastWas==1 && firstRun==false){
+               productList.add(j);
+               lastWas =0;
+             }else if(lastWas==0 && firstRun ==true){
+               productList.add(j);
+               firstRun = false;
+               lastWas =0;
+             }
+
+             for(var k in commonController.productModelList!.data!){
+               if(k.forPremium==1 && k.categoryId==i.id){
+                 bool result = productList.any((element) => element.id==k.id);
+                 if(result==false){
+                   if(lastWas==0){
+                     productList.add(k);
+                     lastWas = 1;
+                   }
+
+                   break;
+                 }
+               }
+             }
+           }
+         }else if(j.forPremium==1 && j.categoryId==i.id){
+           bool result = productList.any((element) => element.id==j.id);
+           if(result==false){
+             print("Premium Added: ${j.forPremium}");
+             if(lastWas==0 && firstRun==false){
+               productList.add(j);
+               lastWas =1;
+             }else if(lastWas==0 && firstRun ==true){
+               productList.add(j);
+               firstRun = false;
+               lastWas =1;
+             }
+
+             for(var k in commonController.productModelList!.data!){
+               if(k.forPremium==0 && k.categoryId==i.id){
+                 bool result = productList.any((element) => element.id==k.id);
+                 if(result==false){
+                   if(lastWas==1){
+                     productList.add(k);
+                     lastWas = 0;
+                   }
+                   break;
+                 }
+               }
+             }
+           }
+         }
+
+         if(productList.length<4){
+           for(var l in commonController.productModelList!.data!){
+             if(l.forPremium==0 && l.categoryId==i.id) {
+               bool result = productList.any((element) => element.id == l.id);
+               print('${result}');
+               if (result == false) {
+                 print("Regular Added Again: ${l.forPremium}");
+                 if(productList.length<4){
+                   productList.add(l);
+                 }
+               }
+             }
+           }
+         }
+       }
+
+
+
+
+       deckModel.wallpaperdata = [];
+       deckModel.wallpaperdata = productList;
+       data.add(deckModel);
+
+       await commonController.setCategoryDeck(data);
+
+   }
+
+     // for(var r =0; r<=commonController.categoryModelList!.data!.length-1; r++){
+     //
+     //   CategoryDeckModel? deckModel = CategoryDeckModel();
+     //
+     //   deckModel.id = commonController.categoryModelList!.data![r].id;
+     //   deckModel.name = commonController.categoryModelList!.data![r].name;
+     //   deckModel.imageName = commonController.categoryModelList!.data![r].imageName;
+     //   deckModel.image = commonController.categoryModelList!.data![r].image;
+     //
+     //   List<ProductData> productList = [];
+     //
+     //   for(var j =0;  j<=commonController.productModelList!.data!.length-1; j++){
+     //     int pre =0;
+     //
+     //       if(commonController.productModelList!.data![j].forPremium==0 ){
+     //         pre =0;
+     //       }
+     //       else{
+     //         pre =1;
+     //       }
+     //
+     //
+     //     if(commonController.productModelList!.data![j].forPremium==pre && commonController.productModelList!.data![j].categoryId==commonController.categoryModelList!.data![r].id){
+     //
+     //       if(productList.any((element) => element.id == commonController.productModelList!.data![j].id)){
+     //       }
+     //       else{
+     //         productList.add(commonController.productModelList!.data![j]);
+     //         for(var k =0; k<=commonController.productModelList!.data!.length-1; k++){
+     //           int sec = 1;
+     //           if(pre==0){
+     //             sec =1;
+     //           }
+     //           else{
+     //             sec=0;
+     //           }
+     //           if(commonController.productModelList!.data![k].forPremium==sec && commonController.productModelList!.data![k].categoryId==commonController.categoryModelList!.data![r].id){
+     //
+     //
+     //             bool result = productList.any((wallpaper) => wallpaper.id == commonController.productModelList!.data![k].id);
+     //             print(result.toString());
+     //             if(result==false){
+     //               print('Null: ${commonController.productModelList!.data![k].categoryId}');
+     //               print('Null: ${commonController.productModelList!.data![k].forPremium.toString()}');
+     //               productList.add(commonController.productModelList!.data![k]);
+     //               break;
+     //             }
+     //
+     //             //
+     //             // print('Null: ${commonController.productModelList!.data![k].categoryId}');
+     //             // productList.add(commonController.productModelList!.data![k]);
+     //             // break;
+     //
+     //           }
+     //
+     //         }
+     //       }
+     //       // }
+     //     }
+     //   }
+     //   deckModel.wallpaperdata = [];
+     //   print(deckModel.name.toString());
+     //   deckModel.wallpaperdata = productList;
+     //   print(deckModel.wallpaperdata!.length.toString());
+     //   data.add(deckModel);
+     // }
+
+     await commonController.setCategoryDeck(data);
+
+     print('DECK DATA:   ${data!.length}');
 
   }
 

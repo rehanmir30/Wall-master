@@ -23,6 +23,7 @@ import 'package:wallmaster/Screens/Download/EditWallpaper/EditWallpaperScreen.da
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:wallmaster/Screens/Download/SetWallpaper/ReliventImages.dart';
+import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 
 import '../../../CustomWidgets/MixWidget.dart';
 import '../../../Model/CategoryModel.dart';
@@ -431,7 +432,8 @@ class WallpaperBottomSheet extends StatelessWidget {
 class SetWallpaperScreen extends StatefulWidget {
   var productData;
   bool notFromLike;
-   SetWallpaperScreen(this.productData,this.notFromLike,{super.key});
+  bool fromHomePage;
+   SetWallpaperScreen(this.productData,this.notFromLike,this.fromHomePage,{super.key});
 
   @override
   State<SetWallpaperScreen> createState() => _SetWallpaperScreenState();
@@ -452,125 +454,148 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
     await commonController.isProductLiked(widget.productData.id);
   }
 
+  Future<bool> returnBack()async{
+    if(widget.fromHomePage==true){
+      Get.offAll(HomeScreen());
+    }else{
+      Get.back();
+    }
+      return true;
+}
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(onPressed: () {
-            CommonController commonController = Get.find<CommonController>();
-            Get.to(()=>EditWallPaperScreen(commonController.productReliventData![_index].image));
-          }, icon: Icon(Icons.edit,color: Colors.white,))
-        ],
-      ),
-      body: GetBuilder<CommonController>(builder: (controller) {
-        return  Stack(
-          children: [
-            Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(controller.productReliventData![_index].image!),
-                      fit: BoxFit.cover,
-                    )
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                  ),
-                )
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+    return WillPopScope(
+      onWillPop: () {
+        return returnBack();
 
-                Container(
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                returnBack();
+
+          },icon: Icon(Icons.arrow_back,color: AppColors.white,)),
+          elevation: 0,
+          actions: [
+
+            IconButton(onPressed: () {
+              CommonController commonController = Get.find<CommonController>();
+              Get.to(()=>EditWallPaperScreen(commonController.productReliventData![_index].image));
+            }, icon: Icon(Icons.edit,color: Colors.white,))
+          ],
+        ),
+        body: GetBuilder<CommonController>(builder: (controller) {
+          return  Stack(
+            children: [
+              Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: CarouselSlider.builder(
-                    itemCount: controller.productReliventData!.length,
-                    itemBuilder: (BuildContext context, int index, int realIndex) {
-                      final item = controller.productReliventData![index];
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(controller.productReliventData![_index].image!),
+                        fit: BoxFit.cover,
+                      )
+                  ),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                    ),
+                  )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-                      return Container(
-                        color: Colors.transparent,
-                        child: CachedNetworkImage(
-                          imageUrl: item.image!,
-                          placeholder: (context, url) => Image.asset('assets/images/modified_logo.png'),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                        ),
-                      ).marginSymmetric(horizontal: 5);
-                    },
-                    options: CarouselOptions(
-                      enlargeCenterPage: true,
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      enableInfiniteScroll: false,
-                      initialPage: 0,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (int index, CarouselPageChangedReason reason) {
-                        setState(() {
-                          _index = index;
-                        });
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    child: CarouselSlider.builder(
+                      itemCount: controller.productReliventData!.length,
+                      itemBuilder: (BuildContext context, int index, int realIndex) {
+                        final item = controller.productReliventData![index];
+
+                        return Container(
+                          color: Colors.transparent,
+                          child: CachedNetworkImage(
+                            imageUrl: item.image!,
+                            placeholder: (context, url) => Image.asset('assets/images/modified_logo.png'),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                        ).marginSymmetric(horizontal: 0);
                       },
+                      options: CarouselOptions(
+                        scrollPhysics: BouncingScrollPhysics(),
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.76,
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        enableInfiniteScroll: false,
+                        initialPage: 0,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (int index, CarouselPageChangedReason reason) {
+                          setState(() {
+                            _index = index;
+                          });
+                        },
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InkWell(
-                        onTap: () async {
-                          await controller.setLoading(true);
-                          await controller.updateLikeProduct(controller.productReliventData![_index].id, widget.notFromLike);
-                          await controller.setLiked(true);
-                          await controller.setLoading(false);
-                        },
-                        child: (controller.isLiked==true)
-                            ?Icon(CupertinoIcons.heart_fill,color: Colors.white,)
-                            :Icon(CupertinoIcons.heart,color: Colors.white,)).marginSymmetric(horizontal: 10),
-                    InkWell(
-                      onTap: (){
-                        showModalBottomSheet(
-                          barrierColor: Colors.transparent,
-                          backgroundColor: Color(0xff282828),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
-                          context: context,
-                          builder: (BuildContext context) {
-                            return WallpaperBottomSheet(controller.productReliventData![_index].image);
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                          onTap: () async {
+                            await controller.setLoading(true);
+                            await controller.updateLikeProduct(controller.productReliventData![_index].id, widget.notFromLike);
+                            await controller.setLiked(true);
+                            await controller.setLoading(false);
                           },
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(17),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white
-                        ),
-                        child: Icon(Icons.mobile_screen_share_sharp,size: 30,),
-                      ).marginSymmetric(horizontal: 10),
-                    ),
-                    InkWell(
+                          child: (controller.isLiked==true)
+                              ?Icon(CupertinoIcons.heart_fill,color: Colors.white,)
+                              :Icon(CupertinoIcons.heart,color: Colors.white,)).marginSymmetric(horizontal: 10),
+                      InkWell(
                         onTap: (){
-                          downloadImage(controller.productReliventData![_index].image!,context);
+                          showModalBottomSheet(
+                            barrierColor: Colors.transparent,
+                            backgroundColor: Color(0xff282828),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return WallpaperBottomSheet(controller.productReliventData![_index].image);
+                            },
+                          );
                         },
-                        child: Icon(Icons.download,size: 34,color: Colors.white,).marginSymmetric(horizontal: 10))
+                        child: Container(
+                          padding: EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white
+                          ),
+                          child: Icon(Icons.mobile_screen_share_sharp,size: 30,),
+                        ).marginSymmetric(horizontal: 10),
+                      ),
+                      InkWell(
+                          onTap: (){
+                            downloadImage(controller.productReliventData![_index].image!,context);
+                          },
+                          child: Icon(Icons.download,size: 34,color: Colors.white,).marginSymmetric(horizontal: 10))
 
-                  ],),
-              ],).marginSymmetric(horizontal: 0,vertical: 10),
+                    ],),
+                ],).marginSymmetric(horizontal: 0,vertical: 10),
 
-            Visibility(
-                visible: controller.isLoading,
-                child: LoadingAnimation())
-          ],);
-      },),
+              Visibility(
+                  visible: controller.isLoading,
+                  child: LoadingAnimation())
+            ],);
+        },),
+      ),
     );
   }
 }

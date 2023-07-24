@@ -3,9 +3,9 @@ import 'dart:io';
 
 class CreateProductModel{
   var id;
-  var name;
+  List<String>? name;
   var category_id;
-  File? image;
+  List<File>? image;
   var for_premium;
   List<String> tags;
 

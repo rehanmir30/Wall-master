@@ -45,7 +45,7 @@ class LanguageTransalator extends Translations{
       //Add New WallPaperScreen
       "TAG": "TAG",
       "EnterTag": "Enter Tag",
-      "PickWallpapers": "Pick Wallpapers",
+      "PickWallpapers": "ADD IMAGES +",
       "NoWallpaperSelected": "No Wallpaper selected",
       "Premium": "Premium",
       "TAGS": "TAGS",
@@ -123,7 +123,7 @@ class LanguageTransalator extends Translations{
       //Add New WallPaperScreen
       "TAG": "ETIQUETA",
       "EnterTag": "Introducir etiqueta",
-      "PickWallpapers": "Elige fondos de pantalla",
+      "PickWallpapers": "AÑADIR IMÁGENES +",
       "NoWallpaperSelected": "Ningún fondo de pantalla seleccionado",
       "Premium": "De primera calidad",
       "TAGS": "ETIQUETAS",

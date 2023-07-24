@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Tab(
                   child: Text(
                     'Premium'.tr,
-                    style: TextStyle(fontSize: 20), // Increase the font size
+                    style: TextStyle(fontSize: 20,color: Colors.yellow), // Increase the font size
                   ),
                 ),
                 // Other tabs...
@@ -224,7 +224,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 child: Image.asset("assets/images/heart.png",width: 15,height: 15,),
               ),
-              title: Text('LikedWallpapers'.tr),
+              title: Text('LikedWallpaper'.tr),
               onTap: () {
                 Navigator.pop(context);
                 Get.to(()=>LikedWallpaperScreen());

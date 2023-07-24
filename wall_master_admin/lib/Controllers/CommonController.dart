@@ -9,6 +9,7 @@ import 'package:wall_master_admin/Models/CreateCategoryModel.dart';
 import 'package:wall_master_admin/Models/CreateProductModel.dart';
 import 'package:wall_master_admin/Models/GetAllUserModel.dart';
 import 'package:wall_master_admin/Models/GetCategoryModel.dart';
+import 'package:wall_master_admin/Models/UpdateProductModel.dart';
 
 import '../Models/GetProductModel.dart';
 
@@ -30,6 +31,10 @@ class CommonController extends GetxController{
 
   List<ProductData>? _productData;
   List<ProductData>? get productData=>_productData;
+
+  late List<ProductData> _multiSelectionProduct =[];
+  List<ProductData> get multiSelectionProduct=>_multiSelectionProduct;
+
 
   List<Datum>? _categoryList;
   List<Datum>? get categoryList=>_categoryList;
@@ -53,10 +58,63 @@ class CommonController extends GetxController{
   bool get isLoading =>_isLoading;
 
 
+  bool _multiSelectEnabled = false;
+  bool get multiSelectEnabled =>_multiSelectEnabled;
+
+  late List<bool> _multicheckBox = [];
+  List<bool> get multicheckBox => _multicheckBox;
+
+
   @override
   onInit()async{
     super.onInit();
    getImages();
+  }
+
+
+  addProductUsingMultiSelect(ProductData productData)async{
+    print('Last Add LENGTH: ${productData.id}');
+    _multiSelectionProduct.add(productData);
+    print('After Add Updated LENGTH: ${_multiSelectionProduct.length}');
+    update();
+  }
+
+  removeProductUsingMultiSelect(ProductData productData)async{
+    print('Last LENGTH: ${_multiSelectionProduct.length}');
+    _multiSelectionProduct.removeWhere((element) => element.id==productData.id);
+    print('Updated LENGTH: ${_multiSelectionProduct.length}');
+    update();
+  }
+
+  clearProductUsingMultiSelect( )async{
+    _multiSelectionProduct.clear();
+    print('Updated LENGTH: ${_multiSelectionProduct.length}');
+    _multicheckBox.clear();
+    update();
+  }
+
+  setMultiSelectSupport(bool value,bool selectAll)async{
+    if(value==true){
+      _multiSelectEnabled =value;
+     if(selectAll==false){
+       for(var i=0; i<=productData!.length-1;i++){
+         _multicheckBox.add(false);
+       }
+     }else{
+       for(var i=0; i<=productData!.length-1;i++){
+         _multicheckBox.add(true);
+       }
+     }
+    }else{
+      _multiSelectEnabled =value;
+      _multicheckBox.clear();
+    }
+    update();
+  }
+
+  updateMulticheckBoxValue(bool value,index)async{
+    _multicheckBox[index] = value;
+    update();
   }
 
 
@@ -157,7 +215,7 @@ class CommonController extends GetxController{
     update();
   }
 
-  updateProduct(CreateProductModel model ,context)async{
+  updateProduct(UpdateProductModel model ,context)async{
     await DatabaseHelper().updateProduct(model,context);
     update();
   }
@@ -165,6 +223,43 @@ class CommonController extends GetxController{
   deleteProduct(id,category_id,context)async{
     await DatabaseHelper().deleteProduct(id,category_id,context);
     update();
+  }
+
+  DeleteMultipleProduct(List<ProductData> productList,context)async{
+    await DatabaseHelper().DeleteMultipleProduct(productList,context);
+    await setMultiSelectSupport(false,false);
+    await clearProductUsingMultiSelect();
+    update();
+  }
+
+
+  UpdateMultipleProducts(List<ProductData> productList,context)async{
+    List<UpdateProductModel> modelList =[];
+
+    for(var i in productList){
+      modelList.add(UpdateProductModel(
+          i.id,
+          tags: i.tags!,
+          name: i.name,
+          image: i.image,
+          category_id: i.categoryId,
+          for_premium: i.forPremium)
+      );
+    }
+
+    await DatabaseHelper().UpdateMultipleProducts(modelList,context);
+    await setMultiSelectSupport(false,false);
+    await clearProductUsingMultiSelect();
+    update();
+  }
+
+  selectAll()async{
+    await clearProductUsingMultiSelect();
+    await setMultiSelectSupport(true,true);
+    for(var i in productData!){
+      await addProductUsingMultiSelect(i);
+    }
+
   }
 
 
