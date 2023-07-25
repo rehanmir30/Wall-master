@@ -566,6 +566,9 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                     model, widget._categoryModel, context);
                               } else {
                                 final split = tagsController.text.split(',');
+                                if(split.last ==" "  || split.last ==""){
+                                  split.removeAt(split.length-1);
+                                }
                                 CreateProductModel model = CreateProductModel(
                                   "",
                                   name: _selectedImageNames,

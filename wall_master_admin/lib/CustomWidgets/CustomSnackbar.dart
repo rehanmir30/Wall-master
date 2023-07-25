@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomSnackbar {
-  static void show(String message,Color coo, {Duration duration = const Duration(seconds: 4)}) {
+  static void show(String message,Color coo, {Duration duration = const Duration(milliseconds: 800)}) {
     Get.snackbar(
       '',
       '',

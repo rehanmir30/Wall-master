@@ -399,21 +399,19 @@ class DatabaseHelper {
   }
 
   //Create Product Function
-  Future<void> createProduct(
-      CreateProductModel model, CategoryModel categoryModel, context) async {
+  Future<void> createProduct(CreateProductModel model, CategoryModel categoryModel, context) async {
     print("LENGTH OF TAGS: ${model.tags.length}");
     var tagsValue = model.tags.join(',');
 
-    AuthenticationController authenticationController =
-        Get.find<AuthenticationController>();
-    Map<String, String> headers = {
-      "Accept": "application/json",
-      'Content-Type': 'multipart/form-data',
-      'Authorization':
-          'Bearer ${authenticationController.adminModel?.accessToken}'
-    };
-
     for (var i = 0; i <= model.image!.length - 1; i++) {
+      AuthenticationController authenticationController =
+      Get.find<AuthenticationController>();
+      Map<String, String> headers = {
+        "Accept": "application/json",
+        'Content-Type': 'multipart/form-data',
+        'Authorization':
+        'Bearer ${authenticationController.adminModel?.accessToken}'
+      };
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(ApiConstants.baseUrl + ApiConstants.createProductUrl),
@@ -422,12 +420,11 @@ class DatabaseHelper {
       request.fields['name'] = model.name![i];
       request.fields['category_id'] = model.category_id.toString();
       request.fields['for_premium'] = model.for_premium.toString();
-      for (var i = 0; i < model.tags.length; i++) {
-        print(i.toString());
-        request.fields['tags[${i}]'] = model.tags[i];
+      for (var j = 0; j < model.tags.length; j++) {
+        print(j.toString());
+        request.fields['tags[${j}]'] = model.tags[j];
       }
-      request.files.add(
-          await http.MultipartFile.fromPath('image', model.image![i].path));
+      request.files.add(await http.MultipartFile.fromPath('image', model.image![i].path));
 
       if (kDebugMode) {
         print('Create Category API URL - ${request.url.toString()}');
@@ -440,8 +437,7 @@ class DatabaseHelper {
       if (jsonResponse['status'] == 200) {
         // File successfully uploaded
         print('File uploaded!');
-        CustomSnackbar.show(
-            '${i + 1} ${jsonResponse['message']}', AppColors.green);
+        CustomSnackbar.show('${i + 1} ${jsonResponse['message']}', AppColors.green);
         // Get.back();
         // Get.offAll(()=>const HomeScreen());
       } else {
