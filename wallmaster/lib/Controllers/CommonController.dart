@@ -88,9 +88,29 @@ class CommonController extends GetxController{
   int _clickCount = 0;
   int get clickCount => _clickCount;
 
+  String? _selectedString;
+  String? get selectedString =>_selectedString;
 
+  bool _selected = false;
+  bool get selected => _selected;
+  selectedImagebool(boo)async{
+    _selected = boo;
+    update();
+  }
+
+  selectedImage(image,bool value)async{
+   _selectedString = image;
+   _selected = value;
+    update();
+  }
+
+
+  updateUI()async{
+    update();
+  }
 
   setCategoryDeck(List<CategoryDeckModel>? model)async{
+    model?.shuffle();
     _categoryDeckList = model;
     update();
   }

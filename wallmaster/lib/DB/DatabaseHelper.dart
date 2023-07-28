@@ -566,6 +566,7 @@ class DatabaseHelper {
    List<CategoryDeckModel>? data =[];
 
    for(var i in commonController.categoryModelList!.data!){
+     commonController.productModelList?.data?.shuffle();
      CategoryDeckModel? deckModel = CategoryDeckModel();
 
      deckModel.id = i.id;

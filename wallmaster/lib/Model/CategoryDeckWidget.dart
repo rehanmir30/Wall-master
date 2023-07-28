@@ -12,6 +12,7 @@ import '../Screens/Download/SetWallpaper/SetWallpaperScreen.dart';
 import '../Screens/HomeScreen/SubScreens/Drawer/PremiumPackages/PremiumPackage.dart';
 import 'GetProductModel.dart';
 
+
 class CategoryDeckWidget extends StatefulWidget {
   int categoryIndex;
   int prodcutIndex;
@@ -24,9 +25,10 @@ class CategoryDeckWidget extends StatefulWidget {
 
 class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _animation;
+  late Animation<double> _animation=Tween<double>(begin: stackValue, end: 1.2).animate(_animationController);
   bool set =false;
-  double stackValue =1.2;
+  double stackValue =0.5;
+  bool selection = false;
 
   @override
   void initState() {
@@ -35,9 +37,8 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
       vsync: this,
       duration: Duration(milliseconds: 300), // Adjust the duration as needed
     );
-    _animation = Tween<double>(begin: stackValue, end: 0.6).animate(_animationController);
 
-    _toggleAnimation();
+    // _toggleAnimation();
 
   }
 
@@ -51,7 +52,7 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
 
   Future<void> _toggleAnimation() async {
     if (_animationController.status == AnimationStatus.completed) {
-       await _animationController.reverse();
+      await _animationController.reverse();
 
 
 
@@ -128,21 +129,21 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
 
       }
 
-    } else {
-      setState(() {
-         _animationController.forward();
-      });
     }
-    await Future.delayed(Duration(seconds: 2),(){
+    else {
+        await _animationController.forward();
+        selection =true;
+        // await controller.selectedImage(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex].image.toString(),true);
+        await controller.updateUI();
 
-       if(_animationController.status == AnimationStatus.completed){
-         setState(() {
-           _animationController.reverse(); //
-           set = false;
-         });
-       }
+        await Future.delayed(Duration(milliseconds: 3000),() async {
+          await _animationController.reverse();
+          selection = false;
+          await controller.updateUI();
+        });
 
-    });
+
+    }
 
   }
 
@@ -150,18 +151,11 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GetBuilder<CommonController>(builder: (controller) {
+      return InkWell(
         overlayColor: MaterialStateProperty.all(Colors.transparent),
         onTap: () async {
-          // setState(() {
-          //   set = !set;
-          // });
-           _toggleAnimation();
-
-
-
-
-
+          await _toggleAnimation();
         },
         child: AnimatedAlign(
           alignment: Alignment.center,
@@ -175,11 +169,11 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 // color: AppColors.white,
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: Colors.white, width: 3),
                 borderRadius: BorderRadius.circular(25),
               ),
-              height: 200,
-              width: 120,
+              height: (selection==true)?230:200,
+              width: (selection==true)?150:120,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: FadeInImage(
@@ -193,7 +187,7 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
           ),
         ),
       );
+    },);
 
   }
 }
-
