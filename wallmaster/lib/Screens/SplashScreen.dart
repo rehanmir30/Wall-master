@@ -30,11 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
     Future.delayed(const Duration(milliseconds: 3000), () async {
+      CommonController commonController = Get.find<CommonController>();
       UserModel? savedUser = await SharedPref.getUser();
       var selectedLanguage = await SharedPref.getSelectedLanguage();
+      bool magazine = await SharedPref.getWorkManager();
+      await commonController.setMagazine(magazine);
       if (savedUser != null) {
         // await SharedPref.removeUser();
-        CommonController commonController = Get.find<CommonController>();
+
         // AuthenticationController authenticationController = Get.find<AuthenticationController>();
         // await authenticationController.setUserData(savedUser);
         await commonController.getUserDetails(savedUser);
@@ -64,32 +67,50 @@ class _SplashScreenState extends State<SplashScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-            color: AppColors.white
+            color: Colors.black
         ),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnimatedContainer(
-                width: _isVisible ? 150 : 0,
-                height: _isVisible ? 150 : 0,
-                curve: Curves.bounceIn,
-                duration: Duration(seconds: 1),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/modified_logo.png"),
-                  ),
-                ),
-              ),
-              Text("Wall Master",style: TextStyle(color: Color(0xffA61892),fontSize: 54,fontFamily: 'impact',letterSpacing: 3),),
-              Text("Your world, your Screen...",style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
-              SizedBox(height: 20,),
+
+              // Text("Visual Scape",style: TextStyle(color: Colors.white,fontSize: 54,fontFamily: 'impact',letterSpacing: 3),),
+
+              SizedBox(height: 200,),
               Container(
-                height: 20,
-                width: 20,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+
+                      Positioned(
+                        top:-110,
+                        child: AnimatedContainer(
+                        width: _isVisible ? 150 : 0,
+                        height: _isVisible ? 150 : 0,
+                        curve: Curves.bounceIn,
+                        duration: Duration(seconds: 1),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/modified_logo.png"),
+                          ),
+                        ),
+                      ),),
+
+                      Image.asset('assets/images/VisualScapeText.png',width: MediaQuery.of(context).size.width*0.9,),
+                      Positioned(
+                          bottom: 25,
+                          child: Text("Your world, your Screen...",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),)),
+                    ],
+                  )),
+              // SizedBox(height: 20,),
+              Container(
+                height: 60,
+                width: 60,
                 child: CircularProgressIndicator(
-                  color: Color(0xffA61892),
+                  color: Colors.white,
                 ),
               ),
 

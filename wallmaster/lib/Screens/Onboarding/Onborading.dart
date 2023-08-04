@@ -38,15 +38,22 @@ class _OnboardingState extends State<Onboarding> {
     return SafeArea(
         child: Scaffold(
             extendBodyBehindAppBar: true,
+            backgroundColor: Colors.black,
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Colors.transparent,
-              leading: Container(padding: EdgeInsets.all(10),child: Image.asset("assets/images/logo.png",width: 5,height: 5,fit: BoxFit.fill,)),
+              leading: Container(
+                  padding: EdgeInsets.all(5),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: AssetImage('assets/images/circle_logo.png'),
+                    // radius: 20,
+                  )),
               actions: [
                 InkWell(
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                     highlightColor: Colors.transparent,
-                    radius: 20,
+                    radius: 10,
                     onTap: () {
                       print("Clicked");
                       Get.to(()=>PrivacyPolicyScreen());
@@ -150,7 +157,7 @@ class _OnboardingState extends State<Onboarding> {
                               Container(
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.6),
+                                  // color: Colors.black.withOpacity(0.6),
                                 ),
                               ),
                               Column(
@@ -199,38 +206,52 @@ class _OnboardingState extends State<Onboarding> {
                   // left: MediaQuery.of(context).size.width*0.4,
                   child: Column(
                     children: [
-                      SmoothPageIndicator(
-                          controller: _controller.pageController,
-                          // PageController
-                          count: _controller.onBoardingPages.length,
-                          effect: SlideEffect(
-                              spacing: 8.0,
-                              radius: 20.0,
-                              dotWidth: 10.0,
-                              dotHeight: 10.0,
-                              paintStyle: PaintingStyle.stroke,
-                              strokeWidth: 1.5,
-                              dotColor: Colors.grey,
-                              activeDotColor: Colors.red),
-                          // your preferred effect
-                          onDotClicked: (index) {}),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          SizedBox(width: 70,),
+                          Expanded(
+                            child: GetBuilder<Localization>(builder: (controller) {
+                              return InkWell(
+                                  onTap: (){
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return MyAlertDialog();
+                                      },
+                                    );
+                                  },
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(controller.dropdownValue['name'].toString(),style: TextStyle(color: Colors.white,fontSize: 26,fontWeight: FontWeight.bold),),Icon(Icons.arrow_drop_down_sharp,color: AppColors.white,size: 50,)],));
+                            },),
+                          ),
+                          // SizedBox(
+                          //   height: 30,
+                          // ),
+                          SmoothPageIndicator(
+                              controller: _controller.pageController,
+                              // PageController
+                              count: _controller.onBoardingPages.length,
+                              effect: SlideEffect(
+                                  spacing: 8.0,
+                                  radius: 50.0,
+                                  dotWidth: 20.0,
+                                  dotHeight: 20.0,
+                                  paintStyle: PaintingStyle.stroke,
+                                  strokeWidth: 1.5,
+                                  dotColor: Colors.grey,
+                                  activeDotColor: Colors.red),
+                              // your preferred effect
+                              onDotClicked: (index) {}),
+
+
+
+
+                        ],),
+
                       SizedBox(
-                        height: 30,
-                      ),
-                      GetBuilder<Localization>(builder: (controller) {
-                        return InkWell(
-                            onTap: (){
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return MyAlertDialog();
-                                },
-                              );
-                            },
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(controller.dropdownValue['name'].toString(),style: TextStyle(color: Colors.white,fontSize: 16),),Icon(Icons.arrow_drop_down_sharp,color: AppColors.white,size: 30,)],));
-                      },),
-                      SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
                       InkWell(
                         onTap: () {

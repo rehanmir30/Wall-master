@@ -100,7 +100,7 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
           data!.add(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex]);
           await commonController.getReliventData(data);
           await commonController.setLoading(false);
-          Get.offAll(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true,true));            // await commonController.setCount();
+          Get.offAll(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true));            // await commonController.setCount();
 
 
         }
@@ -116,7 +116,7 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
           await commonController.getReliventData(data);
           await commonController.setCount();
           await commonController.setLoading(false);
-          Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true,true));
+          Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true));
         }else{
           CommonController commonController = Get.find<CommonController>();
           await commonController.setLoading(true);
@@ -124,7 +124,7 @@ class _CategoryDeckWidgetState extends State<CategoryDeckWidget> with SingleTick
           data!.add(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex]);
           await commonController.getReliventData(data);
           await commonController.setLoading(false);
-          Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true,true));
+          Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![widget.categoryIndex].wallpaperdata![widget.prodcutIndex],true));
         }
 
       }

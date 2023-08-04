@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
+import 'package:wallmaster/DB/SharedPreferences/SharedPreferences.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallmaster/Model/GetCategoryModel.dart';
 import 'package:wallmaster/Model/UserModel.dart';
@@ -22,11 +24,6 @@ import '../Screens/Download/SetWallpaper/SetWallpaperScreen.dart';
 
 class CommonController extends GetxController{
 
-  List<String> _Images=[];
-  List<String> get Images =>_Images;
-  List<PaletteColor?> _dycolors = [];
-  List<PaletteColor?> get dycolors =>_dycolors;
-
   bool _isLoading = false;
   bool get isLoading =>_isLoading;
 
@@ -38,6 +35,12 @@ class CommonController extends GetxController{
 
   GetCategoryModel? _categoryModelList;
   GetCategoryModel? get categoryModelList=>_categoryModelList;
+
+  List<String> _Images=[];
+  List<String> get Images =>_Images;
+
+  List<PaletteColor?> _dycolors = [];
+  List<PaletteColor?> get dycolors =>_dycolors;
 
   LikedWallpaperModel? _likedWallpaperModel;
   LikedWallpaperModel? get likedWallpaperModel=>_likedWallpaperModel;
@@ -66,16 +69,23 @@ class CommonController extends GetxController{
   List<CategoryDeckModel>? _categoryDeckList;
   List<CategoryDeckModel>? get categoryDeckList => _categoryDeckList;
 
+  List<NativeAd>? _nativeAdList = [];
+  List<NativeAd>? get nativeAdList=>_nativeAdList;
+
 
   BannerAd? _banner;
   BannerAd? _Listbanner;
+
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
+
   int _rewardedScore = 0;
+
+  List<int>? _stackIndex;
+  List<int>? get stackIndex =>_stackIndex;
+
   late NativeAd _nativeAd;
   NativeAd get nativeAd=>_nativeAd;
-  List<NativeAd>? _nativeAdList = [];
-  List<NativeAd>? get nativeAdList=>_nativeAdList;
 
   bool nativeIsLoaded = false;
 
@@ -93,6 +103,39 @@ class CommonController extends GetxController{
 
   bool _selected = false;
   bool get selected => _selected;
+
+  bool _workManagerMagazine = false;
+  bool  get workManagerMagazine =>_workManagerMagazine;
+
+
+  setMagazine(bool value)async{
+    _workManagerMagazine = value;
+    await SharedPref.setWorkManager(value);
+    update();
+  }
+
+  stopWorkManagerTasks()async{
+    await DatabaseHelper().stopWorkManagerTasks();
+    update();
+  }
+
+
+  selectedStackIndex(value)async{
+    _stackIndex = value;
+    update();
+  }
+
+  updatedStackIndex(stackIndex,int selectedIndex)async{
+    List<int>? demo =[];
+    for(var i=0;i<categoryDeckList!.length;i++){
+      demo!.add(0);
+    }
+    _stackIndex = demo;
+    _stackIndex![stackIndex] = selectedIndex;
+    update();
+  }
+
+
   selectedImagebool(boo)async{
     _selected = boo;
     update();
@@ -110,7 +153,7 @@ class CommonController extends GetxController{
   }
 
   setCategoryDeck(List<CategoryDeckModel>? model)async{
-    model?.shuffle();
+    // model!.sort((a,b)=>a.name!.compareTo(b.name!));
     _categoryDeckList = model;
     update();
   }
@@ -276,6 +319,11 @@ class CommonController extends GetxController{
     update();
   }
 
+  startWorkManagerTask(text)async{
+    await DatabaseHelper().startWorkManagerTask(text);
+    update();
+  }
+
   List<String> images =[
         "assets/images/1 (1).jpg",
         "assets/images/1 (2).jpg",
@@ -323,8 +371,11 @@ class CommonController extends GetxController{
       called();
     });
   }
+
   called()async{
-    print('checking');
+    if (kDebugMode) {
+      print('checking Auto Ad');
+    }
     if(clickCount>=5){
       if(interstitial==true){
         showInterstitialAd();
@@ -459,7 +510,7 @@ class CommonController extends GetxController{
           onUserEarnedReward:(ad,reward){
             commonController.setLoading(false);
               _rewardedScore++;
-              Get.to(()=>SetWallpaperScreen(wallpaper,value,false));
+              Get.to(()=>SetWallpaperScreen(wallpaper,value));
           } );
       _rewardedAd = null;
 

@@ -96,7 +96,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
                   decoration: BoxDecoration(
                     color: AppColors.black,
                     image: DecorationImage(
-                      image:  AssetImage("assets/images/logo.png"),
+                      image:  AssetImage("assets/images/modified_logo.png"),
                     ),
                   ),
                 ),
@@ -106,7 +106,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
 
             Align(
                 alignment: Alignment.center,
-                child: Text("Wall Master",style: TextStyle(color: Colors.white,fontSize: 28),)),
+                child: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 28),)),
             SizedBox(height: 40,),
 
             Text("Upgrade".tr,style: TextStyle(fontSize: 14,color: Colors.white),),

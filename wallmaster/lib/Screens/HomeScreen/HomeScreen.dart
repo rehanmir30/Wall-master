@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         appBar: AppBar(
           backgroundColor: AppColors.black,
           elevation: 0,
-          title: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 24),),
+          title: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 30,fontFamily: 'agency',letterSpacing: 1.0),),
           centerTitle: true,
           actions: [
             InkWell(
@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             child: TabBar(
               indicatorColor: AppColors.red,
               indicatorWeight: 3,
+              indicatorSize: TabBarIndicatorSize.label,
               controller: _tabController,
               isScrollable: true,
               onTap: (value) async{
@@ -72,19 +73,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Tab(
                   child: Text(
                     'Categories'.tr,
-                    style: TextStyle(fontSize: 20), // Increase the font size
+                    style: TextStyle(fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0), // Increase the font size
                   ),
                 ),
                 Tab(
                   child: Text(
                     'Recent'.tr,
-                    style: TextStyle(fontSize: 20), // Increase the font size
+                    style: TextStyle(fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0), // Increase the font size
                   ),
                 ),
                 Tab(
                   child: Text(
                     'Premium'.tr,
-                    style: TextStyle(fontSize: 20,color: Colors.yellow), // Increase the font size
+                    style: TextStyle(fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0), // Increase the font size
                   ),
                 ),
                 // Other tabs...
@@ -146,8 +147,8 @@ class MyDrawer extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      radius: 25,
-                      backgroundImage: AssetImage("assets/images/logo.png"),
+                      radius: 35,
+                      backgroundImage: AssetImage("assets/images/circle_logo.png"),
                     ),
                     SizedBox(height: 10,),
                     Text(

@@ -67,6 +67,11 @@ dependencies:
   state_persistence:
 #  #To change package name
 #  change_app_package_name: ^1.1.0
+  workmanager:
+  wallpaper_manager_flutter:
+  flutter_cache_manager:
+  #Lottie
+  lottie:
 
 
 dev_dependencies:
@@ -120,6 +125,10 @@ flutter:
          - asset: assets/fonts/unicode.impact.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+      - family: agency
+        fonts:
+          - asset: assets/fonts/AgencyFB-Bold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

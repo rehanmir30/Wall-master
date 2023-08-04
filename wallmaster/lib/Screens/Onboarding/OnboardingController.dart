@@ -20,8 +20,8 @@ class OnBoardingController extends GetxController {
   }
 
   List<OnBoardingModel> onBoardingPages = [
-    OnBoardingModel(imageAsset: 'assets/images/img_1.png', name: 'Unlimited wallpapers',slogon:'Download the wallpaper that fits you best.' ),
-    OnBoardingModel(imageAsset: 'assets/images/img_1.png', name: 'Download Free wallpapers',slogon:'Always have something to watch\noffline.' ),
+    OnBoardingModel(imageAsset: 'assets/images/img_2.png', name: ' ',slogon:' ' ),
+    OnBoardingModel(imageAsset: 'assets/images/img_1.png', name: ' ',slogon:' ' ),
 
   ];
 }

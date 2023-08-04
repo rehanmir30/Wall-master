@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,11 +8,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wallmaster/Constants/ApiConstants.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
@@ -24,6 +28,7 @@ import 'package:http/http.dart' as http;
 import 'package:wallmaster/Screens/HomeScreen/HomeScreen.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/LikedWallpaper/LikedWallpaperScreen.dart';
 import 'package:wallmaster/Screens/auth/LoginScreen.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../AdsMob/AdMobService.dart';
 import '../Constants/AppColors.dart';
@@ -33,8 +38,7 @@ import '../Model/GetProductModel.dart';
 import '../Screens/Onboarding/Onborading.dart';
 
 class DatabaseHelper {
-  AuthenticationController authController =
-      Get.find<AuthenticationController>();
+  AuthenticationController authController = Get.find<AuthenticationController>();
   CommonController commonController = Get.find<CommonController>();
 
   //SignUp Function
@@ -125,13 +129,14 @@ class DatabaseHelper {
         if (responseJson['status'] == 200) {
           final usermodel = UserModel.fromJson(response.body.toString());
           await authController.setUserData(usermodel);
-          CustomSnackbar.show('${usermodel.message}', AppColors.green);
+
           await SharedPref.saveUser(usermodel);
           CommonController commonController = Get.find<CommonController>();
           await commonController.getCategories();
           await commonController.getAllProducts();
           await getCategoriesWallpaper();
 
+          CustomSnackbar.show('${usermodel.message}', AppColors.green);
           Get.offAll(() => const HomeScreen());
         } else {
           final userModelFailure =
@@ -566,7 +571,7 @@ class DatabaseHelper {
    List<CategoryDeckModel>? data =[];
 
    for(var i in commonController.categoryModelList!.data!){
-     commonController.productModelList?.data?.shuffle();
+     // commonController.productModelList?.data?.shuffle();
      CategoryDeckModel? deckModel = CategoryDeckModel();
 
      deckModel.id = i.id;
@@ -658,6 +663,12 @@ class DatabaseHelper {
        deckModel.wallpaperdata = productList;
        data.add(deckModel);
 
+       List<int>? indexes =[];
+       for(var i=0;i<data.length;i++){
+         indexes!.add(0);
+       }
+       await commonController.selectedStackIndex(indexes);
+
        await commonController.setCategoryDeck(data);
 
    }
@@ -729,7 +740,7 @@ class DatabaseHelper {
      //   data.add(deckModel);
      // }
 
-     await commonController.setCategoryDeck(data);
+     // await commonController.setCategoryDeck(data);
 
      print('DECK DATA:   ${data!.length}');
 
@@ -814,8 +825,37 @@ class DatabaseHelper {
 
   }
 
+  Future<void>stopWorkManagerTasks()async{
+    await Workmanager().cancelAll();
+  }
 
 
+
+  Future<void> startWorkManagerTask(text)async{
+    CommonController commonController = Get.find<CommonController>();
+
+    // List<String> data =[];
+  // for(var i in commonController.likedWallpaperModel!.data!){
+  //   data.add(i.image!);
+  // }
+  //   List<String> wallpaperUrls = commonController.productData?.map((item) => item.image!)?.toList() ?? [];
+    List<String> wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
+
+    await Workmanager().cancelAll();
+
+    Workmanager().registerOneOffTask(
+      "taskOne",
+      "changeWallpaperTask",
+        inputData: {
+        'wallpaperUrls': wallpaperUrls,
+          'time': text,
+        },
+         initialDelay: Duration(seconds: 5),
+      // frequency: Duration(minutes: 15),
+    );
+
+    CustomSnackbar.show('Album as been Set', AppColors.green);
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////
 

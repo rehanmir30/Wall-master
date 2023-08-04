@@ -19,6 +19,7 @@ import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 import 'package:wallmaster/CustomWidgets/LoadingAnimation.dart';
 import 'package:wallmaster/CustomWidgets/ReliventWidget.dart';
 import 'package:wallmaster/Model/GetProductModel.dart';
+import 'package:wallmaster/Model/LikedWallpaperModel.dart';
 import 'package:wallmaster/Screens/Download/EditWallpaper/EditWallpaperScreen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
@@ -432,8 +433,7 @@ class WallpaperBottomSheet extends StatelessWidget {
 class SetWallpaperScreen extends StatefulWidget {
   var productData;
   bool notFromLike;
-  bool fromHomePage;
-   SetWallpaperScreen(this.productData,this.notFromLike,this.fromHomePage,{super.key});
+   SetWallpaperScreen(this.productData,this.notFromLike,{super.key});
 
   @override
   State<SetWallpaperScreen> createState() => _SetWallpaperScreenState();
@@ -441,6 +441,7 @@ class SetWallpaperScreen extends StatefulWidget {
 
 class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
   int _index= 0;
+  List<LikeProductData> data=[];
 
     @override
   void initState() {
@@ -452,14 +453,14 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
     print("IDDDDDDDDDDDD: "+widget.productData.id.toString());
     CommonController commonController = Get.find<CommonController>();
     await commonController.isProductLiked(widget.productData.id);
+    if(widget.notFromLike==false){
+      data.add(widget.productData);
+    }
   }
 
   Future<bool> returnBack()async{
-    if(widget.fromHomePage==true){
-      Get.offAll(HomeScreen());
-    }else{
       Get.back();
-    }
+
       return true;
 }
 
@@ -470,7 +471,136 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
         return returnBack();
 
       },
-      child: Scaffold(
+      child: (widget.notFromLike==false)
+          ?Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                returnBack();
+
+              },icon: Icon(Icons.arrow_back,color: AppColors.white,)),
+          elevation: 0,
+          actions: [
+
+            IconButton(onPressed: () {
+              CommonController commonController = Get.find<CommonController>();
+              Get.to(()=>EditWallPaperScreen(data[_index].image!));
+            }, icon: Icon(Icons.edit,color: Colors.white,))
+          ],
+        ),
+        body: GetBuilder<CommonController>(builder: (controller) {
+          return  Stack(
+            children: [
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(data[_index].image!),
+                        fit: BoxFit.cover,
+                      )
+                  ),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                    ),
+                  )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    child: CarouselSlider.builder(
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index, int realIndex) {
+                        final item = data[index];
+
+                        return Container(
+                          color: Colors.transparent,
+                          child: CachedNetworkImage(
+                            imageUrl: item.image!,
+                            placeholder: (context, url) => Image.asset('assets/images/modified_logo.png'),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                        ).marginSymmetric(horizontal: 0);
+                      },
+                      options: CarouselOptions(
+                        scrollPhysics: BouncingScrollPhysics(),
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.76,
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        enableInfiniteScroll: false,
+                        initialPage: 0,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (int index, CarouselPageChangedReason reason) async {
+                          setState(() {
+                            _index = index;
+                          });
+                          controller.isProductLiked(data[index].id);
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                          onTap: () async {
+                            await controller.setLoading(true);
+                            await controller.updateLikeProduct(data[_index].id, widget.notFromLike);
+                            await controller.setLiked(true);
+                            await controller.setLoading(false);
+                          },
+                          child: (controller.isLiked==true)
+                              ?Icon(CupertinoIcons.heart_fill,color: Colors.white,)
+                              :Icon(CupertinoIcons.heart,color: Colors.white,)).marginSymmetric(horizontal: 10),
+                      InkWell(
+                        onTap: (){
+                          showModalBottomSheet(
+                            barrierColor: Colors.transparent,
+                            backgroundColor: Color(0xff282828),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return WallpaperBottomSheet(data[_index].image);
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white
+                          ),
+                          child: Icon(Icons.mobile_screen_share_sharp,size: 30,),
+                        ).marginSymmetric(horizontal: 10),
+                      ),
+                      InkWell(
+                          onTap: (){
+                            downloadImage(data[_index].image!,context);
+                          },
+                          child: Icon(Icons.download,size: 34,color: Colors.white,).marginSymmetric(horizontal: 10))
+
+                    ],),
+                ],).marginSymmetric(horizontal: 0,vertical: 10),
+
+              Visibility(
+                  visible: controller.isLoading,
+                  child: LoadingAnimation())
+            ],);
+        },),
+      )
+
+          :Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
         appBar: AppBar(
@@ -538,10 +668,11 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                         enableInfiniteScroll: false,
                         initialPage: 0,
                         scrollDirection: Axis.horizontal,
-                        onPageChanged: (int index, CarouselPageChangedReason reason) {
+                        onPageChanged: (int index, CarouselPageChangedReason reason) async {
                           setState(() {
                             _index = index;
                           });
+                          controller.isProductLiked(controller.productReliventData![index].id);
                         },
                       ),
                     ),

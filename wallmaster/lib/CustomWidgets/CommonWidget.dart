@@ -17,7 +17,7 @@ class _CommonWidgetState extends State<CommonWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=>SetWallpaperScreen(widget.wallpaper,true,false));
+        Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
       },
       child: Container(
         alignment: Alignment.center,

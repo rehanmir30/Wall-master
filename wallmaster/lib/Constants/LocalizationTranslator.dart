@@ -10,7 +10,7 @@ class LocalizationTranslator extends Translations{
     //ENGLISH LANGUAGE
     'en_US':{
       //AppName
-      "WallMaster": "Wall Master",
+      "WallMaster": "Visual Scape",
 
       //Social Login
       "ContinueWithGoogle": "Continue with Google",
@@ -48,6 +48,7 @@ class LocalizationTranslator extends Translations{
       "Categories": "CATEGORIES",
       "Recent": "RECENT",
       "Premium": "PREMIUM",
+      "SEEALL": "SEE ALL",
 
       //Drawer
       "ChangeLanguage": "Change Language",
@@ -62,6 +63,7 @@ class LocalizationTranslator extends Translations{
       "NoWallpaperAvailable": "No wallpaper available",
 
       //RelatedCategoryScreen
+      "AutoChange" : "Auto switch",
 
       //SetWallpaperScreen
       "NoRelatedWallpaper": "No related wallpaper",
@@ -81,7 +83,7 @@ class LocalizationTranslator extends Translations{
 
       //PrivacyPolicyScreen
       "PrivacyPolicy" : "Privacy Policy",
-      "WallMasterPrivacyPolicy": 'WallMaster Privacy Policy',
+      "WallMasterPrivacyPolicy": 'Visual Scape Privacy Policy',
       "ThisPrivacyPolicy": 'This Privacy Policy was last updated on July 13, 2023.',
       "GWebSoft": 'GWebSoft ("we", "us", "our") operates the WallMaster mobile application ("the Service").',
       "Thispageinformsyouofourpolicies": 'This page informs you of our policies regarding the collection, use and disclosure of Personal Data when you use our Service.',
@@ -229,7 +231,7 @@ class LocalizationTranslator extends Translations{
     //Spanish LANGUAGE
     'es_US':{
       //AppName
-      "WallMaster": "Wall Master",
+      "WallMaster": "Visual Scape",
 
       //Social Login
       "ContinueWithGoogle": "Continuar con Google",
@@ -265,12 +267,13 @@ class LocalizationTranslator extends Translations{
       "Categories": "CATEGORIAS",
       "Recent": "RECIENTE",
       "Premium": "PREMIUM",
+      "SEEALL" :"VER TODO",
 
 
       //Drawer
       "ChangeLanguage": "Cambiar idioma",
       "BuyPremium": "Comprar Premium",
-      "LikedWallpaper": "Fondo de pantalla que me gustó",
+      "LikedWallpaper": "Mis favoritos",
       "Notifications": "Notificaciones",
       "PrivacyPolicy": "política de privacidad",
       "Logout": "Cerrar sesión",
@@ -280,6 +283,7 @@ class LocalizationTranslator extends Translations{
       "NoWallpaperAvailable": "No hay fondo de pantalla disponible",
 
       //RelatedCategoryScreen
+      "AutoChange" : "Cambio Automático",
 
       //SetWallpaperScreen
       "NoRelatedWallpaper": "Sin fondo de pantalla relacionado",
@@ -299,7 +303,7 @@ class LocalizationTranslator extends Translations{
 
       //PrivacyPolicyScreen
       "PrivacyPolicy" : "política de privacidad",
-      "WallMasterPrivacyPolicy": 'Política de Privacidad de WallMaster',
+      "WallMasterPrivacyPolicy": 'Política de Privacidad de Visual Scape',
       "ThisPrivacyPolicy": 'Esta Política de Privacidad fue actualizada por última vez el 13 de Julio de 2023.',
       "GWebSoft": 'GWebSoft ("nosotros", "nos", "nuestro") opera la aplicación móvil WallMaster ("el Servicio").',
       "Thispageinformsyouofourpolicies": 'Esta página le informa de nuestras políticas en relación con la recopilación, uso y divulgación de Datos Personales cuando usted utiliza nuestro Servicio.',

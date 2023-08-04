@@ -68,7 +68,7 @@ class _MixWidgetState extends State<MixWidget> {
             data!.add(widget._productData);
             await commonController.getReliventData(data);
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));            // await commonController.setCount();
+            Get.to(()=>SetWallpaperScreen(widget._productData,true));            // await commonController.setCount();
 
 
           }
@@ -84,7 +84,7 @@ class _MixWidgetState extends State<MixWidget> {
             await commonController.getReliventData(data);
             await commonController.setCount();
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));
+            Get.to(()=>SetWallpaperScreen(widget._productData,true));
           }else{
             CommonController commonController = Get.find<CommonController>();
             await commonController.setLoading(true);
@@ -92,7 +92,7 @@ class _MixWidgetState extends State<MixWidget> {
             data!.add(widget._productData);
             await commonController.getReliventData(data);
             await commonController.setLoading(false);
-            Get.to(()=>SetWallpaperScreen(widget._productData,true,false));
+            Get.to(()=>SetWallpaperScreen(widget._productData,true));
           }
 
         }
@@ -123,9 +123,10 @@ class _MixWidgetState extends State<MixWidget> {
                 child: FadeInImage(
                   height: 280,
                     width: MediaQuery.of(context).size.width,
-                    placeholder:   AssetImage("assets/images/loading_logo.png"),
+                    placeholder:  const AssetImage("assets/images/circle_logo.png"),
                     image: CachedNetworkImageProvider(widget._productData!.image.toString()),
                   fit: BoxFit.fill,
+                  placeholderFit: BoxFit.contain,
                 ),
               ),
             ).marginSymmetric(horizontal: 0,vertical: 0),

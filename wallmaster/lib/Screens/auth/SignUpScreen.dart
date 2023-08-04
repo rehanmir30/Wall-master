@@ -57,15 +57,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.black,
-        title: Text("WallMaster".tr,style: TextStyle(color: AppColors.red,letterSpacing: 2),),
+        title: Text("WallMaster".tr,style: TextStyle(color: AppColors.white,letterSpacing: 2),),
         leading: InkWell(
             onTap: (){
               Get.back();
             },
-            child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.red,size: 24,)),
+            child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,size: 24,)),
 
         actions: [
-          Image.asset("assets/images/logo.png",width: 35,height:35,).marginOnly(right: 10),
+          Image.asset("assets/images/circle_logo.png",width: 45,height:45,).marginOnly(right: 10),
         ],
 
       ),

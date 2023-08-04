@@ -36,6 +36,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     return PersistedAppState(
@@ -49,211 +50,1414 @@ class _CategoryScreenState extends State<CategoryScreen> {
             return Center(child: Text("No Wallpaper Found"),);
 
           }else{
+
             return ListView.builder(
               itemCount: controller.categoryDeckList!.length,
               itemBuilder: (context, index) {
                 return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 244,
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('${controller.categoryDeckList![index].name}',style: TextStyle(color: AppColors.white,fontSize: 18),),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: InkWell(
-                                  onTap: () async {
-                                    CommonController commonController = Get.find<CommonController>();
-                                    AuthenticationController authenticationController = Get.find<AuthenticationController>();
-                                    if(authenticationController.myUser!.data!.isPremium==0){
-                                      await commonController.setCount();
-                                    }
-                                    commonController.getSelectedCategoryProduct(commonController.productModelList,controller.categoryModelList!.data![index].id);
-                                    Get.to(()=>RelatedCategoryScreen(CategoryModel(id:controller.categoryModelList!.data![index].id,name: controller.categoryModelList!.data![index].name,image: controller.categoryModelList!.data![index].image)));
-                                  },
-                                  child: Text('See All ',style: TextStyle(color: AppColors.red,fontSize: 18,fontWeight: FontWeight.w500),))),
+                      Align(
+                  alignment:Alignment.centerLeft,
+                  child: Text('${controller.categoryDeckList![index].name}',style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold,fontFamily: 'agency'),)).marginOnly(top: 5),
 
-                        ],),
-
-                      SizedBox(height: 5,),
+                      // SizedBox(height: 2,),
                        (controller.categoryDeckList![index].wallpaperdata==null || controller.categoryDeckList![index].wallpaperdata!.length==0)
                            ?Container(height: 230, child: Center(child: Text('No Wallpaper',style: TextStyle(color: AppColors.white),),))
-                           : Container(
-                         width: MediaQuery.of(context).size.width,
-                         height: 230,
-                         child: ListView.builder(
-                           shrinkWrap: true,
-                           reverse: true,
-                           primary: false,
-                           clipBehavior: Clip.none,
-                           itemCount: (controller.categoryDeckList![index].wallpaperdata!.length > 4)
-                               ? 4
-                               : controller.categoryDeckList![index].wallpaperdata!.length,
-                           scrollDirection: Axis.horizontal,
-                           itemBuilder: (context, indexs) {
-                             final reversedIndex = controller.categoryDeckList![index].wallpaperdata!.length - 1 - indexs;
+                           :Container(
+                           height: 210,
+                           width: MediaQuery.of(context).size.width,
+                           child: IndexedStack(
+                             alignment: Alignment.center,
+                             index: controller.stackIndex![index],
+                             children: [
 
-                             return CategoryDeckWidget(index,reversedIndex);
-                             // return InkWell(
-                             //   onTap: () async {
-                             //   //  controller.categoryDeckList![index].wallpaperdata![reversedIndex]
-                             //     CommonController commonController = Get.find<CommonController>();
-                             //     commonController.setLoading(true);
-                             //     AuthenticationController authenticationController = Get.find<AuthenticationController>();
-                             //     if(controller.categoryDeckList![index].wallpaperdata![reversedIndex].forPremium ==1){
-                             //       if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
-                             //         commonController.setLoading(false);
-                             //         showDialog(context: context, builder: (context) {
-                             //           return AlertDialog(
-                             //             title: Text('premiummember'.tr),
-                             //             backgroundColor: AppColors.white,
-                             //             elevation: 3,
-                             //             content: Text("viewwallpaper".tr),
-                             //             actions: [
-                             //               InkWell(
-                             //                   onTap: () async {
-                             //                     commonController.setLoading(true);
-                             //                     List<ProductData> data =[];
-                             //                     Navigator.pop(context);
-                             //                     data.add(controller.categoryDeckList![index].wallpaperdata![reversedIndex]);
-                             //                     await commonController.getReliventData(data);
-                             //                     await commonController.showRewardedAd(controller.categoryDeckList![index].wallpaperdata![reversedIndex],true,);
-                             //                     commonController.setLoading(false);
-                             //                     // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
-                             //                   },
-                             //                   child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
-                             //               ElevatedButton(
-                             //                   style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
-                             //                   onPressed: () {
-                             //                     Navigator.of(context).pop();
-                             //                     Get.to(()=>PremiumPackage());
-                             //
-                             //                   }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
-                             //             ],
-                             //           );
-                             //         },);
-                             //
-                             //       }
-                             //       else{
-                             //         CommonController commonController = Get.find<CommonController>();
-                             //         await commonController.setLoading(true);
-                             //         List<ProductData> data =[];
-                             //         data!.add(controller.categoryDeckList![index].wallpaperdata![reversedIndex]);
-                             //         await commonController.getReliventData(data);
-                             //         await commonController.setLoading(false);
-                             //         Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![reversedIndex],true));            // await commonController.setCount();
-                             //
-                             //
-                             //       }
-                             //
-                             //     }
-                             //     else{
-                             //
-                             //       if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
-                             //         CommonController commonController = Get.find<CommonController>();
-                             //         await commonController.setLoading(true);
-                             //         List<ProductData> data =[];
-                             //         data!.add(controller.categoryDeckList![index].wallpaperdata![reversedIndex]);
-                             //         await commonController.getReliventData(data);
-                             //         await commonController.setCount();
-                             //         await commonController.setLoading(false);
-                             //         Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![reversedIndex],true));
-                             //       }else{
-                             //         CommonController commonController = Get.find<CommonController>();
-                             //         await commonController.setLoading(true);
-                             //         List<ProductData> data =[];
-                             //         data!.add(controller.categoryDeckList![index].wallpaperdata![reversedIndex]);
-                             //         await commonController.getReliventData(data);
-                             //         await commonController.setLoading(false);
-                             //         Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![reversedIndex],true));
-                             //       }
-                             //
-                             //     }
-                             //
-                             //   },
-                             //   child: Stack(
-                             //     clipBehavior: Clip.none,
-                             //     children: [
-                             //       Align(
-                             //         widthFactor: 0.6,
-                             //         child: Card(
-                             //           shape: RoundedRectangleBorder(
-                             //             borderRadius: BorderRadius.circular(25),
-                             //           ),
-                             //           child: Container(
-                             //             decoration: BoxDecoration(
-                             //               shape: BoxShape.rectangle,
-                             //               // color: AppColors.white,
-                             //               border: Border.all(color: Colors.white, width: 2),
-                             //               borderRadius: BorderRadius.circular(25),
-                             //             ),
-                             //             height: 200,
-                             //             width: 120,
-                             //             child: ClipRRect(
-                             //               borderRadius: BorderRadius.circular(25),
-                             //               child: FadeInImage(
-                             //                 image: CachedNetworkImageProvider(
-                             //                     "${controller.categoryDeckList![index].wallpaperdata![reversedIndex].image}"),
-                             //                 placeholder: AssetImage('assets/images/modified_logo.png'),
-                             //                 fit: BoxFit.fill,
-                             //               ),
-                             //             ),
-                             //           ),
-                             //         ),
-                             //       ),
-                             //       if (commonController.categoryDeckList![index]
-                             //           .wallpaperdata![reversedIndex].forPremium ==
-                             //           1)
-                             //         Positioned(
-                             //           right: -15,
-                             //           bottom: 25,
-                             //           child: Column(
-                             //             mainAxisSize: MainAxisSize.min,
-                             //             crossAxisAlignment: CrossAxisAlignment.center,
-                             //             children: [
-                             //               CircleAvatar(
-                             //                 backgroundColor: Colors.transparent,
-                             //                 radius: 10,
-                             //                 child: Icon(
-                             //                   Icons.workspace_premium_outlined,
-                             //                   color: Colors.white,
-                             //                 ),
-                             //               ),
-                             //               SizedBox(
-                             //                 height: 10,
-                             //               ),
-                             //               Container(
-                             //                 padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-                             //                 decoration: BoxDecoration(
-                             //                   borderRadius: BorderRadius.circular(10),
-                             //                   color: Colors.white,
-                             //                 ),
-                             //                 child: Image.asset(
-                             //                   "assets/images/play.png",
-                             //                   width: 20,
-                             //                   height: 20,
-                             //                 ),
-                             //               ).marginOnly(left: 5)
-                             //             ],
-                             //           ),
-                             //         ),
-                             //     ],
-                             //   ),
-                             // );
-                           },
-                         ).marginOnly(right: 30),
+                               //First Pic Selected
+                               Stack(
+                                 clipBehavior: Clip.none,
+                                 children: [
+
+
+                                   Positioned(
+                                     right: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: ()async{
+                                         await controller.updatedStackIndex(index, 3);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                                 borderRadius: BorderRadius.circular(15),
+                                                child: FadeInImage(
+                                                  fit: BoxFit.fill,
+                                                  placeholderFit: BoxFit.contain,
+                                                    placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                    image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![3].image}'),
+                                                ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![3].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.4,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 2);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![2].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                           visible: (controller.categoryDeckList![index].wallpaperdata![2].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 1);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![1].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![1].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: 2,
+                                     top: 0,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 0);
+                                         CommonController commonController = Get.find<CommonController>();
+                                         commonController.setLoading(true);
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(controller.categoryDeckList![index].wallpaperdata![0].forPremium ==1){
+                                           if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
+                                             commonController.setLoading(false);
+                                             showDialog(context: context, builder: (context) {
+                                               return AlertDialog(
+                                                 title: Text('premiummember'.tr),
+                                                 backgroundColor: AppColors.white,
+                                                 elevation: 3,
+                                                 content: Text("viewwallpaper".tr),
+                                                 actions: [
+                                                   InkWell(
+                                                       onTap: () async {
+                                                         commonController.setLoading(true);
+                                                         List<ProductData> data =[];
+                                                         Navigator.pop(context);
+                                                         data.add(controller.categoryDeckList![index].wallpaperdata![0]);
+                                                         await commonController.getReliventData(data);
+                                                         await commonController.showRewardedAd(controller.categoryDeckList![index].wallpaperdata![0],true,);
+                                                         commonController.setLoading(false);
+                                                         // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+                                                       },
+                                                       child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
+                                                   ElevatedButton(
+                                                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
+                                                       onPressed: () {
+                                                         Navigator.of(context).pop();
+                                                         Get.to(()=>PremiumPackage());
+
+                                                       }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
+                                                 ],
+                                               );
+                                             },);
+
+                                           }
+                                           else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![0]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![0],true));            // await commonController.setCount();
+
+
+                                           }
+
+                                         }
+                                         else{
+
+                                           if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![0]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setCount();
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![0],true));
+                                           }else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![0]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![0],true));
+                                           }
+
+                                         }
+
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 130,
+                                             height: 215,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![0].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![0].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+
+                                   Positioned(
+                                     top: -16,
+                                     right: 2,
+                                     child:  InkWell(
+                                       onTap: () async {
+                                         print("Clicked");
+                                         CommonController commonController = Get.find<CommonController>();
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(authenticationController.myUser!.data!.isPremium==0){
+                                           await commonController.setCount();
+                                         }
+                                         commonController.getSelectedCategoryProduct(commonController.productModelList,controller.categoryDeckList![index].id);
+                                         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:controller.categoryDeckList![index].id,name: controller.categoryDeckList![index].name,image: controller.categoryDeckList![index].image)));
+
+                                       },
+                                       child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                           decoration: BoxDecoration(
+                                               color: AppColors.white,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: Text('SEEALL'.tr,style: TextStyle(color: AppColors.red,fontSize: 18,fontFamily: 'agency',fontWeight: FontWeight.bold),)).marginOnly(right: 0),
+                                     ),
+                                   )
+
+
+
+                                 ],
+                               ),
+
+                               //Second Pic Selected
+                               Stack(
+                                 clipBehavior: Clip.none,
+                                 children: [
+
+                                   Positioned(
+                                     right: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 3);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![3].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![3].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.4,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 2);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![2].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![2].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 0);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![0].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![0].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.2,
+                                     top: 0,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 1);
+
+                                         CommonController commonController = Get.find<CommonController>();
+                                         commonController.setLoading(true);
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(controller.categoryDeckList![index].wallpaperdata![1].forPremium ==1){
+                                           if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
+                                             commonController.setLoading(false);
+                                             showDialog(context: context, builder: (context) {
+                                               return AlertDialog(
+                                                 title: Text('premiummember'.tr),
+                                                 backgroundColor: AppColors.white,
+                                                 elevation: 3,
+                                                 content: Text("viewwallpaper".tr),
+                                                 actions: [
+                                                   InkWell(
+                                                       onTap: () async {
+                                                         commonController.setLoading(true);
+                                                         List<ProductData> data =[];
+                                                         Navigator.pop(context);
+                                                         data.add(controller.categoryDeckList![index].wallpaperdata![1]);
+                                                         await commonController.getReliventData(data);
+                                                         await commonController.showRewardedAd(controller.categoryDeckList![index].wallpaperdata![1],true,);
+                                                         commonController.setLoading(false);
+                                                         // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+                                                       },
+                                                       child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
+                                                   ElevatedButton(
+                                                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
+                                                       onPressed: () {
+                                                         Navigator.of(context).pop();
+                                                         Get.to(()=>PremiumPackage());
+
+                                                       }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
+                                                 ],
+                                               );
+                                             },);
+
+                                           }
+                                           else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![1]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![1],true));            // await commonController.setCount();
+
+
+                                           }
+
+                                         }
+                                         else{
+
+                                           if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![1]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setCount();
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![1],true));
+                                           }else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![1]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![1],true));
+                                           }
+
+                                         }
+
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 130,
+                                             height: 215,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![1].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![1].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+
+                                   Positioned(
+                                     top: -16,
+                                     right: 2,
+                                     child:  InkWell(
+                                       onTap: () async {
+                                         print("Clicked");
+                                         CommonController commonController = Get.find<CommonController>();
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(authenticationController.myUser!.data!.isPremium==0){
+                                           await commonController.setCount();
+                                         }
+                                         commonController.getSelectedCategoryProduct(commonController.productModelList,controller.categoryDeckList![index].id);
+                                         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:controller.categoryDeckList![index].id,name: controller.categoryDeckList![index].name,image: controller.categoryDeckList![index].image)));
+
+                                       },
+                                       child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                           decoration: BoxDecoration(
+                                               color: AppColors.white,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: Text('SEEALL'.tr,style: TextStyle(color: AppColors.red,fontSize: 18,fontFamily: 'agency',fontWeight: FontWeight.bold),)).marginOnly(right: 0),
+                                     ),
+                                   )
+
+                                 ],
+                               ),
+
+                               //Third Pic Selected
+                               Stack(
+                                 clipBehavior: Clip.none,
+                                 children: [
+
+
+                                   Positioned(
+                                     left: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 0);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![0].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![0].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     right: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 3);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![3].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![3].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 1);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![1].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![1].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.4,
+                                     top: 0,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 2);
+
+                                         CommonController commonController = Get.find<CommonController>();
+                                         commonController.setLoading(true);
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(controller.categoryDeckList![index].wallpaperdata![2].forPremium ==1){
+                                           if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
+                                             commonController.setLoading(false);
+                                             showDialog(context: context, builder: (context) {
+                                               return AlertDialog(
+                                                 title: Text('premiummember'.tr),
+                                                 backgroundColor: AppColors.white,
+                                                 elevation: 3,
+                                                 content: Text("viewwallpaper".tr),
+                                                 actions: [
+                                                   InkWell(
+                                                       onTap: () async {
+                                                         commonController.setLoading(true);
+                                                         List<ProductData> data =[];
+                                                         Navigator.pop(context);
+                                                         data.add(controller.categoryDeckList![index].wallpaperdata![2]);
+                                                         await commonController.getReliventData(data);
+                                                         await commonController.showRewardedAd(controller.categoryDeckList![index].wallpaperdata![2],true,);
+                                                         commonController.setLoading(false);
+                                                         // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+                                                       },
+                                                       child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
+                                                   ElevatedButton(
+                                                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
+                                                       onPressed: () {
+                                                         Navigator.of(context).pop();
+                                                         Get.to(()=>PremiumPackage());
+
+                                                       }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
+                                                 ],
+                                               );
+                                             },);
+
+                                           }
+                                           else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![2]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![2],true));            // await commonController.setCount();
+
+
+                                           }
+
+                                         }
+                                         else{
+
+                                           if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![2]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setCount();
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![2],true));
+                                           }else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![2]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![2],true));
+                                           }
+
+                                         }
+
+
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 130,
+                                             height: 215,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![2].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![2].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+
+                                   Positioned(
+                                     top: -16,
+                                     right: 2,
+                                     child:  InkWell(
+                                       onTap: () async {
+                                         print("Clicked");
+                                         CommonController commonController = Get.find<CommonController>();
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(authenticationController.myUser!.data!.isPremium==0){
+                                           await commonController.setCount();
+                                         }
+                                         commonController.getSelectedCategoryProduct(commonController.productModelList,controller.categoryDeckList![index].id);
+                                         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:controller.categoryDeckList![index].id,name: controller.categoryDeckList![index].name,image: controller.categoryDeckList![index].image)));
+
+                                       },
+                                       child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                           decoration: BoxDecoration(
+                                               color: AppColors.white,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: Text('SEEALL'.tr,style: TextStyle(color: AppColors.red,fontSize: 18,fontFamily: 'agency',fontWeight: FontWeight.bold),)).marginOnly(right: 0),
+                                     ),
+                                   )
+
+                                 ],
+                               ),
+
+                               //Fourth Pic Selected
+                               Stack(
+                                 clipBehavior: Clip.none,
+                                 children: [
+
+                                   Positioned(
+                                     left: 2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 0);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![0].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![0].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.2,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 1);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![1].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![1].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     left: MediaQuery.of(context).size.width*0.4,
+                                     top: 10,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 2);
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 120,
+                                             height: 200,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![2].image}'),
+
+                                               ),
+
+                                             ),
+                                           ),
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![2].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                   Positioned(
+                                     right: 2,
+                                     top: 0,
+                                     child: InkWell(
+                                       onTap: () async {
+                                         await controller.updatedStackIndex(index, 3);
+
+                                         CommonController commonController = Get.find<CommonController>();
+                                         commonController.setLoading(true);
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(controller.categoryDeckList![index].wallpaperdata![3].forPremium ==1){
+                                           if(authenticationController.myUser!.data!.isPremium==0 || authenticationController.myUser!.data!.isPremium==null){
+                                             commonController.setLoading(false);
+                                             showDialog(context: context, builder: (context) {
+                                               return AlertDialog(
+                                                 title: Text('premiummember'.tr),
+                                                 backgroundColor: AppColors.white,
+                                                 elevation: 3,
+                                                 content: Text("viewwallpaper".tr),
+                                                 actions: [
+                                                   InkWell(
+                                                       onTap: () async {
+                                                         commonController.setLoading(true);
+                                                         List<ProductData> data =[];
+                                                         Navigator.pop(context);
+                                                         data.add(controller.categoryDeckList![index].wallpaperdata![3]);
+                                                         await commonController.getReliventData(data);
+                                                         await commonController.showRewardedAd(controller.categoryDeckList![index].wallpaperdata![3],true,);
+                                                         commonController.setLoading(false);
+                                                         // Get.to(()=>SetWallpaperScreen(widget.wallpaper,true));
+                                                       },
+                                                       child: Text("ViewAd".tr,style: TextStyle(color: Colors.blue),)),
+                                                   ElevatedButton(
+                                                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.red),
+                                                       onPressed: () {
+                                                         Navigator.of(context).pop();
+                                                         Get.to(()=>PremiumPackage());
+
+                                                       }, child: Text('BuyPremium'.tr,style: TextStyle(color: AppColors.white),))
+                                                 ],
+                                               );
+                                             },);
+
+                                           }
+                                           else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![3]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![3],true));            // await commonController.setCount();
+
+
+                                           }
+
+                                         }
+                                         else{
+
+                                           if(authenticationController.myUser?.data!.isPremium ==0 || authenticationController.myUser?.data!.isPremium ==null){
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![3]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setCount();
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![3],true));
+                                           }else{
+                                             CommonController commonController = Get.find<CommonController>();
+                                             await commonController.setLoading(true);
+                                             List<ProductData> data =[];
+                                             data!.add(controller.categoryDeckList![index].wallpaperdata![3]);
+                                             await commonController.getReliventData(data);
+                                             await commonController.setLoading(false);
+                                             Get.to(()=>SetWallpaperScreen(controller.categoryDeckList![index].wallpaperdata![3],true));
+                                           }
+
+                                         }
+
+
+                                       },
+                                       child: Stack(
+                                         children: [
+                                           Container(
+                                             width: 130,
+                                             height: 215,
+                                             decoration: BoxDecoration(
+                                                 color: AppColors.black,
+                                                 border: Border.all(color: AppColors.white,width: 3),
+                                                 borderRadius: BorderRadius.circular(15)
+                                             ),
+                                             child: ClipRRect(
+                                               borderRadius: BorderRadius.circular(15),
+                                               child: FadeInImage(
+                                                 fit: BoxFit.fill,
+                                                 placeholderFit: BoxFit.contain,
+                                                 placeholder: AssetImage("assets/images/circle_logo.png"),
+                                                 image: CachedNetworkImageProvider('${controller.categoryDeckList![index].wallpaperdata![3].image}'),
+                                               ),
+
+                                             ),
+                                           ),
+
+                                           Visibility(
+                                             visible: (controller.categoryDeckList![index].wallpaperdata![3].forPremium==1)?true:false,
+                                             child: Positioned(
+                                               right: 15,
+                                               top: 10,
+                                               child: Column(
+                                                 children: [
+                                                   CircleAvatar(
+                                                     backgroundColor: Colors.transparent,
+                                                     radius: 10,
+                                                     child: Icon(Icons.workspace_premium_outlined,color: Colors.white,),
+                                                   ),
+                                                   SizedBox(height: 10,),
+
+                                                   Container(
+                                                     padding: EdgeInsets.symmetric(horizontal: 3,vertical: 2),
+                                                     decoration: BoxDecoration(
+                                                       borderRadius: BorderRadius.circular(10),
+                                                       color: Colors.white,
+                                                     ),
+                                                     child: Image.asset("assets/images/play.png",width: 20,height: 20,),
+                                                   ).marginOnly(left: 5)
+                                                 ],
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+
+                                   Positioned(
+                                     top: -20,
+                                     right: 2,
+                                     child:  GestureDetector(
+                                       onTap: () async {
+                                         print("Clicked");
+                                         CommonController commonController = Get.find<CommonController>();
+                                         AuthenticationController authenticationController = Get.find<AuthenticationController>();
+                                         if(authenticationController.myUser!.data!.isPremium==0){
+                                           await commonController.setCount();
+                                         }
+                                         commonController.getSelectedCategoryProduct(commonController.productModelList,controller.categoryDeckList![index].id);
+                                         Get.to(()=>RelatedCategoryScreen(CategoryModel(id:controller.categoryDeckList![index].id,name: controller.categoryDeckList![index].name,image: controller.categoryDeckList![index].image)));
+
+                                       },
+                                       child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                           decoration: BoxDecoration(
+                                               color: AppColors.white,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: Text('SEEALL'.tr,style: TextStyle(color: AppColors.red,fontSize: 18,fontFamily: 'agency',fontWeight: FontWeight.bold),)).marginOnly(right: 0),
+                                     ),
+                                   )
+
+                                 ],
+                               ),
+
+
+                             ],),
                        ),
-
-
                     ],
                   ),
                 );
 
-              },);
+              },).marginOnly(top: 10);
+
           }
 
           // if(controller.categoryModelList==null || controller.categoryModelList!.data==null|| controller.categoryModelList!.data!.length==0 || controller.categoryModelList!.data!.length==null){
@@ -280,7 +1484,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           //     return CategoryWidget(controller.categoryModelList!,index);
           //
           //   },);
-        },).marginSymmetric(horizontal:15),
+        },).marginSymmetric(horizontal:10),
       ),
     );
   }

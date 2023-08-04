@@ -21,7 +21,7 @@ class _ReliventWidgetState extends State<ReliventWidget> {
       onTap: () async {
         CommonController commonController = Get.find<CommonController>();
         Get.back();
-        Get.to(()=>SetWallpaperScreen(widget._productData,true,false));
+        Get.to(()=>SetWallpaperScreen(widget._productData,true));
         List<ProductData> data =[];
         data!.add(widget._productData);
         await commonController.getReliventData(data);

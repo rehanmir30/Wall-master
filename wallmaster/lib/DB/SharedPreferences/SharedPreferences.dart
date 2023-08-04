@@ -6,6 +6,7 @@ import 'package:wallmaster/Model/UserModel.dart';
 class SharedPref {
   static const String _keyUser = 'wallmaster_user';
     static const String _keyLanguageUser = 'wallmaster_user_language';
+    static const String _keyWorkManager = 'wallmaster_work_manager';
 
   static Future<void> saveUser(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();
@@ -49,6 +50,23 @@ class SharedPref {
     static Future<void> removeSelectedLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyLanguageUser);
+  }
+
+
+  //Creating to check that work manager service is enabled or not
+  static Future<void> setWorkManager(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    final magazine = value;
+    await prefs.setBool(_keyWorkManager,magazine);
+  }
+
+  static Future<bool> getWorkManager() async {
+    final prefs = await SharedPreferences.getInstance();
+    final magazine = prefs.getBool(_keyWorkManager);
+    if (magazine != null) {
+      return magazine;
+    }
+    return false;
   }
 
 }

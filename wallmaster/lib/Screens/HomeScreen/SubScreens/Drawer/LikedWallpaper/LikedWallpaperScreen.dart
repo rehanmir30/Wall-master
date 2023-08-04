@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
+import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 import 'package:wallmaster/CustomWidgets/LikeWidget.dart';
 import 'package:wallmaster/CustomWidgets/MixWidget.dart';
 
@@ -16,6 +17,7 @@ class LikedWallpaperScreen extends StatefulWidget {
 
 class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
   CommonController commonController = Get.find<CommonController>();
+  bool value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +32,36 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
               Get.back();
             },
             child: Icon(Icons.arrow_back_ios_new_rounded,size: 24,color: AppColors.white,)),
+
+        // actions:  [
+        // GetBuilder<CommonController>(builder: (commonController) {
+        //   return  InkWell(
+        //       onTap: () async {
+        //        if(commonController.likedWallpaperModel!.data!.length==null || commonController.likedWallpaperModel!.data!.length<10 ){
+        //
+        //          CustomSnackbar.show('Wallpaper album should have at least 10 wallpapers', AppColors.red);
+        //
+        //        }else{
+        //          if(commonController.workManagerMagazine==false){
+        //            await commonController.startWorkManagerTask();
+        //          }else{
+        //            await commonController.stopWorkManagerTasks();
+        //          }
+        //          await commonController.setMagazine(!commonController.workManagerMagazine);
+        //        }
+        //
+        //       },
+        //       child: Container(
+        //           alignment: Alignment.center,
+        //           child: (commonController.workManagerMagazine==false)
+        //               ?Text('Play ',style: TextStyle(color: AppColors.white),)
+        //               :Text('Stop',style: TextStyle(color: AppColors.white),)
+        //       ).marginSymmetric(horizontal: 10)
+        //   );
+        // },),
+        //
+        //
+        // ],
       ),
 
       body:  GetBuilder<CommonController>(builder: (controller) {
@@ -40,10 +72,10 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
           primary: true,
           itemCount: controller.likedWallpaperModel!.data!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 1.0,
-              mainAxisSpacing: 3.0,
-              mainAxisExtent: 300,
-              crossAxisCount: 2),
+              crossAxisSpacing: 0.0,
+              mainAxisSpacing: 0.0,
+              mainAxisExtent: 230,
+              crossAxisCount: 3),
           itemBuilder: (context, index) {
             return LikeWidget(controller.likedWallpaperModel!.data![index]);
 
