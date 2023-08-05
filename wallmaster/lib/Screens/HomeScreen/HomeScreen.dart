@@ -8,6 +8,7 @@ import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Category/SearchScreen.dart';
 import 'package:wallmaster/Screens/Onboarding/Onborading.dart';
 import '../../Controllers/LocalizationController.dart';
+import '../../DB/DatabaseHelper.dart';
 import 'SubScreens/Category/CategoryScreen.dart';
 import 'SubScreens/Drawer/LikedWallpaper/LikedWallpaperScreen.dart';
 import 'SubScreens/Drawer/PremiumPackages/PremiumPackage.dart';
@@ -51,8 +52,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           centerTitle: true,
           actions: [
             InkWell(
-                onTap: (){
-                  Get.to(()=>SearchScreen());
+                onTap: () async {
+                  // Get.to(()=>SearchScreen());
+                  await DatabaseHelper().getCategoriesWallpaper();
                 },
                 child: Icon(Icons.search,size: 24,color: Colors.white,).marginOnly(right: 15))
           ],

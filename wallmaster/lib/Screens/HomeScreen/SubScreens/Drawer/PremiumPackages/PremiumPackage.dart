@@ -78,7 +78,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
             },
             child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,size: 20,)),
 
-        title: const Text("Buy Premium"),
+        title: Text("BuyPremium".tr),
         centerTitle: true,
       ),
 
@@ -109,34 +109,71 @@ class _PremiumPackageState extends State<PremiumPackage> {
                 child: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 28),)),
             SizedBox(height: 40,),
 
-            Text("Upgrade".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+            Text("Elevate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+            SizedBox(height: 10,),
+
+            Text("Navigate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+            SizedBox(height: 10,),
+
+            Text("top_tier".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+            SizedBox(height: 10,),
 
 
-            SizedBox(height: 40,),
-            Text("provide".tr,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Text("youget".tr,style: TextStyle(color: Colors.white,fontSize: 22),),
             SizedBox(height: 10,),
             Row(
               children: [
               Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("RemoveAds".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("Access".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
             ],),
             Row(
               children: [
                 Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("LiveUpdates".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("ExclusivePremium".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
             Row(
               children: [
                 Icon(Icons.done_outlined,color: Colors.white,size: 18,),
                 SizedBox(width: 10,),
-                Text("UnlimitedWallpapers".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                Text("NoAd".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
+                SizedBox(width: 10,),
+                Expanded(child: Text("AutomticCategory".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
+              ],),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
+                SizedBox(width: 10,),
+                Expanded(child: Text("AutomaticProduct".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
+              ],),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
+                SizedBox(width: 10,),
+                Expanded(child: Text("TotalControl".tr,style: TextStyle(color: Colors.white,fontSize: 18,),maxLines: null,)),
+              ],),
+
+
 
             SizedBox(height: 10,),
 
-            Text("OneYear".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runAlignment: WrapAlignment.start,
+            direction: Axis.horizontal,
+              children: [
+                Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+                Text("price".tr,style: TextStyle(fontSize: 14,color: Colors.green),),
+              ],
+            ),
 
 
             SizedBox(height: 10,),
@@ -207,7 +244,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
               width: MediaQuery.of(context).size.width*0.9,
               height: 50,
               decoration: BoxDecoration(color: AppColors.red.withOpacity(0.7),borderRadius: BorderRadius.circular(10)),
-              child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
+              child: Text("BuyNow".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
             ),
                 ),
 

@@ -527,7 +527,7 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                           color: Colors.transparent,
                           child: CachedNetworkImage(
                             imageUrl: item.image!,
-                            placeholder: (context, url) => Image.asset('assets/images/modified_logo.png'),
+                            placeholder: (context, url) => Image.asset('assets/images/circle_logo.png'),
                             errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ).marginSymmetric(horizontal: 0);
@@ -655,7 +655,7 @@ class _SetWallpaperScreenState extends State<SetWallpaperScreen> {
                           color: Colors.transparent,
                           child: CachedNetworkImage(
                             imageUrl: item.image!,
-                            placeholder: (context, url) => Image.asset('assets/images/modified_logo.png'),
+                            placeholder: (context, url) => Image.asset('assets/images/circle_logo.png'),
                             errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ).marginSymmetric(horizontal: 0);

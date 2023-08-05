@@ -78,6 +78,7 @@ Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
       }else{
         if (kDebugMode) {
           print("Fail");
+          sleep(Duration(minutes:  timer));
           changeLockScreenWallpaper(wallpaperUrls,timer);
         }
         // CustomSnackbar.show('WallpaperUpdateFailed'.tr,AppColors.red);
@@ -88,6 +89,7 @@ Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
       print('Error setting lock screen wallpaper: $e');
     }
   }
+  sleep(Duration(minutes: timer));
   await changeLockScreenWallpaper(wallpaperUrls,timer);
 }
 

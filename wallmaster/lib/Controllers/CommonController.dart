@@ -324,6 +324,11 @@ class CommonController extends GetxController{
     update();
   }
 
+  startWorkManagerLikeWallpaperTask(text)async{
+    await DatabaseHelper().startWorkManagerLikeWallpaperTask(text);
+    update();
+  }
+
   List<String> images =[
         "assets/images/1 (1).jpg",
         "assets/images/1 (2).jpg",

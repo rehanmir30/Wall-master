@@ -32,6 +32,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    for(var i in commonController.categoryDeckList!){
+      print(" Category: ${i.id}");
+
+      for(var j in i.wallpaperdata!){
+        print('Product Premium: ${j.forPremium}');
+      }
+
+    }
   }
 
 

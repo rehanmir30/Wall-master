@@ -45,9 +45,10 @@ class _LikeWidgetState extends State<LikeWidget> {
                 child: FadeInImage(
                   height: 280,
                   width: MediaQuery.of(context).size.width,
-                  placeholder: AssetImage("assets/images/modified_logo.png"),
+                  placeholder: AssetImage("assets/images/circle_logo.png"),
                   image: NetworkImage(widget._productData!.image.toString()),
                   fit: BoxFit.fill,
+                  placeholderFit: BoxFit.contain,
                 ),
               ),
             ).marginSymmetric(horizontal: 1,vertical: 1),

@@ -126,11 +126,27 @@ class LocalizationTranslator extends Translations{
       "Iagreeto" : "I agree to ",
       "termsandconditions" : "terms and conditions",
 
+      //New modification in premium
+      "Elevate": "Elevate your digital experience to the next level with our Premium Wallpaper Package. Immerse yourself in an unlimited universe of high-definition images, adding a unique and personal touch to your device.",
+      "Navigate":"Navigate without interruptions in our ad-free environment and enjoy the freedom to expand your collection with a higher wallpaper limit. Stay ahead of the crowd with priority access to our latest releases and exclusive collections.",
+      "top_tier": "Our top-tier customer service is always ready to ensure a smooth journey. Experience the convenience of changing your wallpaper automatically as you desire. Don't wait any longer, upgrade to Premium today and unleash the full potential of our wallpaper application. A universe of possibilities awaits you!",
+      "youget:":"What you'll get:",
+
+      "Access":"Unlimited access to Premium wallpapers.",
+      "ExclusivePremium":"Exclusive Premium categories.",
+      "NoAd":"No ads.",
+      "AutomticCategory":"Automatic change of wallpapers from any category.",
+      "AutomaticProduct":"Automatic change of wallpapers that you have marked as favorites.",
+      "TotalControl":"Total control over the timing of wallpaper changes.",
+      "ForPrice":"For the price of your weekly coffee, acquire our Premium Package for a year and enjoy a new dimension in wallpapers. All this for just ",
+      "price":"\$6.99.",
+      "BuyNow":"Buy Now",
+
       //Buy Premium Dialog
       "premiummember" : "You are not a premium member",
       "viewwallpaper" : "If you want to view wallpaper",
       "ViewAd" : "View Ad",
-      "BuyPremium" : "Buy Premium",
+      // "BuyPremium" : "Buy Premium",
 
 
 
@@ -344,11 +360,27 @@ class LocalizationTranslator extends Translations{
       "Iagreeto" : "Acepto los ",
       "termsandconditions" : "términos y condiciones",
 
+      //New modification in premium
+      "Elevate": "Eleva tu experiencia digital al siguiente nivel con nuestro Paquete Premium de fondos de pantalla. Sumérgete en un universo ilimitado de imágenes de alta definición para darle a tu dispositivo un toque único y personal.",
+      "Navigate":"Navega sin interrupciones con nuestro entorno libre de publicidad y disfruta de la libertad de expandir tu colección con un mayor límite de fondos de pantalla. Adelántate a todos con acceso prioritario a nuestras últimas novedades y colecciones exclusivas.",
+      "top_tier": "Nuestro servicio al cliente de primera calidad está siempre listo para garantizar un viaje sin contratiempos. Experimenta la comodidad de cambiar tu fondo de pantalla automáticamente a tu antojo. No esperes más, actualízate a Premium hoy y desata el potencial completo de nuestra aplicación de fondos de pantalla. ¡Un universo de posibilidades te espera!",
+      "youget":"Lo que obtendrás:",
+
+      "Access":"Acceso ilimitado a fondos Premium.",
+      "ExclusivePremium":"Categorías exclusivas Premium.",
+      "NoAd":"Sin anuncios.",
+      "AutomticCategory":"Cambio automático de wallpapers de cualquier categoría.",
+      "AutomaticProduct":"Cambio automático de wallpapers que has marcado en favoritos.",
+      "TotalControl":"Control total sobre el tiempo en que cambian los wallpapers.",
+      "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo ",
+      "price":"\$6.99.",
+      "BuyNow":"Comprar Ahora",
+
       //Buy Premium Dialog
       "premiummember" : "No eres miembro premium",
       "viewwallpaper" : "Si quieres ver el fondo de pantalla",
       "ViewAd" : "Ver anuncio",
-      "BuyPremium" : "Comprar Premium",
+      // "BuyPremium" : "Comprar Premium",
 
 
       // Terms And Condtions
