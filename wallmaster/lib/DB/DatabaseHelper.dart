@@ -133,7 +133,9 @@ class DatabaseHelper {
           await SharedPref.saveUser(usermodel);
           CommonController commonController = Get.find<CommonController>();
           await commonController.getCategories();
-          await commonController.getAllProducts();
+          if(commonController.productModelList==null){
+            await commonController.getAllProducts();
+          }
           await getCategoriesWallpaper();
 
           CustomSnackbar.show('${usermodel.message}', AppColors.green);
@@ -829,7 +831,11 @@ class DatabaseHelper {
   }
 
   Future<void>stopWorkManagerTasks()async{
+    // await Future.delayed(const Duration(seconds: 14));
     await Workmanager().cancelAll();
+    await Future.delayed(const Duration(seconds: 20));
+    sleep(Duration(seconds: 10));
+
   }
 
 
@@ -844,7 +850,7 @@ class DatabaseHelper {
   //   List<String> wallpaperUrls = commonController.productData?.map((item) => item.image!)?.toList() ?? [];
     List<String> wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
 
-    await Workmanager().cancelAll();
+    await Workmanager().cancelByUniqueName("taskOne");
 
     Workmanager().registerOneOffTask(
       "taskOne",

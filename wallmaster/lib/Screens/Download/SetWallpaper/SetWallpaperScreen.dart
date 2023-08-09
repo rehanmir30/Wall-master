@@ -248,12 +248,12 @@ class WallpaperBottomSheet extends StatelessWidget {
       child: Wrap(
         children: [
           ListTile(
-            title: Text('SetWallpaper'.tr,textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+            title: Text('SetWallpaper'.tr,textAlign: TextAlign.center,style: TextStyle(color: Colors.yellowAccent,fontSize: 24,fontWeight: FontWeight.bold),),
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.lock,color: Colors.white,),
-            title: Text('LockScreen'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+            title: Text('LockScreen'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 23)),
             onTap: () async {
               Navigator.of(context).pop();
               _commonController.setLoading(true);
@@ -309,7 +309,7 @@ class WallpaperBottomSheet extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.home,color: Colors.white,),
-            title: Text('HomeScreen'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+            title: Text('HomeScreen'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 23)),
             onTap: () async {
               Navigator.of(context).pop();
               _commonController.setLoading(true);
@@ -367,7 +367,7 @@ class WallpaperBottomSheet extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.phone_android,color: Colors.white,),
-            title: Text('Both'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+            title: Text('Both'.tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 23)),
             onTap: () async {
               Navigator.of(context).pop();
               _commonController.setLoading(true);

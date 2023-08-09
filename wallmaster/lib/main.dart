@@ -72,15 +72,17 @@ Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
 
         if (kDebugMode) {
           print("Success");
-          sleep( Duration(minutes: timer));
         }
+          sleep( Duration(minutes: timer));
+
 
       }else{
         if (kDebugMode) {
           print("Fail");
+        }
           sleep(Duration(minutes:  timer));
           changeLockScreenWallpaper(wallpaperUrls,timer);
-        }
+
         // CustomSnackbar.show('WallpaperUpdateFailed'.tr,AppColors.red);
 
       }

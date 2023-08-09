@@ -130,7 +130,7 @@ class LocalizationTranslator extends Translations{
       "Elevate": "Elevate your digital experience to the next level with our Premium Wallpaper Package. Immerse yourself in an unlimited universe of high-definition images, adding a unique and personal touch to your device.",
       "Navigate":"Navigate without interruptions in our ad-free environment and enjoy the freedom to expand your collection with a higher wallpaper limit. Stay ahead of the crowd with priority access to our latest releases and exclusive collections.",
       "top_tier": "Our top-tier customer service is always ready to ensure a smooth journey. Experience the convenience of changing your wallpaper automatically as you desire. Don't wait any longer, upgrade to Premium today and unleash the full potential of our wallpaper application. A universe of possibilities awaits you!",
-      "youget:":"What you'll get:",
+      "youget":"What you'll get:",
 
       "Access":"Unlimited access to Premium wallpapers.",
       "ExclusivePremium":"Exclusive Premium categories.",
@@ -138,7 +138,7 @@ class LocalizationTranslator extends Translations{
       "AutomticCategory":"Automatic change of wallpapers from any category.",
       "AutomaticProduct":"Automatic change of wallpapers that you have marked as favorites.",
       "TotalControl":"Total control over the timing of wallpaper changes.",
-      "ForPrice":"For the price of your weekly coffee, acquire our Premium Package for a year and enjoy a new dimension in wallpapers. All this for just ",
+      "ForPrice":"For the price of your weekly coffee, acquire our Premium Package for a year and enjoy a new dimension in wallpapers. All this for just:",
       "price":"\$6.99.",
       "BuyNow":"Buy Now",
 
@@ -147,6 +147,26 @@ class LocalizationTranslator extends Translations{
       "viewwallpaper" : "If you want to view wallpaper",
       "ViewAd" : "View Ad",
       // "BuyPremium" : "Buy Premium",
+
+      //Premium Feature Bottom Sheet
+      "premiumFeature":"Premium Feature",
+      "PleaseSelectTime":"Please select time for wallpaper to change.",
+      "setTime":"Set Timer",
+      "ServiceStartState":"START",
+      "ServiceStopState":"STOP",
+
+      //Not a Premium Member Bottom Sheet
+      "premiumOffer": "Premium Offer:",
+      // "youget":"Lo que obtendrás:",
+      // "Access":"Acceso ilimitado a fondos Premium.",
+      // "ExclusivePremium":"Categorías exclusivas Premium.",
+      // "NoAd":"Sin anuncios.",
+      // "AutomticCategory":"Cambio automático de wallpapers de cualquier categoría.",
+      // "AutomaticProduct":"Cambio automático de wallpapers que has marcado en favoritos.",
+      // "TotalControl":"Control total sobre el tiempo en que cambian los wallpapers.",
+      // "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo:",
+      // "price":"\$6.99.",
+      // "BuyNow":"Comprar Ahora",
 
 
 
@@ -303,7 +323,7 @@ class LocalizationTranslator extends Translations{
 
       //SetWallpaperScreen
       "NoRelatedWallpaper": "Sin fondo de pantalla relacionado",
-      "SetWallpaper": "Establecer fondo de pantalla",
+      "SetWallpaper": "Establecer Fondo en:",
       "LockScreen": "Pantalla de Bloqueo",
       "HomeScreen": "Pantalla de inicio",
       "Both": "Ambas",
@@ -372,7 +392,7 @@ class LocalizationTranslator extends Translations{
       "AutomticCategory":"Cambio automático de wallpapers de cualquier categoría.",
       "AutomaticProduct":"Cambio automático de wallpapers que has marcado en favoritos.",
       "TotalControl":"Control total sobre el tiempo en que cambian los wallpapers.",
-      "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo ",
+      "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo:",
       "price":"\$6.99.",
       "BuyNow":"Comprar Ahora",
 
@@ -381,6 +401,28 @@ class LocalizationTranslator extends Translations{
       "viewwallpaper" : "Si quieres ver el fondo de pantalla",
       "ViewAd" : "Ver anuncio",
       // "BuyPremium" : "Comprar Premium",
+
+      //Premium Feature Bottom Sheet
+      "premiumFeature":"Función Premium",
+      "PleaseSelectTime":"Por favor ajusta el tiempo en elque se cambiará de wallpaper.",
+      "setTime":"AJUSTAR TIEMPO",
+      "ServiceStartState":"INICIAR",
+      "ServiceStopState":"DETENER",
+
+      //Not a Premium Member Bottom Sheet
+      "premiumOffer": "Oferta Premium:",
+      // "youget":"Lo que obtendrás:",
+      // "Access":"Acceso ilimitado a fondos Premium.",
+      // "ExclusivePremium":"Categorías exclusivas Premium.",
+      // "NoAd":"Sin anuncios.",
+      // "AutomticCategory":"Cambio automático de wallpapers de cualquier categoría.",
+      // "AutomaticProduct":"Cambio automático de wallpapers que has marcado en favoritos.",
+      // "TotalControl":"Control total sobre el tiempo en que cambian los wallpapers.",
+      // "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo:",
+      // "price":"\$6.99.",
+      // "BuyNow":"Comprar Ahora",
+
+
 
 
       // Terms And Condtions

@@ -145,14 +145,18 @@ class _OnboardingState extends State<Onboarding> {
                         itemBuilder: (context, index) {
                           return Stack(
                             children: [
-                              Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                  image: AssetImage(_controller
-                                      .onBoardingPages[index].imageAsset),
-                                  fit: BoxFit.cover,
-                                )),
+                              Positioned.fill(
+                                top:0,
+                                bottom: 60,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    image: AssetImage(_controller
+                                        .onBoardingPages[index].imageAsset),
+                                    fit: BoxFit.contain,
+                                  )),
+                                ),
                               ),
                               Container(
                                 alignment: Alignment.center,

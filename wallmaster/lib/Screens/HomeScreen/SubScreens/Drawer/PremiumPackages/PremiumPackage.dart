@@ -10,6 +10,8 @@ import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/TermsAndCondtion
 import 'package:wallmaster/Screens/Payment/paymentConfig.dart';
 import 'package:pay/pay.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
+
+import '../../../../../Controllers/LocalizationController.dart';
 class PremiumPackage extends StatefulWidget {
   const PremiumPackage({super.key});
 
@@ -119,64 +121,67 @@ class _PremiumPackageState extends State<PremiumPackage> {
             SizedBox(height: 10,),
 
 
-            Text("youget".tr,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Text("youget".tr,style: TextStyle(color: Colors.yellowAccent,fontWeight: FontWeight.bold,fontSize: 29),),
             SizedBox(height: 10,),
             Row(
               children: [
-              Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+              // Icon(Icons.done_sharp,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Text("Access".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
             ],),
             Row(
               children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Text("ExclusivePremium".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
             Row(
               children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Text("NoAd".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
               ],),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Expanded(child: Text("AutomticCategory".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
               ],),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Expanded(child: Text("AutomaticProduct".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
               ],),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.done_outlined,color: Colors.white,size: 18,),
-                SizedBox(width: 10,),
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
                 Expanded(child: Text("TotalControl".tr,style: TextStyle(color: Colors.white,fontSize: 18,),maxLines: null,)),
               ],),
 
-
-
             SizedBox(height: 10,),
 
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.start,
-              runAlignment: WrapAlignment.start,
-            direction: Axis.horizontal,
-              children: [
                 Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
-                Text("price".tr,style: TextStyle(fontSize: 14,color: Colors.green),),
-              ],
-            ),
+            SizedBox(height: 5,),
+                GetBuilder<Localization>(builder: (controller) {
+                  return Align(
+                      alignment: Alignment.center,
+                      child: Image.asset((controller.dropdownValue['name']=='English')?"assets/images/borderlessOfferEnglish.png":"assets/images/borderlessOfferSpanish.png",width: MediaQuery.of(context).size.width*0.60,));
+                },),
 
 
-            SizedBox(height: 10,),
+
+            // SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

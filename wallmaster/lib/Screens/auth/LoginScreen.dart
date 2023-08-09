@@ -161,15 +161,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       },
                       child: Container(
-                        height: 50,
+                        height: 55,
                         alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            color: AppColors.black,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.white,width: 1,)
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.yellowAccent,width: 2,)
                         ),
-                        child: Text("ContinueWithGoogle".tr,style: TextStyle(color: Colors.white),),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("ContinueWithGoogle".tr,style: TextStyle(color: Colors.black,fontSize: 22),),
+                            SizedBox(width: 10,),
+                            Image.asset('assets/images/google.png',width: 40,height: 40,),
+                          ],
+                        ),
                       ),
                     ),
 

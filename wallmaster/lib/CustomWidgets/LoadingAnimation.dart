@@ -67,7 +67,7 @@ class _LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPr
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/modified_logo.png"),
+                    image: AssetImage("assets/images/circle_logo.png"),
                   ),
                   //color: Colors.blue,
                   borderRadius: BorderRadius.circular(10),
