@@ -190,7 +190,7 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       decoration: BoxDecoration(color: Colors.red,borderRadius: BorderRadius.circular(10),border: Border.all(color: AppColors.black,width: 2)),
-                      child: Text('Stop',style: TextStyle(color: AppColors.white,fontSize: 27,fontWeight: FontWeight.bold),),),
+                      child: Text('ServiceStopState'.tr,style: TextStyle(color: AppColors.white,fontSize: 27,fontWeight: FontWeight.bold),),),
                   )
                       :InkWell(
                     onTap: () async {
@@ -294,7 +294,7 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       decoration: BoxDecoration(color: Colors.yellowAccent,borderRadius: BorderRadius.circular(10),border: Border.all(color: AppColors.black,width: 2)),
-                      child: Text('Start',style: TextStyle(color: AppColors.black,fontSize: 27,fontWeight: FontWeight.bold),),),
+                      child: Text('ServiceStartState'.tr,style: TextStyle(color: AppColors.black,fontSize: 27,fontWeight: FontWeight.bold),),),
                   ),
 
               ],

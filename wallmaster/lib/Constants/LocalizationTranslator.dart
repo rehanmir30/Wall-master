@@ -392,7 +392,7 @@ class LocalizationTranslator extends Translations{
       "AutomticCategory":"Cambio automático de wallpapers de cualquier categoría.",
       "AutomaticProduct":"Cambio automático de wallpapers que has marcado en favoritos.",
       "TotalControl":"Control total sobre el tiempo en que cambian los wallpapers.",
-      "ForPrice":"FPor el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo:",
+      "ForPrice":"Por el precio de tu café semanal, adquiere nuestro Paquete Premium por un año y disfruta de una nueva dimensión en fondos de pantalla. Todo esto por solo:",
       "price":"\$6.99.",
       "BuyNow":"Comprar Ahora",
 
