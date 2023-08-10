@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -832,9 +833,18 @@ class DatabaseHelper {
 
   Future<void>stopWorkManagerTasks()async{
     // await Future.delayed(const Duration(seconds: 14));
-    await Workmanager().cancelAll();
-    await Future.delayed(const Duration(seconds: 20));
-    sleep(Duration(seconds: 10));
+   try{
+       await Workmanager().cancelByTag('heavy');
+       await Future.delayed(Duration(seconds: 20));
+       sleep(Duration(seconds: 10));
+
+
+   }catch(e){
+     print("Caught exception: $e");
+
+   }
+
+    // await Workmanager().cancelByUniqueName('taskOne');
 
   }
 
@@ -850,16 +860,24 @@ class DatabaseHelper {
   //   List<String> wallpaperUrls = commonController.productData?.map((item) => item.image!)?.toList() ?? [];
     List<String> wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
 
-    await Workmanager().cancelByUniqueName("taskOne");
+    // await Workmanager().cancelByUniqueName("changeWallpaperTask");
 
     Workmanager().registerOneOffTask(
       "taskOne",
       "changeWallpaperTask",
+        tag: 'heavy',
         inputData: {
         'wallpaperUrls': wallpaperUrls,
           'time': text,
         },
          initialDelay: Duration(seconds: 5),
+      constraints: Constraints(
+        networkType: NetworkType.connected,
+        requiresBatteryNotLow: true,
+        requiresCharging: false,
+        requiresDeviceIdle: false,
+        requiresStorageNotLow: true,
+      ),
       // frequency: Duration(minutes: 15),
     );
 
@@ -877,17 +895,26 @@ class DatabaseHelper {
 
   //   List<String> wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
 
-    await Workmanager().cancelAll();
+    // await Workmanager().cancelAll();
 
-   await Workmanager().registerOneOffTask(
+   await Workmanager().registerPeriodicTask(
       "taskOne",
       "changeWallpaperTask",
+        tag: "heavy",
         inputData: {
         'wallpaperUrls': wallpaperUrls,
           'time': text,
         },
+     constraints: Constraints(
+       networkType: NetworkType.connected,
+       requiresBatteryNotLow: true,
+       requiresCharging: false,
+       requiresDeviceIdle: false,
+       requiresStorageNotLow: true,
+     ),
+
          initialDelay: Duration(seconds: 5),
-      // frequency: Duration(minutes: 15),
+      frequency: Duration(minutes: 15),
     );
 
     // CustomSnackbar.show('Album as been Set', AppColors.green);

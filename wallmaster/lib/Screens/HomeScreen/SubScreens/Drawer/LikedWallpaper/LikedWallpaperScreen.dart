@@ -4,6 +4,7 @@ import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 import 'package:wallmaster/CustomWidgets/LikeWidget.dart';
 import 'package:wallmaster/CustomWidgets/MixWidget.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../../../../../Constants/AppColors.dart';
 import '../../../../../../CustomWidgets/CommonWidget.dart';
@@ -181,7 +182,6 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                       await commonController.setLoading(true);
                       await commonController.stopWorkManagerTasks();
                       await commonController.setMagazine(!commonController.workManagerMagazine);
-
                       await commonController.setLoading(false);
 
                     },
@@ -199,7 +199,7 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                       } else{
                         if(commonController.likedWallpaperModel!.data!.length==null || commonController.likedWallpaperModel!.data!.length<3 ){
 
-                          CustomSnackbar.show('Wallpaper album should have at least 10 wallpapers', AppColors.red);
+                          CustomSnackbar.show('Wallpaper album should have at least 3 wallpapers', AppColors.red);
 
                         }else{
                           if(commonController.workManagerMagazine==false){
@@ -210,66 +210,79 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                                 timeInMinutes = "1";
                               });
 
-                            }else if(textController.text=="2 minutes"){
+                            }
+                            else if(textController.text=="2 minutes"){
                               setState(() {
                                 timeInMinutes = "2";
                               });
 
-                            }else if(textController.text=="3 minutes"){
+                            }
+                            else if(textController.text=="3 minutes"){
                               setState(() {
                                 timeInMinutes = "3";
                               });
 
-                            }else if(textController.text=="4 minutes"){
+                            }
+                            else if(textController.text=="4 minutes"){
                               setState(() {
                                 timeInMinutes = "4";
                               });
 
-                            }else if(textController.text=="5 minutes"){
+                            }
+                            else if(textController.text=="5 minutes"){
                               setState(() {
                                 timeInMinutes = "5";
                               });
 
-                            }else if(textController.text=="10 minutes"){
+                            }
+                            else if(textController.text=="10 minutes"){
                               setState(() {
                                 timeInMinutes = "10";
                               });
 
-                            }else if(textController.text=="15 Minutes"){
+                            }
+                            else if(textController.text=="15 Minutes"){
                               setState(() {
                                 timeInMinutes = "15";
                               });
 
-                            }else if(textController.text=="30 Minutes"){
+                            }
+                            else if(textController.text=="30 Minutes"){
                               setState(() {
                                 timeInMinutes = "30";
                               });
 
-                            }else if(textController.text=="1 Hour"){
+                            }
+                            else if(textController.text=="1 Hour"){
                               setState(() {
                                 timeInMinutes = "60";
                               });
 
-                            }else if(textController.text=="3 Hours"){
+                            }
+                            else if(textController.text=="3 Hours"){
                               setState(() {
                                 timeInMinutes = "180";
                               });
 
-                            }else if(textController.text=="6 Hours"){
+                            }
+                            else if(textController.text=="6 Hours"){
                               setState(() {
                                 timeInMinutes = "360";
                               });
 
-                            }else if(textController.text=="12 Hours"){
+                            }
+                            else if(textController.text=="12 Hours"){
                               setState(() {
                                 timeInMinutes = "720";
                               });
 
-                            }else if(textController.text=="24 Hours"){
+                            }
+                            else if(textController.text=="24 Hours"){
                               setState(() {
                                 timeInMinutes = "1440";
                               });
-                            }else{
+                            }
+                            else{
                               setState(() {
                                 timeInMinutes = "";
                               });
@@ -281,7 +294,7 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                               CustomSnackbar.show("Something went wrong please set the timer again", AppColors.red);
                             }
                           }else{
-                            await commonController.stopWorkManagerTasks();
+                             // commonController.stopWorkManagerTasks();
                           }
                           await commonController.setMagazine(!commonController.workManagerMagazine);
                           Get.back();
@@ -410,19 +423,27 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
           GetBuilder<CommonController>(builder: (controller) {
             return (controller.likedWallpaperModel!.data?.length==0 || controller.likedWallpaperModel!.data?.length==null)
                 ?Center(child: Text("No wallpaper",style: TextStyle(color: AppColors.white,fontSize: 18),),)
-                :GridView.builder(
-              shrinkWrap: true,
-              primary: true,
-              itemCount: controller.likedWallpaperModel!.data!.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 0.0,
-                  mainAxisSpacing: 0.0,
-                  mainAxisExtent: 230,
-                  crossAxisCount: 3),
-              itemBuilder: (context, index) {
-                return LikeWidget(controller.likedWallpaperModel!.data![index]);
+                :CustomScrollView(
+              slivers: [
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 0.0,
+                    mainAxisSpacing: 0.0,
+                    mainAxisExtent: 230,
+                    crossAxisCount: 3,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    addAutomaticKeepAlives: true,
+                        addRepaintBoundaries: false,
+                        (context, index) {
+                      return LikeWidget(controller.likedWallpaperModel!.data![index]);
+                    },
+                    childCount: controller.likedWallpaperModel!.data!.length,
+                  ),
+                ),
+              ],
+            ).marginSymmetric(horizontal: 0);
 
-              },).marginSymmetric(horizontal: 0);
           },),
 
           GetBuilder<CommonController>(builder: (controller) {

@@ -115,7 +115,7 @@ class CommonController extends GetxController{
   }
 
   stopWorkManagerTasks()async{
-    await DatabaseHelper().stopWorkManagerTasks();
+     await DatabaseHelper().stopWorkManagerTasks();
     update();
   }
 
@@ -372,15 +372,15 @@ class CommonController extends GetxController{
   }
 
   TimerCount()async{
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(Duration(seconds:25), (timer) {
       called();
     });
   }
 
   called()async{
-    if (kDebugMode) {
-      print('checking Auto Ad');
-    }
+    // if (kDebugMode) {
+    //   print('checking Auto Ad');
+    // }
     if(clickCount>=5){
       if(interstitial==true){
         showInterstitialAd();
@@ -493,7 +493,7 @@ class CommonController extends GetxController{
     }
   }
 
-   showRewardedAd(wallpaper,bool value){
+   showRewardedAd(wallpaper,bool value) async {
     CommonController commonController = Get.find<CommonController>();
     if(_rewardedAd != null){
       _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(

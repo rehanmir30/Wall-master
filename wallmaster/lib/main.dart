@@ -26,6 +26,7 @@ import 'Model/GetProductModel.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
+try{
   Workmanager().executeTask((taskName, inputData) async {
     // Retrieve the wallpaper URLs from inputData
     print("TASK: "+taskName);
@@ -39,6 +40,9 @@ void callbackDispatcher() {
 
     return Future.value(true);
   });
+}catch(e){
+  print(e.toString());
+}
 }
 
 Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
