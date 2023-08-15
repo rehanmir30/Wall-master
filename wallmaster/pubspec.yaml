@@ -72,7 +72,10 @@ dependencies:
   flutter_cache_manager:
   #Lottie
   lottie:
-
+  flutter_background_service: ^2.4.6
+  flutter_background_service_ios: ^2.4.0
+  flutter_background_service_android: ^3.0.3
+  flutter_local_notifications: ^13.0.0
 
 dev_dependencies:
   flutter_test:

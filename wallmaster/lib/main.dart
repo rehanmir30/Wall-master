@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:wallmaster/back_service.dart';
 import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
@@ -30,13 +31,14 @@ try{
   Workmanager().executeTask((taskName, inputData) async {
     // Retrieve the wallpaper URLs from inputData
     print("TASK: "+taskName);
-    List<String> wallpaperUrls = List<String>.from(inputData?['wallpaperUrls'] ?? []);
-
+    // List<String> wallpaperUrls = List<String>.from(inputData?['wallpaperUrls'] ?? []);
+String wallpaper=inputData?['wallpaperUrls'];
     String  time = inputData?['time'];
     int timer = int.parse(time);
 
     // Call a function to change the wallpaper with the retrieved URLs
-    await changeLockScreenWallpaper(wallpaperUrls,timer);
+    await  changeLockScreenWallpaper(wallpaper);
+    // await changeLockScreenWallpaper(wallpaperUrls,timer);
 
     return Future.value(true);
   });
@@ -45,18 +47,10 @@ try{
 }
 }
 
-Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
+ changeLockScreenWallpaper( wallpaperUrl) async {
   print("TASK: FUNCTION");
 
-  // Example using flutter_wallpaper_manager plugin (Android only):
-
-  for (var i=0; i < wallpaperUrls.length; i++) {
     try {
-      final wallpaperUrl = wallpaperUrls[i];
-      if (kDebugMode) {
-        print("URLSSSSS: "+wallpaperUrl.toString());
-      }
-
       http.Response response = await http.get(Uri.parse(wallpaperUrl));
       Uint8List imageData = response.bodyBytes;
 
@@ -72,31 +66,16 @@ Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
         imagePath,
         WallpaperManager.BOTH_SCREEN, // Set// wallpaper for the home screen
       );
-      if(results==true){
-
-        if (kDebugMode) {
-          print("Success");
-        }
-          sleep( Duration(minutes: timer));
-
-
+      if(results){
+        print("everything ok");
       }else{
-        if (kDebugMode) {
-          print("Fail");
-        }
-          sleep(Duration(minutes:  timer));
-          changeLockScreenWallpaper(wallpaperUrls,timer);
-
-        // CustomSnackbar.show('WallpaperUpdateFailed'.tr,AppColors.red);
-
+        print("everything not ok");
       }
 
     } catch (e) {
       print('Error setting lock screen wallpaper: $e');
     }
-  }
-  sleep(Duration(minutes: timer));
-  await changeLockScreenWallpaper(wallpaperUrls,timer);
+
 }
 
 
@@ -105,6 +84,13 @@ Future<void> changeLockScreenWallpaper(List<String> wallpaperUrls,timer) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.notification.isDenied.then((value) {
+    if(value){
+      Permission.notification.request();
+    }
+  });
+  // await InitController();
+  await initializeService();
   MobileAds.instance.initialize();
 
   Workmanager().initialize(callbackDispatcher,isInDebugMode: false);

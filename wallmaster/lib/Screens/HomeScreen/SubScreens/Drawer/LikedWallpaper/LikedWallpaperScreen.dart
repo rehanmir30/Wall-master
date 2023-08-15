@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 import 'package:wallmaster/CustomWidgets/LikeWidget.dart';
@@ -10,6 +12,7 @@ import '../../../../../../Constants/AppColors.dart';
 import '../../../../../../CustomWidgets/CommonWidget.dart';
 import '../../../../../Controllers/AuthenticationController.dart';
 import '../../../../../CustomWidgets/LoadingAnimation.dart';
+import '../../../../../DB/SharedPreferences/SharedPreferences.dart';
 import '../../Category/RelatedCategoryScreen.dart';
 
 
@@ -180,7 +183,18 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                     onTap: () async {
                       Get.back();
                       await commonController.setLoading(true);
-                      await commonController.stopWorkManagerTasks();
+                      // await commonController.stopWorkManagerTasks();
+                      final service = FlutterBackgroundService();
+                      bool isRunning=await service.isRunning();
+                      if(isRunning){
+                        service.invoke('stopService');
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.remove("wallpaperLength");
+                        await prefs.remove("wallpaperInterval");
+                        for(int i=0;i< commonController.likedWallpaperModel!.data!.length;i++){
+                          await prefs.remove('wallpaper${i}');
+                        }
+                      }
                       await commonController.setMagazine(!commonController.workManagerMagazine);
                       await commonController.setLoading(false);
 
@@ -198,13 +212,10 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                         CustomSnackbar.show('Please select time', AppColors.red);
                       } else{
                         if(commonController.likedWallpaperModel!.data!.length==null || commonController.likedWallpaperModel!.data!.length<3 ){
-
                           CustomSnackbar.show('Wallpaper album should have at least 3 wallpapers', AppColors.red);
-
                         }else{
                           if(commonController.workManagerMagazine==false){
                             String? timeInMinutes;
-
                             if(textController.text=="1 minute"){
                               setState(() {
                                 timeInMinutes = "1";
@@ -289,7 +300,18 @@ class _LikedPremiumSheetState extends State<LikedPremiumSheet> {
                             }
 
                             if(timeInMinutes !="" ||timeInMinutes!=null){
-                              await commonController.startWorkManagerLikeWallpaperTask(timeInMinutes);
+                              final service = FlutterBackgroundService();
+                              // Obtain shared preferences.
+                              final SharedPreferences prefs = await SharedPreferences.getInstance();
+                              await prefs.setInt('wallpaperLength', commonController.likedWallpaperModel!.data!.length);
+                              await prefs.setInt('wallpaperInterval', int.parse(timeInMinutes!));
+                              for(int i=0;i< commonController.likedWallpaperModel!.data!.length;i++){
+                                await prefs.setString('wallpaper${i}', commonController.likedWallpaperModel!.data![i].image!);
+                              }
+                              // await SharedPref.saveUser(usermodel);
+                              // await commonController.startWorkManagerLikeWallpaperTask(timeInMinutes);
+                              // FlutterBackgroundService().invoke("setAsBackground");
+                              service.startService();
                             }else{
                               CustomSnackbar.show("Something went wrong please set the timer again", AppColors.red);
                             }

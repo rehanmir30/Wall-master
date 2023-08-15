@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/PremiumPackages/PremiumPackage.dart';
 
@@ -303,7 +305,24 @@ class _PremiumSheetState extends State<PremiumSheet> {
                   onTap: () async {
                     Get.back();
                     await commonController.setLoading(true);
-                    await commonController.stopWorkManagerTasks();
+                    // await commonController.stopWorkManagerTasks();
+                    final service = FlutterBackgroundService();
+                    bool isRunning=await service.isRunning();
+                    if(isRunning){
+                      service.invoke('stopService');
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.remove("wallpaperLength");
+                      await prefs.remove("wallpaperInterval");
+                      List<String>wallpaperUrls=[];
+                      if(commonController.productData!.length>25){
+                        wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
+                      }else{
+                        wallpaperUrls = commonController.productData?.map((item) => item.image!).toList() ?? [];
+                      }
+                      for(int i=0;i< wallpaperUrls.length;i++){
+                        await prefs.remove('wallpaper${i}');
+                      }
+                    }
                     await commonController.setMagazine(!commonController.workManagerMagazine);
 
                     await commonController.setLoading(false);
@@ -335,57 +354,68 @@ class _PremiumSheetState extends State<PremiumSheet> {
                              timeInMinutes = "1";
                            });
 
-                         }else if(textController.text=="2 minutes"){
+                         }else if(textController.text=="2 minutes")
+                         {
                            setState(() {
                              timeInMinutes = "2";
                            });
 
-                         }else if(textController.text=="3 minutes"){
+                         }else if(textController.text=="3 minutes")
+                         {
                            setState(() {
                              timeInMinutes = "3";
                            });
 
-                         }else if(textController.text=="4 minutes"){
+                         }else if(textController.text=="4 minutes")
+                         {
                            setState(() {
                              timeInMinutes = "4";
                            });
 
-                         }else if(textController.text=="5 minutes"){
+                         }else if(textController.text=="5 minutes")
+                         {
                            setState(() {
                              timeInMinutes = "5";
                            });
 
-                         }else if(textController.text=="10 minutes"){
+                         }else if(textController.text=="10 minutes")
+                         {
                            setState(() {
                              timeInMinutes = "10";
                            });
 
-                         }else if(textController.text=="15 Minutes"){
+                         }else if(textController.text=="15 Minutes")
+                         {
                            setState(() {
                              timeInMinutes = "15";
                            });
 
-                         }else if(textController.text=="30 Minutes"){
+                         }else if(textController.text=="30 Minutes")
+                         {
                            setState(() {
                              timeInMinutes = "30";
                            });
 
-                         }else if(textController.text=="1 Hour"){
+                         }else if(textController.text=="1 Hour")
+                         {
                            setState(() {
                              timeInMinutes = "60";
                            });
 
-                         }else if(textController.text=="3 Hours"){
+                         }else if(textController.text=="3 Hours")
+                         {
                            setState(() {
                              timeInMinutes = "180";
                            });
 
-                         }else if(textController.text=="6 Hours"){
+                         }else if(textController.text=="6 Hours")
+                         {
                            setState(() {
                              timeInMinutes = "360";
                            });
 
-                         }else if(textController.text=="12 Hours"){
+                         }else if(textController.text=="12 Hours")
+                         {
                            setState(() {
                              timeInMinutes = "720";
                            });
@@ -401,7 +431,27 @@ class _PremiumSheetState extends State<PremiumSheet> {
                          }
 
                          if(timeInMinutes !="" ||timeInMinutes!=null){
-                           await commonController.startWorkManagerTask(timeInMinutes);
+                           // await commonController.startWorkManagerTask(timeInMinutes);
+                           final service = FlutterBackgroundService();
+                           // Obtain shared preferences.
+                           final SharedPreferences prefs = await SharedPreferences.getInstance();
+                           List<String>wallpaperUrls=[];
+                           if(commonController.productData!.length>25){
+                             wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
+                           }else{
+                             wallpaperUrls = commonController.productData?.map((item) => item.image!).toList() ?? [];
+                           }
+
+
+                           await prefs.setInt('wallpaperLength', wallpaperUrls.length);
+                           await prefs.setInt('wallpaperInterval', int.parse(timeInMinutes!));
+                           for(int i=0;i< wallpaperUrls.length;i++){
+                             await prefs.setString('wallpaper${i}', wallpaperUrls[i]);
+                           }
+                           // await SharedPref.saveUser(usermodel);
+                           // await commonController.startWorkManagerLikeWallpaperTask(timeInMinutes);
+                           // FlutterBackgroundService().invoke("setAsBackground");
+                           service.startService();
                          }else{
                            CustomSnackbar.show("Something went wrong please set the timer again", AppColors.red);
                          }

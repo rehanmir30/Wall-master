@@ -69,4 +69,5 @@ class SharedPref {
     return false;
   }
 
+  // static Future<>
 }

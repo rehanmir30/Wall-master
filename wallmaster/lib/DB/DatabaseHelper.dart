@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
@@ -835,8 +836,8 @@ class DatabaseHelper {
     // await Future.delayed(const Duration(seconds: 14));
    try{
        await Workmanager().cancelByTag('heavy');
-       await Future.delayed(Duration(seconds: 20));
-       sleep(Duration(seconds: 10));
+       // await Future.delayed(Duration(seconds: 20));
+       // sleep(Duration(seconds: 10));
 
 
    }catch(e){
@@ -896,26 +897,31 @@ class DatabaseHelper {
   //   List<String> wallpaperUrls = commonController.productData?.take(25).map((item) => item.image!).toList() ?? [];
 
     // await Workmanager().cancelAll();
+    int time= int.parse(text);
+// for(var wallpaper in wallpaperUrls){
+//   await Workmanager().registerPeriodicTask(
+//     "taskOne",
+//     "changeWallpaperTask",
+//     tag: "heavy",
+//     inputData: {
+//       'wallpaperUrls': wallpaper,
+//       'time': text,
+//     },
+//     constraints: Constraints(
+//       networkType: NetworkType.connected,
+//       requiresBatteryNotLow: true,
+//       requiresCharging: false,
+//       requiresDeviceIdle: false,
+//       requiresStorageNotLow: true,
+//     ),
+//     initialDelay: Duration(seconds: 5),
+//     frequency: Duration(minutes: time),
+//     // frequency: Duration(minutes: 15),
+//   );
+//   time+=time;
+//   print("Time: "+time.toString());
+// }
 
-   await Workmanager().registerPeriodicTask(
-      "taskOne",
-      "changeWallpaperTask",
-        tag: "heavy",
-        inputData: {
-        'wallpaperUrls': wallpaperUrls,
-          'time': text,
-        },
-     constraints: Constraints(
-       networkType: NetworkType.connected,
-       requiresBatteryNotLow: true,
-       requiresCharging: false,
-       requiresDeviceIdle: false,
-       requiresStorageNotLow: true,
-     ),
-
-         initialDelay: Duration(seconds: 5),
-      frequency: Duration(minutes: 15),
-    );
 
     // CustomSnackbar.show('Album as been Set', AppColors.green);
   }
