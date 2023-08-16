@@ -53,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           actions: [
             InkWell(
                 onTap: () async {
-                  // Get.to(()=>SearchScreen());
-                  await DatabaseHelper().getCategoriesWallpaper();
+                  Get.to(()=>SearchScreen());
+                  // await DatabaseHelper().getCategoriesWallpaper();
                 },
                 child: Icon(Icons.search,size: 24,color: Colors.white,).marginOnly(right: 15))
           ],
