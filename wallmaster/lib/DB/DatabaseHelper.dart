@@ -570,186 +570,260 @@ class DatabaseHelper {
 
   }
 
-  Future<void>getCategoriesWallpaper()async{
-   CommonController commonController = Get.find<CommonController>();
-   List<CategoryDeckModel>? data =[];
-   int shouldPick =0;
+  // Future<void>getCategoriesWallpaper()async{
+  //  CommonController commonController = Get.find<CommonController>();
+  //  List<CategoryDeckModel>? data =[];
+  //  int shouldPick =0;
+  //
+  //  for(var currentCategory in commonController.categoryModelList!.data!){
+  //      commonController.productModelList?.data?.shuffle();
+  //      CategoryDeckModel? deckModel = CategoryDeckModel();
+  //
+  //      deckModel.id = currentCategory.id;
+  //      print('categorId: ${currentCategory.id}');
+  //        deckModel.name = currentCategory.name;
+  //        deckModel.imageName = currentCategory.imageName;
+  //        deckModel.image = currentCategory.image;
+  //        List<ProductData> productList =[];
+  //
+  //        for(var fetchProducts in commonController.productModelList!.data!){
+  //          if(fetchProducts.categoryId ==currentCategory.id){
+  //
+  //            if(shouldPick==int.parse(fetchProducts.forPremium.toString())){
+  //              print('${fetchProducts.forPremium}');
+  //              print('${fetchProducts.id}');
+  //              if(shouldPick==0){
+  //                shouldPick=1;
+  //                productList.add(fetchProducts);
+  //              }else if(shouldPick==1){
+  //                shouldPick=0;
+  //                productList.add(fetchProducts);
+  //              }
+  //            }
+  //
+  //
+  //          }
+  //        }
+  //      if(productList.length<4){
+  //        for(var l in commonController.productModelList!.data!){
+  //          if(l.forPremium==0 && l.categoryId==currentCategory.id) {
+  //            bool result = productList.any((element) => element.id == l.id);
+  //            print('${result}');
+  //            if (result == false) {
+  //              print("Regular Added Again: ${l.forPremium}");
+  //              if(productList.length<4){
+  //                productList.add(l);
+  //              }
+  //            }
+  //          }
+  //        }
+  //      }
+  //        deckModel.wallpaperdata = [];
+  //        deckModel.wallpaperdata = productList;
+  //        data.add(deckModel);
+  //
+  //        List<int>? indexes =[];
+  //        for(var i=0;i<data.length;i++){
+  //          indexes!.add(0);
+  //        }
+  //        await commonController.selectedStackIndex(indexes);
+  //
+  //        await commonController.setCategoryDeck(data);
+  //
+  //  }
+  //  ///////////////////////////////////
+  //
+  //  // for(var i in commonController.categoryModelList!.data!){
+  //  //   commonController.productModelList?.data?.shuffle();
+  //  //   CategoryDeckModel? deckModel = CategoryDeckModel();
+  //  //
+  //  //   deckModel.id = i.id;
+  //  //   print('categorId: ${i.id}');
+  //  //     deckModel.name = i.name;
+  //  //     deckModel.imageName = i.imageName;
+  //  //     deckModel.image = i.image;
+  //  //
+  //  //     List<ProductData> productList =[];
+  //  //     int lastWas=0;
+  //  //     bool firstRun = true;
+  //  //
+  //  //     for(var j in commonController.productModelList!.data!){
+  //  //       if(j.forPremium==0 && j.categoryId==i.id){
+  //  //
+  //  //         bool result = productList.any((element) => element.id==j.id);
+  //  //         print('${result}');
+  //  //         if(result==false){
+  //  //           print("Regular Added: ${j.forPremium}");
+  //  //           if(lastWas==1 && firstRun==false){
+  //  //             productList.add(j);
+  //  //             lastWas =0;
+  //  //           }else if(lastWas==0 && firstRun ==true){
+  //  //             productList.add(j);
+  //  //             firstRun = false;
+  //  //             lastWas =0;
+  //  //           }
+  //  //
+  //  //           for(var k in commonController.productModelList!.data!){
+  //  //             if(k.forPremium==1 && k.categoryId==i.id){
+  //  //               bool result = productList.any((element) => element.id==k.id);
+  //  //               if(result==false){
+  //  //                 if(lastWas==0){
+  //  //                   productList.add(k);
+  //  //                   lastWas = 1;
+  //  //                 }
+  //  //
+  //  //                 break;
+  //  //               }
+  //  //             }
+  //  //           }
+  //  //         }
+  //  //       }else if(j.forPremium==1 && j.categoryId==i.id){
+  //  //         bool result = productList.any((element) => element.id==j.id);
+  //  //         if(result==false){
+  //  //           print("Premium Added: ${j.forPremium}");
+  //  //           if(lastWas==0 && firstRun==false){
+  //  //             productList.add(j);
+  //  //             lastWas =1;
+  //  //           }else if(lastWas==0 && firstRun ==true){
+  //  //             productList.add(j);
+  //  //             firstRun = false;
+  //  //             lastWas =1;
+  //  //           }
+  //  //
+  //  //           for(var k in commonController.productModelList!.data!){
+  //  //             if(k.forPremium==0 && k.categoryId==i.id){
+  //  //               bool result = productList.any((element) => element.id==k.id);
+  //  //               if(result==false){
+  //  //                 if(lastWas==1){
+  //  //                   productList.add(k);
+  //  //                   lastWas = 0;
+  //  //                 }
+  //  //                 break;
+  //  //               }
+  //  //             }
+  //  //           }
+  //  //         }
+  //  //       }
+  //  //
+  //  //       if(productList.length<4){
+  //  //         for(var l in commonController.productModelList!.data!){
+  //  //           if(l.forPremium==0 && l.categoryId==i.id) {
+  //  //             bool result = productList.any((element) => element.id == l.id);
+  //  //             print('${result}');
+  //  //             if (result == false) {
+  //  //               print("Regular Added Again: ${l.forPremium}");
+  //  //               if(productList.length<4){
+  //  //                 productList.add(l);
+  //  //               }
+  //  //             }
+  //  //           }
+  //  //         }
+  //  //       }
+  //  //     }
+  //  //
+  //  //
+  //  //
+  //  //
+  //  //     deckModel.wallpaperdata = [];
+  //  //     deckModel.wallpaperdata = productList;
+  //  //     data.add(deckModel);
+  //  //
+  //  //     List<int>? indexes =[];
+  //  //     for(var i=0;i<data.length;i++){
+  //  //       indexes!.add(0);
+  //  //     }
+  //  //     await commonController.selectedStackIndex(indexes);
+  //  //
+  //  //     await commonController.setCategoryDeck(data);
+  //  //
+  //  // }
+  //    await commonController.setCategoryDeck(data);
+  //    print('Running Tests');
+  //    for(var i in data){
+  //      print(" Category: ${i.id}");
+  //
+  //          for(var j in i.wallpaperdata!){
+  //            print('Product Premium: ${j.forPremium}');
+  //          }
+  //
+  //    }
+  //
+  //    print('DECK DATA:   ${data!.length}');
+  //
+  // }
 
-   for(var currentCategory in commonController.categoryModelList!.data!){
-       commonController.productModelList?.data?.shuffle();
-       CategoryDeckModel? deckModel = CategoryDeckModel();
-
-       deckModel.id = currentCategory.id;
-       print('categorId: ${currentCategory.id}');
-         deckModel.name = currentCategory.name;
-         deckModel.imageName = currentCategory.imageName;
-         deckModel.image = currentCategory.image;
-         List<ProductData> productList =[];
-
-         for(var fetchProducts in commonController.productModelList!.data!){
-           if(fetchProducts.categoryId ==currentCategory.id){
-
-             if(shouldPick==int.parse(fetchProducts.forPremium.toString())){
-               print('${fetchProducts.forPremium}');
-               print('${fetchProducts.id}');
-               if(shouldPick==0){
-                 shouldPick=1;
-                 productList.add(fetchProducts);
-               }else if(shouldPick==1){
-                 shouldPick=0;
-                 productList.add(fetchProducts);
-               }
-             }
 
 
-           }
-         }
-       if(productList.length<4){
-         for(var l in commonController.productModelList!.data!){
-           if(l.forPremium==0 && l.categoryId==currentCategory.id) {
-             bool result = productList.any((element) => element.id == l.id);
-             print('${result}');
-             if (result == false) {
-               print("Regular Added Again: ${l.forPremium}");
-               if(productList.length<4){
-                 productList.add(l);
-               }
-             }
-           }
-         }
-       }
-         deckModel.wallpaperdata = [];
-         deckModel.wallpaperdata = productList;
-         data.add(deckModel);
+  Future<void> getCategoriesWallpaper() async {
+    CommonController commonController = Get.find<CommonController>();
+    List<CategoryDeckModel>? data = [];
 
-         List<int>? indexes =[];
-         for(var i=0;i<data.length;i++){
-           indexes!.add(0);
-         }
-         await commonController.selectedStackIndex(indexes);
+    for (var currentCategory in commonController.categoryModelList!.data!) {
+      CategoryDeckModel? deckModel = CategoryDeckModel();
+      var randomNumber = Random();
+      int number = randomNumber.nextInt(4);
 
-         await commonController.setCategoryDeck(data);
+      deckModel.id = currentCategory.id;
+      print('categoryId: ${currentCategory.id}');
+      deckModel.name = currentCategory.name;
+      deckModel.imageName = currentCategory.imageName;
+      deckModel.image = currentCategory.image;
+      List<ProductData> productList = [];
 
-   }
-   ///////////////////////////////////
+      // Separate premium and non-premium products
+      List<ProductData> premiumProducts = commonController.productModelList!.data!
+          .where((product) =>
+      product.categoryId == currentCategory.id &&
+          product.forPremium == 1)
+          .toList();
 
-   // for(var i in commonController.categoryModelList!.data!){
-   //   commonController.productModelList?.data?.shuffle();
-   //   CategoryDeckModel? deckModel = CategoryDeckModel();
-   //
-   //   deckModel.id = i.id;
-   //   print('categorId: ${i.id}');
-   //     deckModel.name = i.name;
-   //     deckModel.imageName = i.imageName;
-   //     deckModel.image = i.image;
-   //
-   //     List<ProductData> productList =[];
-   //     int lastWas=0;
-   //     bool firstRun = true;
-   //
-   //     for(var j in commonController.productModelList!.data!){
-   //       if(j.forPremium==0 && j.categoryId==i.id){
-   //
-   //         bool result = productList.any((element) => element.id==j.id);
-   //         print('${result}');
-   //         if(result==false){
-   //           print("Regular Added: ${j.forPremium}");
-   //           if(lastWas==1 && firstRun==false){
-   //             productList.add(j);
-   //             lastWas =0;
-   //           }else if(lastWas==0 && firstRun ==true){
-   //             productList.add(j);
-   //             firstRun = false;
-   //             lastWas =0;
-   //           }
-   //
-   //           for(var k in commonController.productModelList!.data!){
-   //             if(k.forPremium==1 && k.categoryId==i.id){
-   //               bool result = productList.any((element) => element.id==k.id);
-   //               if(result==false){
-   //                 if(lastWas==0){
-   //                   productList.add(k);
-   //                   lastWas = 1;
-   //                 }
-   //
-   //                 break;
-   //               }
-   //             }
-   //           }
-   //         }
-   //       }else if(j.forPremium==1 && j.categoryId==i.id){
-   //         bool result = productList.any((element) => element.id==j.id);
-   //         if(result==false){
-   //           print("Premium Added: ${j.forPremium}");
-   //           if(lastWas==0 && firstRun==false){
-   //             productList.add(j);
-   //             lastWas =1;
-   //           }else if(lastWas==0 && firstRun ==true){
-   //             productList.add(j);
-   //             firstRun = false;
-   //             lastWas =1;
-   //           }
-   //
-   //           for(var k in commonController.productModelList!.data!){
-   //             if(k.forPremium==0 && k.categoryId==i.id){
-   //               bool result = productList.any((element) => element.id==k.id);
-   //               if(result==false){
-   //                 if(lastWas==1){
-   //                   productList.add(k);
-   //                   lastWas = 0;
-   //                 }
-   //                 break;
-   //               }
-   //             }
-   //           }
-   //         }
-   //       }
-   //
-   //       if(productList.length<4){
-   //         for(var l in commonController.productModelList!.data!){
-   //           if(l.forPremium==0 && l.categoryId==i.id) {
-   //             bool result = productList.any((element) => element.id == l.id);
-   //             print('${result}');
-   //             if (result == false) {
-   //               print("Regular Added Again: ${l.forPremium}");
-   //               if(productList.length<4){
-   //                 productList.add(l);
-   //               }
-   //             }
-   //           }
-   //         }
-   //       }
-   //     }
-   //
-   //
-   //
-   //
-   //     deckModel.wallpaperdata = [];
-   //     deckModel.wallpaperdata = productList;
-   //     data.add(deckModel);
-   //
-   //     List<int>? indexes =[];
-   //     for(var i=0;i<data.length;i++){
-   //       indexes!.add(0);
-   //     }
-   //     await commonController.selectedStackIndex(indexes);
-   //
-   //     await commonController.setCategoryDeck(data);
-   //
-   // }
-     await commonController.setCategoryDeck(data);
-     print('Running Tests');
-     for(var i in data){
-       print(" Category: ${i.id}");
+      List<ProductData> nonPremiumProducts = commonController.productModelList!.data!
+          .where((product) =>
+      product.categoryId == currentCategory.id &&
+          product.forPremium == 0)
+          .toList();
 
-           for(var j in i.wallpaperdata!){
-             print('Product Premium: ${j.forPremium}');
-           }
+      // Add premium product at index 3 if available
+      productList.addAll(nonPremiumProducts);
+      if (premiumProducts.isNotEmpty) {
+        // productList.add(premiumProducts[0]);
+        productList[number] = premiumProducts[0];
+      }
 
-     }
+      if(productList.length<4){
+        for(var l in commonController.productModelList!.data!){
+          if(l.forPremium==0 && l.categoryId==currentCategory.id) {
+            bool result = productList.any((element) => element.id == l.id);
+            print('${result}');
+            if (result == false) {
+              print("Regular Added Again: ${l.forPremium}");
+              if(productList.length<4){
+                productList.add(l);
+              }
+            }
+          }
+        }
+      }
 
-     print('DECK DATA:   ${data!.length}');
+      deckModel.wallpaperdata = productList;
+      data.add(deckModel);
+    }
 
+    List<int>? indexes = List.filled(data.length, 0);
+    await commonController.selectedStackIndex(indexes);
+
+    await commonController.setCategoryDeck(data);
+
+    print('Running Tests');
+    for (var i in data) {
+      print("Category: ${i.id}");
+
+      for (var j in i.wallpaperdata!) {
+        print('Product Premium: ${j.forPremium}');
+      }
+    }
+
+    print('DECK DATA: ${data!.length}');
   }
 
 

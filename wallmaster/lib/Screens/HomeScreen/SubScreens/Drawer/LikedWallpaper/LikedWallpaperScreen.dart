@@ -11,11 +11,135 @@ import 'package:workmanager/workmanager.dart';
 import '../../../../../../Constants/AppColors.dart';
 import '../../../../../../CustomWidgets/CommonWidget.dart';
 import '../../../../../Controllers/AuthenticationController.dart';
+import '../../../../../Controllers/LocalizationController.dart';
 import '../../../../../CustomWidgets/LoadingAnimation.dart';
 import '../../../../../DB/SharedPreferences/SharedPreferences.dart';
 import '../../Category/RelatedCategoryScreen.dart';
+import '../PremiumPackages/PremiumPackage.dart';
 
 
+
+class NotPremiumSheet extends StatelessWidget {
+  CommonController _commonController = Get.find<CommonController>();
+  var wallpaper;
+
+  NotPremiumSheet(this.wallpaper,{super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // height: 800,
+      decoration: BoxDecoration(
+        // color: Colors.white
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
+
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('premiumOffer'.tr,textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 26,fontWeight: FontWeight.bold),),
+
+                Image.asset('assets/images/crown.png',width: 40,height: 40,),
+                // InkWell(
+                //     onTap: (){
+                //       Get.back();
+                //     },
+                //     child: Icon(Icons.clear,color: AppColors.white,)),
+              ],).marginOnly(top: 10,left: 15,right: 15,bottom: 5),
+
+            // Lottie.asset('assets/images/premiumCrown.json',),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text("youget".tr,style: TextStyle(color: Colors.yellowAccent,fontSize: 22),).marginSymmetric(horizontal: 15)),
+
+            SizedBox(height: 10,),
+            Row(
+              children: [
+                // Icon(Icons.done_sharp,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Text("Access".tr,style: TextStyle(color: Colors.white,fontSize: 15),),
+              ],).marginOnly(left: 18),
+            Row(
+              children: [
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Text("ExclusivePremium".tr,style: TextStyle(color: Colors.white,fontSize: 15),),
+              ],).marginOnly(left: 18),
+            Row(
+              children: [
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Text("NoAd".tr,style: TextStyle(color: Colors.white,fontSize: 15),),
+              ],).marginOnly(left: 18),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Expanded(child: Text("AutomticCategory".tr,style: TextStyle(color: Colors.white,fontSize: 15),)),
+              ],).marginOnly(left: 18),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Expanded(child: Text("AutomaticProduct".tr,style: TextStyle(color: Colors.white,fontSize: 15),)),
+              ],).marginOnly(left: 18),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                Image.asset('assets/images/check_mark.png',width: 14,height: 14,fit: BoxFit.fill,),
+                SizedBox(width: 2,),
+                Expanded(child: Text("TotalControl".tr,style: TextStyle(color: Colors.white,fontSize: 15,),maxLines: null,)),
+              ],).marginOnly(left: 18),
+
+            SizedBox(height: 10,),
+
+            Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),).marginOnly(left: 18),
+            SizedBox(height: 5,),
+            GetBuilder<Localization>(builder: (controller) {
+              return Align(
+                  alignment: Alignment.center,
+                  child: Image.asset((controller.dropdownValue['name']=='English')?"assets/images/borderOfferEnglish.png":"assets/images/borderOfferSpanish.png",width: MediaQuery.of(context).size.width*0.60,));
+            },),
+
+
+            SizedBox(height: 10,),
+            InkWell(
+              onTap: (){
+                Get.back();
+                Get.to(()=>PremiumPackage());
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width*0.9,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: AppColors.red,
+                    borderRadius: BorderRadius.circular(15)
+                ),
+                child: Text('BuyPremium'.tr.toUpperCase(),style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold),),),
+            ),
+
+            SizedBox(height: 10,),
+
+
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 class LikedPremiumSheet extends StatefulWidget {
@@ -374,8 +498,8 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
           InkWell(
               onTap: ()async{
                 AuthenticationController authController = Get.find<AuthenticationController>();
-                // if(authController.myUser!.data!.isPremium==1){
-                //
+                if(authController.myUser!.data!.isPremium==1){
+
                 if(commonController.isLoading==false) showModalBottomSheet(
                     barrierColor: Colors.transparent,
                     backgroundColor: Color(0xff282828),
@@ -385,19 +509,17 @@ class _LikedWallpaperScreenState extends State<LikedWallpaperScreen> {
                       return LikedPremiumSheet();
                     },
                   );
-                //
-                //
-                // }else{
-                //   showModalBottomSheet(
-                //     barrierColor: Colors.transparent,
-                //     backgroundColor: Color(0xff282828),
-                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
-                //     context: context,
-                //     builder: (BuildContext context) {
-                //       return NotPremiumSheet('');
-                //     },
-                //   );
-                // }
+                }else{
+                  showModalBottomSheet(
+                    barrierColor: Colors.transparent,
+                    backgroundColor: Color(0xff282828),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return NotPremiumSheet('');
+                    },
+                  );
+                }
               },
               child: Row(
                 children: [

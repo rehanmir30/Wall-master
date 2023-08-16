@@ -68,15 +68,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 primary: true,
                 itemCount: commonController.producSearchedData!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  // crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 1.0,
-                    mainAxisExtent: 300,
-                    crossAxisCount: 2),
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
+                  mainAxisExtent: 230,
+                  crossAxisCount: 3,
+                ),
                 itemBuilder: (context, index) {
                   // return CommonWidget(commonController.productModelList!.data![index]);
                   return MixWidget(commonController.producSearchedData![index]);
 
-                },).marginSymmetric(horizontal: 10);
+                },).marginSymmetric(horizontal: 3);
             },),
           ),
         ],
