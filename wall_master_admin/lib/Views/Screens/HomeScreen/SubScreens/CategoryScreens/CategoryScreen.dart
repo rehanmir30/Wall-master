@@ -5,6 +5,7 @@ import 'package:wall_master_admin/Constants/AppColors.dart';
 import 'package:wall_master_admin/Controllers/CommonController.dart';
 import 'package:wall_master_admin/CustomWidgets/CategoryWidget.dart';
 import 'package:wall_master_admin/Views/Screens/HomeScreen/SubScreens/AddScreens/AddNewScreen.dart';
+import 'package:wall_master_admin/Views/Screens/HomeScreen/SubScreens/CategoryScreens/SortCategories.dart';
 
 import '../CRUDCategory/NewCategoryScreen.dart';
 
@@ -29,6 +30,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
         elevation: 0,
         title: Text("Categories".tr,style: TextStyle(color: AppColors.white),),
         centerTitle: true,
+
+        actions: [
+          InkWell(
+            onTap: (){
+              Get.to(()=>SortCategories());
+            },
+            child: Row(
+              children: [
+                Icon(Icons.sort_by_alpha_outlined),
+                SizedBox(width: 5,),
+                Text('Sort'.tr,style: TextStyle(color: AppColors.white),),
+              ],
+            ),
+          ).marginSymmetric(horizontal: 10)
+        ],
       ),
 
       body: Container(
@@ -38,17 +54,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
             (commonController.categoryModelList?.data!.length==0 ||commonController.categoryModelList?.data!.length==null)
                 ?Center(child: Text("NoCategoryAvailable".tr,style: TextStyle(color: AppColors.white)),)
                 :Expanded(
-              child: GridView.builder(
-                itemCount: commonController.categoryModelList?.data!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    // childAspectRatio: 200,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 0,
-                    mainAxisExtent: 180),
-                itemBuilder: (context, index) {
-                  return CategoryWidget(commonController.categoryModelList,index);
+              child: GetBuilder<CommonController>(builder: (controller) {
+                return GridView.builder(
+                  itemCount: controller.categoryModelList?.data!.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      // childAspectRatio: 200,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      mainAxisExtent: 180),
+                  itemBuilder: (context, index) {
+                    return CategoryWidget(controller.categoryModelList,index);
 
+                  },);
               },),
             ),
           ],

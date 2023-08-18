@@ -52,6 +52,35 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:26359633293:android:9240fca570a66bcb9899c4",
+        "android_client_info": {
+          "package_name": "com.visualscape.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACsmwmp-Y6UANb5uZbJ7iTqTWwAqJaMq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:26359633293:android:afbf2e09754540cb9899c4",
         "android_client_info": {
           "package_name": "com.wallmaster.app"

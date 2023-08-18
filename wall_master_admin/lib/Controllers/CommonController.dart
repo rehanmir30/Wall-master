@@ -38,6 +38,10 @@ class CommonController extends GetxController{
 
   List<Datum>? _categoryList;
   List<Datum>? get categoryList=>_categoryList;
+
+  List<Datum>?  _sortCategoriesList;
+  List<Datum>? get sortCategoriesList=>_sortCategoriesList;
+
   List<String> images =[
     "assets/images/1 (1).jpg",
     "assets/images/1 (2).jpg",
@@ -56,8 +60,6 @@ class CommonController extends GetxController{
 
   bool _isLoading = false;
   bool get isLoading =>_isLoading;
-
-
   bool _multiSelectEnabled = false;
   bool get multiSelectEnabled =>_multiSelectEnabled;
 
@@ -71,6 +73,16 @@ class CommonController extends GetxController{
    getImages();
   }
 
+
+  sendCategoryPriority(List<Datum> sortedCategories)async{
+    await DatabaseHelper().sendCategoryPriority(sortedCategories);
+    update();
+  }
+
+  setSortCategories(list)async{
+    _sortCategoriesList = list;
+    update();
+  }
 
   addProductUsingMultiSelect(ProductData productData)async{
     print('Last Add LENGTH: ${productData.id}');
@@ -135,6 +147,7 @@ class CommonController extends GetxController{
 
   setCategoryModelList(List<Datum>? list){
     _categoryList = list;
+    _sortCategoriesList = list;
     print("LENGTH: ${list?.length}");
     update();
   }

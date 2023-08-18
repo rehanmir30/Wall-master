@@ -41,6 +41,7 @@ class Datum {
   String? name;
   String? image;
   String? imageName;
+  int? priority;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -49,6 +50,7 @@ class Datum {
     this.name,
     this.image,
     this.imageName,
+    this.priority,
     this.createdAt,
     this.updatedAt,
   });
@@ -62,6 +64,7 @@ class Datum {
     name: json["name"],
     image: json["image"],
     imageName: json["image_name"],
+    priority: json["priority"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
   );
@@ -71,6 +74,7 @@ class Datum {
     "name": name,
     "image": image,
     "image_name": imageName,
+    "priority": priority,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };

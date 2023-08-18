@@ -270,8 +270,11 @@ class DatabaseHelper {
        GetCategoryModel.fromJson(response.body.toString());
        // await .setAdminData(adminModel);
        List<Datum> categories = parseDataList(response.body);
+       categories.sort((a, b) => a.priority!.compareTo(b.priority!),);
 
        await commonController.setCategoryModelList(categories);
+
+       getCategoryModel.data!.sort((a, b) => a.priority!.compareTo(b.priority!),);
 
        await commonController.setCategoryList(getCategoryModel);
        print(getCategoryModel.message.toString());
@@ -759,6 +762,7 @@ class DatabaseHelper {
     List<CategoryDeckModel>? data = [];
 
     for (var currentCategory in commonController.categoryModelList!.data!) {
+      commonController.productModelList?.data?.shuffle();
       CategoryDeckModel? deckModel = CategoryDeckModel();
       var randomNumber = Random();
       int number = randomNumber.nextInt(4);

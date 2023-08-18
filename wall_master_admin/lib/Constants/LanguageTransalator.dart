@@ -23,6 +23,9 @@ class LanguageTransalator extends Translations{
       "Profile": "Profile",
       "NoCategoryAvailable": "No category available",
       "AddCategory": "Add Category",
+      "Sort":"Sort",
+      "SortCategories":"Sort Categories",
+      "Save":"Save",
 
       //Add new Category Screen
       "AddNewCategory": "Add New Category",
@@ -100,6 +103,9 @@ class LanguageTransalator extends Translations{
       "Profile": "Perfil",
       "NoCategoryAvailable": "Ninguna categoría disponible",
       "AddCategory": "añadir categoría",
+      "Sort":"Clasificar",
+      "SortCategories":"Ordenar categorías",
+      "Save":"Ahorrar",
 
       //Add New Category Screen
       "AddNewCategory": "Añadir nueva categoria",

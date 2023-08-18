@@ -21,6 +21,8 @@ class ApiConstants{
   static const deleteCategoryUrl = "api/admin/category/delete";
   //Get Category Url
   static const getCategoryListUrl = "api/category";
+  //set Category Priority Url
+  static const setCategoryPriorityUrl = "api/admin/setPriority";
 
 
   //Product Urls

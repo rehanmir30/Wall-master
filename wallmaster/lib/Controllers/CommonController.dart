@@ -289,9 +289,7 @@ class CommonController extends GetxController{
   }
 
   setProductList(GetProductModel model)async{
-    var reversed = model.data!.reversed;
-    model.data =reversed.toList();
-
+    model.data!.shuffle();
     _productModelList = model;
     print("All product updated");
     update();

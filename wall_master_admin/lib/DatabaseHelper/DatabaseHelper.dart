@@ -340,8 +340,10 @@ class DatabaseHelper {
           GetCategoryModel.fromJson(response.body.toString());
       // await .setAdminData(adminModel);
       List<Datum> categories = parseDataList(response.body);
+      categories.sort((a, b) => a.priority!.compareTo(b.priority!));
 
       await commonController.setCategoryModelList(categories);
+      getCategoryModel!.data!.sort((a, b) => a.priority!.compareTo(b.priority!),);
 
       await commonController.setCategoryList(getCategoryModel);
       print(getCategoryModel.message.toString());
@@ -744,6 +746,57 @@ class DatabaseHelper {
      commonController.setLoading(false);
 
    }
+  }
+
+  //Set New Priorities
+  Future<void> sendCategoryPriority(List<Datum> sortCategories) async {
+    CommonController commonController = Get.find<CommonController>();
+    AuthenticationController authenticationController = Get.find<AuthenticationController>();
+    print("${authenticationController.adminModel?.accessToken}");
+
+    try {
+      List<Map<String, dynamic>> categoryDataList = sortCategories.map((category) {
+        return {
+          "category_id": category.id,
+          "priority": category.priority,
+        };
+      }).toList();
+
+      Map<String, dynamic> requestBody = {
+        "data": categoryDataList,
+      };
+
+      print("${requestBody.toString()}");
+
+      String requestBodyJson = jsonEncode(requestBody);
+
+      Map<String, String> headers = {
+        "Accept": "application/json",
+        'Content-Type': 'application/json', // Change to application/json
+        'Authorization': 'Bearer ${authenticationController.adminModel?.accessToken}'
+      };
+
+      final response = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.setCategoryPriorityUrl),
+        headers: headers,
+        body: requestBodyJson, // Use the JSON-encoded body
+      );
+
+      var responseJson = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // Successful response
+        await commonController.getCategories();
+        CustomSnackbar.show('Categories have been successfully sorted', AppColors.green);
+      } else {
+        CustomSnackbar.show('${responseJson['message']}', AppColors.red);
+        commonController.setLoading(false);
+        // Handle error
+      }
+    } catch (e) {
+      CustomSnackbar.show('${e}', AppColors.red);
+      commonController.setLoading(false);
+    }
   }
 
 
