@@ -58,9 +58,11 @@ class DatabaseHelper {
       CustomSnackbar.show('${adminModel.message}', AppColors.green);
       await SharedPref.saveUser(adminModel);
       CommonController commonController = Get.find<CommonController>();
-      await commonController.getCategories();
-      await commonController.getAllProducts();
-      await commonController.getAllUsers();
+      if(commonController.productModelList==null){
+        await commonController.getCategories();
+        await commonController.getAllProducts();
+        await commonController.getAllUsers();
+      }
       Get.offAll(() => const HomeScreen());
     } else {
       final userModelFailure =

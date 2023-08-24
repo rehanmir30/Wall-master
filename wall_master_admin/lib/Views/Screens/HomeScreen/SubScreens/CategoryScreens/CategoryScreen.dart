@@ -28,7 +28,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.black,
         elevation: 0,
-        title: Text("Categories".tr,style: TextStyle(color: AppColors.white),),
+        title: Text("Categories".tr, style: TextStyle(color: AppColors.white,fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0),),
         centerTitle: true,
 
         actions: [
@@ -40,7 +40,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               children: [
                 Icon(Icons.sort_by_alpha_outlined),
                 SizedBox(width: 5,),
-                Text('Sort'.tr,style: TextStyle(color: AppColors.white),),
+                Text('Sort'.tr,style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,),),
               ],
             ),
           ).marginSymmetric(horizontal: 10)
@@ -52,7 +52,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: Column(
           children: [
             (commonController.categoryModelList?.data!.length==0 ||commonController.categoryModelList?.data!.length==null)
-                ?Center(child: Text("NoCategoryAvailable".tr,style: TextStyle(color: AppColors.white)),)
+                ?Center(child: Text("NoCategoryAvailable".tr,style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,)),)
                 :Expanded(
               child: GetBuilder<CommonController>(builder: (controller) {
                 return GridView.builder(
@@ -80,7 +80,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       }, label: Row(
         children: [
           Icon(Icons.add,color: Colors.white,),
-          Text("AddCategory".tr)
+          Text("AddCategory".tr,style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,),)
         ],
       )),
 

@@ -41,7 +41,7 @@ class LocalizationTranslator extends Translations{
       //Sign In Screen
       "signin": "Sign In",
       "NeedHelp": "Need help",
-      "NewSignUpNow": "New to wall Master? Sign up now",
+      "NewSignUpNow": "New to Visual Scape? Sign up now",
       "Recaptchas": "Sign in is protected by Google reCAPTCHA to ensure you're not a bot.",
 
       //HomeScreen
@@ -296,7 +296,7 @@ class LocalizationTranslator extends Translations{
       //Sign In Screen
       "signin": "Iniciar sesión",
       "NeedHelp": "Necesitas ayuda",
-      "NewSignUpNow": "¿Nuevo en Wall Master? Regístrate ahora",
+      "NewSignUpNow": "¿Nuevo en Visual Scape? Regístrate ahora",
       "Recaptchas": "El inicio de sesión está protegido por Google reCAPTCHA para garantizar que no sea un bot.",
 
       //HomeScreen

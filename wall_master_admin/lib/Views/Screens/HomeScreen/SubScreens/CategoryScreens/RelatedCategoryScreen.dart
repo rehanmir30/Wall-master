@@ -27,8 +27,8 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    commonController.clearProductUsingMultiSelect();
-    commonController.setMultiSelectSupport(false,false);
+    commonController.leaveByClearingProductUsingMultiSelect();
+    commonController.LeaveAndSetMultiSelectSupport(false,false);
   }
 
   @override
@@ -46,7 +46,7 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                 child: Icon(Icons.arrow_back_ios_new_rounded,size: 24,color: AppColors.white,)),
             backgroundColor: AppColors.black,
             elevation: 0,
-            title: Text("${widget._categoryModel.name}",style: TextStyle(color: AppColors.white),),
+            title: Text("${widget._categoryModel.name}",style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,fontSize: 23,),),
             centerTitle: true,
 
             actions: [
@@ -104,7 +104,7 @@ class _RelatedCategoryScreenState extends State<RelatedCategoryScreen> {
                 },
                 child: Row(
                   children: [
-                    Text("EditCategory".tr,style: TextStyle(color: Colors.white),),
+                    Text("EditCategory".tr,style: TextStyle(color: Colors.white,fontFamily: 'agency',letterSpacing: 1.0,),),
                     // Icon(Icons.edit,color: Colors.white,),
 
                   ],).marginOnly(right: 10),

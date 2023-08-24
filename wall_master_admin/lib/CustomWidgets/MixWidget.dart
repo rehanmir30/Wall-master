@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wall_master_admin/Controllers/CommonController.dart';
@@ -38,15 +39,25 @@ class _MixWidgetState extends State<MixWidget> {
                 width: MediaQuery.of(context).size.width,
                 height: 280,
                 decoration: BoxDecoration(
-                  color: AppColors.red,
+                  color: AppColors.black,
                   borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(
-                      image: NetworkImage(widget._productData!.image.toString()),
-                      fit: BoxFit.fill
+                  // image: DecorationImage(
+                  //     image: NetworkImage(widget._productData!.image.toString()),
+                  //     fit: BoxFit.fill
+                  // ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: FadeInImage(
+                    height: 280,
+                    width: MediaQuery.of(context).size.width,
+                    placeholder:  const AssetImage("assets/images/circle_logo.png"),
+                    image: CachedNetworkImageProvider(widget._productData!.image.toString()),
+                    fit: BoxFit.fill,
+                    placeholderFit: BoxFit.contain,
                   ),
                 ),
-                // child: Text(widget.wallpaper.toString()),
-              ).marginSymmetric(horizontal: 2,vertical: 2),
+              ).marginSymmetric(horizontal: 1,vertical: 1),
               if(widget._productData!.forPremium!=0)Positioned(
                 right: 15,
                 top: 10,

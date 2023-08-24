@@ -56,7 +56,7 @@ class _AllUserScreenState extends State<AllUserScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.black,
         elevation: 0,
-        title: Text("Users".tr),
+        title: Text("Users".tr,style: TextStyle(color: AppColors.white,fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0,),),
         centerTitle: true,
 
       ),

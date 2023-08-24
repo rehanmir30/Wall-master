@@ -57,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.black,
-        title: Text('AdminProfile'.tr),
+        title: Text('AdminProfile'.tr,style: TextStyle(color: AppColors.white,fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0,),),
         centerTitle: true,
         actions: [
           InkWell(
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               authController.signOut(authController.adminModel!);
             },
             child: Row(children: [
-              Text("Logout".tr).marginOnly(right: 10),
+              Text("Logout".tr,style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,),).marginOnly(right: 10),
               // Icon(Icons.exit_to_app_outlined,color: AppColors.white,)
             ],),
           )

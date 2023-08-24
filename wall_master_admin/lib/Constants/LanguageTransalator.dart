@@ -10,7 +10,7 @@ class LanguageTransalator extends Translations{
     // For English Language
     'en_US':{
       //AppName
-      "AppName": "Wall Master",
+      "AppName": "Visual Scape",
       //LoginScreen
       "AdminAccount": "Admin Account",
       "Email":"Email",
@@ -18,7 +18,7 @@ class LanguageTransalator extends Translations{
       "Sigin": "Sign In",
 
       //HomeScreen
-      "Categories": "Categories",
+      "Categories": "CATEGORIES",
       "Users": "Users",
       "Profile": "Profile",
       "NoCategoryAvailable": "No category available",
@@ -90,7 +90,7 @@ class LanguageTransalator extends Translations{
 
     'es_US':{
       //AppName
-      "AppName": "Wall Master",
+      "AppName": "Visual Scape",
       //Login Screen
       "AdminAccount": "Cuenta de administrador",
       "Email":"Correo electrónico",
@@ -98,7 +98,7 @@ class LanguageTransalator extends Translations{
       "Sigin": "Iniciar sesión",
 
       //HomeScreen
-      "Categories": "Categorías",
+      "Categories": "CATEGORIAS",
       "Users": "Usuarias",
       "Profile": "Perfil",
       "NoCategoryAvailable": "Ninguna categoría disponible",

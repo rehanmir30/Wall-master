@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColors.black,
-          title: Text("AppName".tr,style: TextStyle(color: AppColors.red,letterSpacing: 2),),
+          title: Text("AppName".tr,style: TextStyle(fontSize: 23,fontFamily: 'agency',letterSpacing: 1.0),),
           // leading: InkWell(
           //     onTap: (){
           //       Get.back();
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           //     child: Icon(Icons.arrow_back,color: Colors.white,size: 24,)),
 
           actions: [
-            Image.asset("assets/images/logo.png",width: 35,height:35,).marginOnly(right: 10),
+            Image.asset("assets/images/modified_logo.png",width: 35,height:35,).marginOnly(right: 10),
           ],
 
         ),
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 70,),
-                    Text("AdminAccount".tr,style: TextStyle(letterSpacing: 2,color: Colors.white,fontSize: 25),),
+                    Text("AdminAccount".tr.toUpperCase(),style: TextStyle(letterSpacing: 2,color: Colors.white,fontSize: 25,fontFamily: 'agency',),),
                     SizedBox(height: 50,),
 
                     Container(

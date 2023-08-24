@@ -85,8 +85,8 @@
       }
     ],
     "merchantInfo": {
-      "merchantId": "905380771951695262",
-      "merchantName": "Georgio"
+      "merchantId": "BCR2DN4TZ242BV2S",
+      "merchantName": "Blaze x Studio"
     },
     "transactionInfo": {
       "countryCode": "US",
@@ -97,7 +97,7 @@
 
    const String basicGooglePayIsReadyToPay = '''{
   "apiVersion": 2,
-  "apiVersionMinor": 0,
+  "apiVersionMinor": 0, 
   "allowedPaymentMethods": [
     {
       "type": "CARD",
@@ -113,7 +113,7 @@
   "apiVersion": 2,
   "apiVersionMinor": 0,
   "merchantInfo": {
-    "merchantName": "Example Merchant"
+    "merchantName": "Muhammad Huzaifa"
   },
   "allowedPaymentMethods": [
     {
@@ -125,15 +125,15 @@
       "tokenizationSpecification": {
         "type": "PAYMENT_GATEWAY",
         "parameters": {
-          "gateway": "example",
-          "gatewayMerchantId": "exampleGatewayMerchantId"
+          "gateway": "gpay",
+          "gatewayMerchantId": "44018778281415564"
         }
       }
     }
   ],
   "transactionInfo": {
     "totalPriceStatus": "FINAL",
-    "totalPrice": "12.34",
+    "totalPrice": "6.99",
     "currencyCode": "USD"
   }
 }''';
@@ -173,7 +173,7 @@
   ],
   "transactionInfo": {
     "totalPriceStatus": "FINAL",
-    "totalPrice": "12.34",
+    "totalPrice": "6.99",
     "currencyCode": "USD"
   }
 }''';

@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
    <application
-        android:label="wall_master_admin"
+        android:label="Visual Scape Admin"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
        android:allowBackup="false"

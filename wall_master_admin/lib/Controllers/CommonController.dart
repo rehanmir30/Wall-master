@@ -124,6 +124,33 @@ class CommonController extends GetxController{
     update();
   }
 
+  leaveByClearingProductUsingMultiSelect( )async{
+    _multiSelectionProduct.clear();
+    print('Updated LENGTH: ${_multiSelectionProduct.length}');
+    _multicheckBox.clear();
+    // update();
+  }
+
+  LeaveAndSetMultiSelectSupport(bool value,bool selectAll)async{
+    if(value==true){
+      _multiSelectEnabled =value;
+      if(selectAll==false){
+        for(var i=0; i<=productData!.length-1;i++){
+          _multicheckBox.add(false);
+        }
+      }else{
+        for(var i=0; i<=productData!.length-1;i++){
+          _multicheckBox.add(true);
+        }
+      }
+    }else{
+      _multiSelectEnabled =value;
+      _multicheckBox.clear();
+    }
+    // update();
+  }
+
+
   updateMulticheckBoxValue(bool value,index)async{
     _multicheckBox[index] = value;
     update();
@@ -213,6 +240,7 @@ class CommonController extends GetxController{
   }
 
   setListofProduct(List<ProductData>? data){
+   data =  data?.reversed.toList();
     _productData = data;
     update();
   }

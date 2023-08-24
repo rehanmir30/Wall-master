@@ -40,7 +40,7 @@ class _SortCategoriesState extends State<SortCategories> {
         automaticallyImplyLeading: true,
         backgroundColor: AppColors.black,
         elevation: 0,
-        title: Text("SortCategories".tr,style: TextStyle(color: AppColors.white),),
+        title: Text("SortCategories".tr.toUpperCase(),style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,),),
         centerTitle: true,
 
         actions: [
@@ -54,7 +54,7 @@ class _SortCategoriesState extends State<SortCategories> {
               children: [
                 Icon(Icons.save),
                 SizedBox(width: 5,),
-                Text('Save'.tr,style: TextStyle(color: AppColors.white),),
+                Text('Save'.tr,style: TextStyle(color: AppColors.white,fontFamily: 'agency',letterSpacing: 1.0,),),
               ],
             ),
           ).marginSymmetric(horizontal: 10)
@@ -71,18 +71,54 @@ class _SortCategoriesState extends State<SortCategories> {
               children: <Widget>[
                 for(final item in controller.sortCategoriesList!)
                   Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2,vertical: 2),
                     key: ValueKey(item.id),
                     alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                          image: NetworkImage("${item.image}"),
-                          fit: BoxFit.fill
-                      ),
+                      // image: DecorationImage(
+                      //   fit: BoxFit.fill,
+                      //   // image: NetworkImage(widget.categoryModel!.data![widget.index].image.toString()),
+                      //   // image: FadeInImage(image: CachedNetworkImageProvider(), placeholder: ,),
+                      // ),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child:  Text('${item.name}',style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold),),
-                  ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: FadeInImage(
+                            height: 280,
+                            width: MediaQuery.of(context).size.width,
+                            placeholder:  const AssetImage("assets/images/circle_logo.png"),
+                            image: CachedNetworkImageProvider(item.image.toString()),
+                            fit: BoxFit.fill,
+                            placeholderFit: BoxFit.contain,
+                          ),
+                        ),
+
+                        Text(item.name.toString(),style: TextStyle(color: AppColors.white,fontSize: 20,fontFamily: 'agency',letterSpacing: 2.0,),),
+
+                      ],
+                    ),
+                    // child: Text(widget.categoryModel!.data![widget.index].name.toString(),style: TextStyle(color: AppColors.white,fontSize: 20,fontFamily: 'agency',letterSpacing: 2.0,),),
+                  )
+                  // Container(
+                  //   key: ValueKey(item.id),
+                  //   alignment: Alignment.center,
+                  //   decoration: BoxDecoration(
+                  //     color: AppColors.white,
+                  //     borderRadius: BorderRadius.circular(15),
+                  //     image: DecorationImage(
+                  //         image: NetworkImage("${item.image}"),
+                  //         fit: BoxFit.fill
+                  //     ),
+                  //   ),
+                  //   child:  Text('${item.name}',style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold),),
+                  // ),
 
                   // ListTile(
                   //   tileColor: Colors.red,
