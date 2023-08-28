@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -20,6 +22,9 @@ import '../Model/GetProductModel.dart';
 import '../Model/LikedWallpaperModel.dart';
 import '../Screens/AdScreen/AdHelper.dart';
 import '../Screens/Download/SetWallpaper/SetWallpaperScreen.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:onepref/onepref.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 
 class CommonController extends GetxController{
@@ -106,6 +111,116 @@ class CommonController extends GetxController{
 
   bool _workManagerMagazine = false;
   bool  get workManagerMagazine =>_workManagerMagazine;
+
+
+  //Subscription Data From Play Store
+  late final List<ProductDetails> _subscriptions = <ProductDetails>[];
+  List<ProductDetails> get subscriptions =>_subscriptions;
+
+  //In App Engine from In App Purchases to handle purchases
+  IApEngine _inApEngine = IApEngine();
+  IApEngine get inApEngine =>_inApEngine;
+
+  //List of ProductID's from Store
+  List<ProductId> _storeProductIds = <ProductId>[
+    ProductId(id: "yearly_2023", isConsumable: false,reward: 0),
+  ];
+  List<ProductId> get storeProductIds =>_storeProductIds;
+
+  //Subscribed
+  bool _subscribed = OnePref.getPremium()??false;
+  bool get subscribed =>_subscribed;
+
+
+  setSubscribe(value)async{
+    _subscribed = value;
+    update();
+  }
+
+
+
+  getProducts()async{
+    await _inApEngine.getIsAvailable().then((value) async {
+    if(value){
+      _subscriptions.clear();
+      await _inApEngine.queryProducts(storeProductIds).then((response) async {
+
+        print(response.notFoundIDs);
+       await addSubscriptionData(response.productDetails);
+        for(var i in _subscriptions){
+          print("In App Purchases Data");
+          print(i.title.toString());
+          print(i.description.toString());
+          print(i.price.toString());
+        }
+        // _subscriptions.addAll();
+      });
+    }
+    });
+  }
+
+  listenPurchases()async{
+    _inApEngine.inAppPurchase.purchaseStream.listen((ListOfProductDetails) {
+      listenProductPurchases(ListOfProductDetails);
+
+    });
+  }
+
+  listenProductPurchases(List<PurchaseDetails> list)async{
+
+    if(list.isNotEmpty){
+      for(PurchaseDetails purchaseDetails in list){
+        if(purchaseDetails.status==PurchaseStatus.restored || purchaseDetails.status==PurchaseStatus.purchased){
+          Map purchaseData = json.decode(purchaseDetails.verificationData.localVerificationData);
+          if(purchaseData["acknowledged"]){
+            print("Restored the Purchase");
+            await setSubscribe(true);
+            OnePref.setPremium(subscribed);
+          }else{
+            print("First Time Purchase");
+            if(Platform.isAndroid){
+              final InAppPurchaseAndroidPlatformAddition androidPlatofrmAddition =
+              inApEngine.inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+              await androidPlatofrmAddition.consumePurchase(purchaseDetails).then((value) async {
+
+                await setSubscribe(true);
+                OnePref.setPremium(subscribed);
+              });
+            }
+            //Complete
+            if(purchaseDetails.pendingCompletePurchase){
+              await inApEngine.inAppPurchase.completePurchase(purchaseDetails).then((value)async{
+                await setSubscribe(true);
+                OnePref.setPremium(subscribed);
+              });
+            }
+
+          }
+
+        }
+      }
+
+
+    }else{
+      await setSubscribe(false);
+    }
+
+  }
+
+  addSubscriptionData(data)async{
+    _subscriptions.addAll(data);
+    update();
+  }
+
+  startPayamentProcess()async{
+    print(_subscriptions[0].id.toString());
+    print(_subscriptions[0].description.toString());
+    print(_subscriptions[0].title.toString());
+    print(_subscriptions[0].price.toString());
+    print(_subscriptions[0].currencySymbol.toString());
+    print(_subscriptions[0].currencyCode.toString());
+    _inApEngine.handlePurchase(_subscriptions[0], _storeProductIds);
+  }
 
 
   setMagazine(bool value)async{
@@ -351,6 +466,8 @@ class CommonController extends GetxController{
     createInterstitialAd();
     createRewardedAd();
     TimerCount();
+    listenPurchases();
+    getProducts();
   //  loadBanner();
   }
   // NativeAd loadNativeAd(){

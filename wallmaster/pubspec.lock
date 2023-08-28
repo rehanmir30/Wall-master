@@ -573,6 +573,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+  in_app_purchase:
+    dependency: transitive
+    description:
+      name: in_app_purchase
+      sha256: af00db44f0314eda24f5e7ff18a6b445ab95e11fcf49c53e4b7c6bef005eeecf
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.5"
+  in_app_purchase_android:
+    dependency: transitive
+    description:
+      name: in_app_purchase_android
+      sha256: "8d24e7141d5da4e239045438cb990b98fe8fd3e8de6884fbc76ff4ecec30caf5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.5+4"
+  in_app_purchase_platform_interface:
+    dependency: transitive
+    description:
+      name: in_app_purchase_platform_interface
+      sha256: "356a855d5a1f92b0d06a739e702fd732b56ee1914e6ba0f2ba08a2cb8e2cc3f8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.4"
+  in_app_purchase_storekit:
+    dependency: transitive
+    description:
+      name: in_app_purchase_storekit
+      sha256: b5e34ac2037d68ff3606877974147a6936ab4e9c8faa9986eca08f21d1f167e7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.6+5"
   infinite_carousel:
     dependency: "direct main"
     description:
@@ -597,6 +629,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.1"
   light_modal_bottom_sheet:
     dependency: "direct main"
     description:
@@ -661,6 +701,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  onepref:
+    dependency: "direct main"
+    description:
+      name: onepref
+      sha256: "71f42deeddbf373d9aa719931a2a3c7c217fc635d73890b8ca31eb408d1af546"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   palette_generator:
     dependency: "direct main"
     description:

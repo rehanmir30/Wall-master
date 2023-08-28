@@ -69,196 +69,221 @@ class _PremiumPackageState extends State<PremiumPackage> {
   bool agreement= false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.black,
-      appBar: AppBar(
+    return GetBuilder<CommonController>(builder: (commonControlller) {
+      return Scaffold(
         backgroundColor: AppColors.black,
-        elevation: 0,
-        leading: InkWell(
-            onTap: (){
-              Get.back();
-            },
-            child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,size: 20,)),
+        appBar: AppBar(
+          backgroundColor: AppColors.black,
+          elevation: 0,
+          leading: InkWell(
+              onTap: (){
+                Get.back();
+              },
+              child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,size: 20,)),
 
-        title: Text("BuyPremium".tr),
-        centerTitle: true,
-      ),
+          title: Text("BuyPremium".tr),
+          centerTitle: true,
+        ),
 
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 50,),
-            Align(
-              alignment: Alignment.center,
-              child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.red,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.black,
-                    image: DecorationImage(
-                      image:  AssetImage("assets/images/modified_logo.png"),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 50,),
+              Align(
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.red,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.black,
+                      image: DecorationImage(
+                        image:  AssetImage("assets/images/modified_logo.png"),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 10,),
+              SizedBox(height: 10,),
 
-            Align(
-                alignment: Alignment.center,
-                child: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 28),)),
-            SizedBox(height: 40,),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text("WallMaster".tr,style: TextStyle(color: Colors.white,fontSize: 28),)),
+              SizedBox(height: 40,),
 
-            Text("Elevate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
-            SizedBox(height: 10,),
+              Text("Elevate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+              SizedBox(height: 10,),
 
-            Text("Navigate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
-            SizedBox(height: 10,),
+              Text("Navigate".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+              SizedBox(height: 10,),
 
-            Text("top_tier".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
-            SizedBox(height: 10,),
-
-
-            Text("youget".tr,style: TextStyle(color: Colors.yellowAccent,fontWeight: FontWeight.bold,fontSize: 29),),
-            SizedBox(height: 10,),
-            Row(
-              children: [
-              // Icon(Icons.done_sharp,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Text("Access".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
-            ],),
-            Row(
-              children: [
-                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Text("ExclusivePremium".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
-              ],),
-            Row(
-              children: [
-                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Text("NoAd".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
-              ],),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Expanded(child: Text("AutomticCategory".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
-              ],),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Expanded(child: Text("AutomaticProduct".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
-              ],),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
-                Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
-                SizedBox(width: 2,),
-                Expanded(child: Text("TotalControl".tr,style: TextStyle(color: Colors.white,fontSize: 18,),maxLines: null,)),
-              ],),
-
-            SizedBox(height: 10,),
-
-                Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
-            SizedBox(height: 5,),
-                GetBuilder<Localization>(builder: (controller) {
-                  return Align(
-                      alignment: Alignment.center,
-                      child: Image.asset((controller.dropdownValue['name']=='English')?"assets/images/borderlessOfferEnglish.png":"assets/images/borderlessOfferSpanish.png",width: MediaQuery.of(context).size.width*0.60,));
-                },),
+              Text("top_tier".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+              SizedBox(height: 10,),
 
 
+              Text("youget".tr,style: TextStyle(color: Colors.yellowAccent,fontWeight: FontWeight.bold,fontSize: 29),),
+              SizedBox(height: 10,),
+              Row(
+                children: [
+                  // Icon(Icons.done_sharp,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Text("Access".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                ],),
+              Row(
+                children: [
+                  // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Text("ExclusivePremium".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                ],),
+              Row(
+                children: [
+                  // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Text("NoAd".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                ],),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Expanded(child: Text("AutomticCategory".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
+                ],),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Expanded(child: Text("AutomaticProduct".tr,style: TextStyle(color: Colors.white,fontSize: 18),)),
+                ],),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Icon(Icons.done_outlined,color: Colors.greenAccent,size: 18,),
+                  Image.asset('assets/images/check_mark.png',width: 20,height: 20,fit: BoxFit.fill,),
+                  SizedBox(width: 2,),
+                  Expanded(child: Text("TotalControl".tr,style: TextStyle(color: Colors.white,fontSize: 18,),maxLines: null,)),
+                ],),
 
-            // SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              SizedBox(height: 10,),
 
-                Checkbox(
-                  activeColor: AppColors.red,
-                    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    checkColor: Colors.white,
-                    // fillColor: MaterialStatePropertyAll(Colors.white),
-                    overlayColor: MaterialStatePropertyAll(Colors.white),
-                    side: BorderSide(
-                      color: Colors.white, // Change the checkbox border color
-                      width: 2.0, // Adjust the border width as desired
-                    ),
+              Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+              Text("ForPrice".tr,style: TextStyle(fontSize: 14,color: Colors.white),),
+              SizedBox(height: 5,),
+              GetBuilder<Localization>(builder: (controller) {
+                return Align(
+                    alignment: Alignment.center,
+                    child: Image.asset((controller.dropdownValue['name']=='English')?"assets/images/borderlessOfferEnglish.png":"assets/images/borderlessOfferSpanish.png",width: MediaQuery.of(context).size.width*0.60,));
+              },),
 
-                    value: agreement, onChanged: (val){
-                   setState(() {
-                     agreement =val!;
-                   });
 
-                }),
 
-                RichText(
-                  text: TextSpan(
-                    text: 'Iagreeto'.tr,
-                    style: TextStyle(color: Colors.white,fontSize: 14),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'termsandconditions'.tr,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                          Get.to(()=>TermsAndCondtions());
-                            // launch('https://example.com/terms'); // Replace with your terms and conditions URL
-                          },
+              // SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  Checkbox(
+                      activeColor: AppColors.red,
+                      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      checkColor: Colors.white,
+                      // fillColor: MaterialStatePropertyAll(Colors.white),
+                      overlayColor: MaterialStatePropertyAll(Colors.white),
+                      side: BorderSide(
+                        color: Colors.white, // Change the checkbox border color
+                        width: 2.0, // Adjust the border width as desired
                       ),
-                    ],
+
+                      value: agreement, onChanged: (val){
+                    setState(() {
+                      agreement =val!;
+                    });
+
+                  }),
+
+                  RichText(
+                    text: TextSpan(
+                      text: 'Iagreeto'.tr,
+                      style: TextStyle(color: Colors.white,fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'termsandconditions'.tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.to(()=>TermsAndCondtions());
+                              // launch('https://example.com/terms'); // Replace with your terms and conditions URL
+                            },
+                        ),
+                      ],
+                    ),
                   ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              (commonControlller.subscribed ==true)
+                  ?InkWell(
+                onTap: (){
+                  // CustomSnackbar.show("Please select the checkbox", AppColors.red);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width*0.9,
+                  height: 55,
+                  decoration: BoxDecoration(
+                      color:Colors.transparent,borderRadius: BorderRadius.circular(20),
+                    border: Border.all(width: 1,color: AppColors.white)
+                  ),
+                  child: Text("AlreadySubscribed".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
                 ),
-              ],
-            ),
-            SizedBox(height: 10,),
-
-            (agreement)
-            ?Container(
-              child: Platform.isIOS?applePayButton:googlePayButton,
-            )
-            //     ?Container(
-            //   alignment: Alignment.center,
-            //   width: MediaQuery.of(context).size.width*0.9,
-            //   height: 50,
-            //   decoration: BoxDecoration(color: AppColors.red,borderRadius: BorderRadius.circular(10)),
-            //   child: Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 18),),
-            // )
-                :InkWell(
-              onTap: (){
-                CustomSnackbar.show("Please select the checkbox", AppColors.red);
-              },
-                  child: Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width*0.9,
-              height: 50,
-              decoration: BoxDecoration(color: AppColors.red.withOpacity(0.7),borderRadius: BorderRadius.circular(10)),
-              child: Text("BuyNow".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
-            ),
+              )
+                  :(agreement)
+                  ?InkWell(
+                onTap: ()async{
+                  await commonControlller.setLoading(true);
+                  print("CLICKED");
+                  commonControlller.startPayamentProcess();
+                  // commonControlller.inApEngine.handlePurchase(commonControlller.subscriptions[0], commonControlller.storeProductIds);
+                  await commonControlller.setLoading(false);
+                  
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width*0.9,
+                  height: 50,
+                  decoration: BoxDecoration(color: AppColors.red,borderRadius: BorderRadius.circular(10)),
+                  child: Text("BuyNow".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
                 ),
+              )
+                  :InkWell(
+                onTap: (){
+                  CustomSnackbar.show("Please select the checkbox", AppColors.red);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width*0.9,
+                  height: 50,
+                  decoration: BoxDecoration(color: AppColors.red.withOpacity(0.7),borderRadius: BorderRadius.circular(10)),
+                  child: Text("BuyNow".tr,style: TextStyle(color: Colors.white,fontSize: 18),),
+                ),
+              ),
 
-            SizedBox(height: 20,),
+              SizedBox(height: 20,),
 
 
-        ],).marginSymmetric(horizontal: 15),
-      ),
+            ],).marginSymmetric(horizontal: 15),
+        ),
 
-    );
+      );
+    },);
   }
 }

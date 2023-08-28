@@ -52,12 +52,73 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:26359633293:android:1f70e2d515d3071c9899c4",
+        "android_client_info": {
+          "package_name": "com.visualscap.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26359633293-13p4a9blf8a76eljpud5p04j909i0731.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscap.application",
+            "certificate_hash": "e72688bae1d06340b6817ffefe6f4c94edddef02"
+          }
+        },
+        {
+          "client_id": "26359633293-5qtfitt3pfdu8v5rig44u3l776k9q504.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscap.application",
+            "certificate_hash": "7f80eaf7125b47a2fe30cd30e33c20661faf2ca0"
+          }
+        },
+        {
+          "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACsmwmp-Y6UANb5uZbJ7iTqTWwAqJaMq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:26359633293:android:9240fca570a66bcb9899c4",
         "android_client_info": {
           "package_name": "com.visualscape.app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "26359633293-5q3dm4bht31fffue3d77g4q2ubuuqh9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscape.app",
+            "certificate_hash": "e72688bae1d06340b6817ffefe6f4c94edddef02"
+          }
+        },
+        {
+          "client_id": "26359633293-j2nb5pl3qgm5ikma46645t7sm3ihjvrs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscape.app",
+            "certificate_hash": "7f80eaf7125b47a2fe30cd30e33c20661faf2ca0"
+          }
+        },
         {
           "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
           "client_type": 3

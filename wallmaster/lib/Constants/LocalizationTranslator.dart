@@ -125,6 +125,7 @@ class LocalizationTranslator extends Translations{
       "OneYear" : "Get our premium package for a full year of exclusive benefits. Elevate your wallpaper app experience now only in \$6.99!",
       "Iagreeto" : "I agree to ",
       "termsandconditions" : "terms and conditions",
+      "AlreadySubscribed" : "Already Subscribed",
 
       //New modification in premium
       "Elevate": "Elevate your digital experience to the next level with our Premium Wallpaper Package. Immerse yourself in an unlimited universe of high-definition images, adding a unique and personal touch to your device.",
@@ -379,6 +380,7 @@ class LocalizationTranslator extends Translations{
       "OneYear" : "Obtenga nuestro paquete premium por un año completo de beneficios exclusivos. ¡Mejora tu experiencia con la aplicación de fondo de pantalla ahora solo en \$6.99!",
       "Iagreeto" : "Acepto los ",
       "termsandconditions" : "términos y condiciones",
+      "AlreadySubscribed" : "Ya suscrito",
 
       //New modification in premium
       "Elevate": "Eleva tu experiencia digital al siguiente nivel con nuestro Paquete Premium de fondos de pantalla. Sumérgete en un universo ilimitado de imágenes de alta definición para darle a tu dispositivo un toque único y personal.",

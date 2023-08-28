@@ -1,4 +1,4 @@
-package com.visualscape.app
+package com.visualscap.application
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:onepref/onepref.dart';
 import 'package:wallmaster/back_service.dart';
 import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -84,6 +85,7 @@ String wallpaper=inputData?['wallpaperUrls'];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await OnePref.init();
   await Permission.notification.isDenied.then((value) {
     if(value){
       Permission.notification.request();

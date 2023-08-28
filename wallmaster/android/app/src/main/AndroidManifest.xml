@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.visualscape.app">
+    package="com.visualscap.application">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
-    <uses-permission android:name="android.permission.BILLING" />
 
    <application
         android:label="Visual Scape Wallpapers"
@@ -16,6 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
         tools:replace="android:allowBackup">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
