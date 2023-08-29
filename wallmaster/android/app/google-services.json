@@ -75,6 +75,22 @@
           }
         },
         {
+          "client_id": "26359633293-giv1smuhslkjfv6e02lp9mribm0is4eg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscap.application",
+            "certificate_hash": "2085640aad7709a23f8f4b07c040b2ac90ff0c2c"
+          }
+        },
+        {
+          "client_id": "26359633293-mahs7r7oklha7putcdqg852e25t2lpgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.visualscap.application",
+            "certificate_hash": "302daab6b006bafd580dc7d266cdca2c137ca60f"
+          }
+        },
+        {
           "client_id": "26359633293-h00vtskqm3phbcjb3fpaoi5rc3tlav1r.apps.googleusercontent.com",
           "client_type": 3
         }
