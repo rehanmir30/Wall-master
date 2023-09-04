@@ -182,9 +182,10 @@ class CommonController extends GetxController{
               final InAppPurchaseAndroidPlatformAddition androidPlatofrmAddition =
               inApEngine.inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
               await androidPlatofrmAddition.consumePurchase(purchaseDetails).then((value) async {
-
                 await setSubscribe(true);
                 OnePref.setPremium(subscribed);
+                await Get.find<CommonController>().buyPremium();
+
               });
             }
             //Complete
@@ -192,6 +193,7 @@ class CommonController extends GetxController{
               await inApEngine.inAppPurchase.completePurchase(purchaseDetails).then((value)async{
                 await setSubscribe(true);
                 OnePref.setPremium(subscribed);
+                await Get.find<CommonController>().buyPremium();
               });
             }
 
@@ -201,7 +203,8 @@ class CommonController extends GetxController{
       }
 
 
-    }else{
+    }
+    else{
       await setSubscribe(false);
     }
 

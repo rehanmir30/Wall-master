@@ -41,6 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // AuthenticationController authenticationController = Get.find<AuthenticationController>();
         // await authenticationController.setUserData(savedUser);
         await commonController.getUserDetails(savedUser);
+
         Localization localization = Get.find<Localization>();
         if(selectedLanguage!=null){
           await localization.setSelectedLang(selectedLanguage);

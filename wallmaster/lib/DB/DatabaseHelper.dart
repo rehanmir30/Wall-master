@@ -556,11 +556,17 @@ class DatabaseHelper {
       final usermodel = UserModel.fromJson(response.body.toString());
       usermodel.accessToken = savedUser!.accessToken;
       usermodel.tokenType = savedUser.tokenType;
+      usermodel.data!.isPremium = savedUser.data!.isPremium;
       await authenticationController.setUserData(usermodel);
       // CustomSnackbar.show('${usermodel.message}', AppColors.green);
       await SharedPref.saveUser(usermodel);
 
       CommonController commonController = Get.find<CommonController>();
+      if(usermodel.data!.isPremium==1){
+        await commonController.setSubscribe(true);
+      }else{
+        await commonController.setSubscribe(false);
+      }
       await commonController.getCategories();
       await commonController.getAllProducts();
       await getLikedProduct();

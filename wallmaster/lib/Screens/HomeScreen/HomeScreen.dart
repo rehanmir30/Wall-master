@@ -114,6 +114,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
         bottomNavigationBar: controller.banner==null
             ?Container()
+            :(Get.find<AuthenticationController>().myUser?.data!.isPremium==1)
+            ?Container(height: 0,)
             :Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(bottom: 12),

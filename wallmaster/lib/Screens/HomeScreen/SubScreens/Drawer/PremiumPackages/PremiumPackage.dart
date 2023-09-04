@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
 import 'package:wallmaster/CustomWidgets/CustomSnackbar.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Drawer/TermsAndCondtions/TermsAndCondtions.dart';
@@ -184,7 +185,8 @@ class _PremiumPackageState extends State<PremiumPackage> {
 
 
               // SizedBox(height: 10,),
-              Row(
+              if(Get.find<AuthenticationController>().myUser?.data!.isPremium ==0)
+                Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
 
@@ -230,7 +232,8 @@ class _PremiumPackageState extends State<PremiumPackage> {
                 ],
               ),
               SizedBox(height: 10,),
-              (commonControlller.subscribed ==true)
+
+              (Get.find<AuthenticationController>().myUser?.data!.isPremium ==1)
                   ?InkWell(
                 onTap: (){
                   // CustomSnackbar.show("Please select the checkbox", AppColors.red);
