@@ -395,6 +395,11 @@ class CommonController extends GetxController{
     update();
   }
 
+  makeFunctionsCall()async{
+    await DatabaseHelper().makeFunctionsCall();
+    update();
+  }
+
   getAllProducts()async{
     await DatabaseHelper().getAllProducts();
     update();

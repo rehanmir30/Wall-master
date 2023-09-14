@@ -73,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           children: [
                             Align(
                                 alignment:Alignment.centerLeft,
-                                child: Text('${controller.categoryDeckList![index].name}',style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold,fontFamily: 'agency'),)).marginOnly(top: 5),
+                                child: Text('${controller.categoryDeckList![index].name}'.toUpperCase().tr,style: TextStyle(color: AppColors.white,fontSize: 22,fontWeight: FontWeight.bold,fontFamily: 'agency'),)).marginOnly(top: 5),
 
                             // SizedBox(height: 2,),
                             (controller.categoryDeckList![index].wallpaperdata==null || controller.categoryDeckList![index].wallpaperdata!.length==0)

@@ -5,6 +5,7 @@ import 'package:wallmaster/AdsMob/AdMobService.dart';
 import 'package:wallmaster/Constants/AppColors.dart';
 import 'package:wallmaster/Controllers/AuthenticationController.dart';
 import 'package:wallmaster/Controllers/CommonController.dart';
+import 'package:wallmaster/CustomWidgets/LoadingAnimation.dart';
 import 'package:wallmaster/Screens/HomeScreen/SubScreens/Category/SearchScreen.dart';
 import 'package:wallmaster/Screens/Onboarding/Onborading.dart';
 import '../../Controllers/LocalizationController.dart';
@@ -97,18 +98,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
         ),
 
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            CategoryScreen(),
-            RecentScreen(),
-            PremiumScreen(),
-            // RandomScreen(),
-            // WeeklyScreen(),
-            // MonthlyPopularScreen(),
-            // MostPopularScreen(),
-          ],
-        ),
+        body: GetBuilder<CommonController>(builder: (controller) {
+          return Stack(
+            children: [
+              TabBarView(
+                controller: _tabController,
+                children: [
+                  CategoryScreen(),
+                  RecentScreen(),
+                  PremiumScreen(),
+                  // RandomScreen(),
+                  // WeeklyScreen(),
+                  // MonthlyPopularScreen(),
+                  // MostPopularScreen(),
+                ],
+              ),
+              Visibility(
+                visible: controller.isLoading,
+                  child: LoadingAnimation())
+            ],
+          );
+        },),
 
         drawer: MyDrawer(),
 
@@ -186,6 +196,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Localization _localization = Get.find<Localization>();
                 CommonController _commonController = Get.find<CommonController>();
+                _commonController.setLoading(true);
                 if('English'==_localization.dropdownValue['name']){
                 await _localization.setSelectedLang('spanish');
                 await _commonController.changeLanguage('spanish');
@@ -194,6 +205,8 @@ class MyDrawer extends StatelessWidget {
                   await _localization.setSelectedLang('English');
                   await _commonController.changeLanguage('English');
                 }
+                // _commonController.makeFunctionsCall();
+                _commonController.setLoading(false);
                 // Get.to(()=>PremiumPackage());
                 // Handle drawer item click for About
               },
